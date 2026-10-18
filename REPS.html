@@ -300,17 +300,214 @@
             z-index: 50;
         }
 
-        #bookPages .text-xs { font-size: 0.8125rem; }
-        #bookPages .text-sm { font-size: 1rem; }
+        #bookPages .page-face { overflow-x: hidden; overflow-y: auto; }
+        #bookPages .text-xs { font-size: 1rem; }
+        #bookPages .text-sm { font-size: 1.125rem; }
         #bookPages .text-base { font-size: 1.125rem; }
         #bookPages .text-lg { font-size: 1.25rem; }
         #bookPages .text-xl { font-size: 1.5rem; }
         #bookPages .text-2xl { font-size: 1.875rem; }
         #bookPages .text-3xl { font-size: 2.25rem; }
         #bookPages .text-4xl { font-size: 2.75rem; }
+        #bookPages [class~="sm:text-xs"], #bookPages [class~="md:text-xs"] { font-size: 1rem; }
+        #bookPages [class~="sm:text-sm"], #bookPages [class~="md:text-sm"] { font-size: 1.125rem; }
+        #bookPages [class~="sm:text-base"], #bookPages [class~="md:text-base"] { font-size: 1.125rem; }
+        #bookPages [class~="sm:text-lg"], #bookPages [class~="md:text-lg"] { font-size: 1.25rem; }
+        #bookPages [class~="sm:text-xl"], #bookPages [class~="md:text-xl"] { font-size: 1.5rem; }
+        #bookPages [class~="sm:text-2xl"], #bookPages [class~="md:text-2xl"] { font-size: 1.875rem; }
+        #bookPages [class~="sm:text-3xl"], #bookPages [class~="md:text-3xl"] { font-size: 2.25rem; }
         #bookPages [class~="text-[10px]"] { font-size: 0.75rem; }
         #bookPages [class~="text-[11px]"] { font-size: 0.8125rem; }
         #bookPages [class~="text-[12px]"] { font-size: 0.875rem; }
+
+        #bookPages #selectionSortCodePage {
+            padding: 1.25rem 1.5rem 2rem;
+        }
+        #bookPages #selectionSortCodePage > div:first-child h3 { font-size: 1.75rem; }
+        #bookPages #selectionSortCodePage > div:first-child > div > span,
+        #bookPages #selectionSortCodePage > div:nth-of-type(2) .text-\[11px\] { font-size: 0.9rem; }
+        #bookPages #selectionSortCodePage #codeSelectionSort {
+            padding: 0.75rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+        #bookPages #selectionSortComplexityPage > div:first-child { font-size: 0.9rem; }
+        #bookPages #selectionSortComplexityPage > div:nth-child(2) > div:first-child {
+            width: 4rem;
+            height: 4rem;
+            font-size: 1.75rem;
+        }
+        #bookPages #selectionSortComplexityPage h1 {
+            font-size: 2.5rem;
+            line-height: 1.08;
+        }
+        #bookPages #selectionSortComplexityPage p { font-size: 1.25rem; }
+        #bookPages #selectionSortSummaryPage > div:first-child h2 { font-size: 2rem; }
+        #bookPages #selectionSortSummaryContent {
+            gap: 0.85rem;
+            font-size: 1.08rem;
+            line-height: 1.4;
+        }
+        #bookPages #selectionSortSummaryContent > div:not(:last-child) { padding: 0.9rem; }
+        #bookPages #selectionSortSummaryContent h3 { font-size: 1rem; }
+        #bookPages #selectionSortSummaryContent .grid > div > span:first-child {
+            width: 1.25rem;
+            height: 1.25rem;
+            font-size: 0.8rem;
+        }
+
+        #selectionSortInteractive.selection-demo-open-page {
+            left: 0;
+            right: auto;
+            width: 50%;
+            height: 100%;
+            transform: none;
+            backface-visibility: visible;
+            -webkit-backface-visibility: visible;
+            z-index: 50;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .selection-demo-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.55rem;
+            flex: 1;
+            min-height: 0;
+        }
+        .selection-demo-title { font-size: 1.25rem !important; line-height: 1.1; }
+        .selection-demo-description { font-size: 0.8rem !important; line-height: 1.25; }
+        .selection-demo-fact { font-size: 0.75rem !important; }
+        .selection-demo-panel {
+            display: flex;
+            min-width: 0;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.65rem;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.9rem;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+        }
+        .selection-demo-chart {
+            display: flex;
+            height: clamp(100px, 16vh, 140px);
+            min-height: 90px;
+            align-items: flex-end;
+            justify-content: center;
+            gap: clamp(3px, 0.6vw, 8px);
+            overflow: hidden;
+            padding: 0.5rem 0.25rem 0;
+            border-bottom: 2px solid #cbd5e1;
+            cursor: pointer;
+        }
+        .selection-demo-chart:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 3px;
+        }
+        .selection-demo-bar {
+            display: flex;
+            min-width: 0;
+            max-width: 42px;
+            flex: 1 1 0;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 0.35rem;
+            border-radius: 0.45rem 0.45rem 0 0;
+            background: #64748b;
+            color: #ffffff;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: height 0.2s ease, background-color 0.2s ease;
+        }
+        .selection-demo-bar.sorted { background: #16a34a; }
+        .selection-demo-bar.current { background: #ca8a04; }
+        .selection-demo-bar.comparing { background: #dc2626; }
+        .selection-demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+        .selection-demo-controls button {
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            background: #f8fafc;
+            padding: 0.45rem 0.6rem;
+            color: #1e293b;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .selection-demo-controls button[data-selection-action="play"] {
+            border-color: #1d4ed8;
+            background: #2563eb;
+            color: #ffffff;
+        }
+        .selection-demo-controls button:disabled { opacity: 0.45; cursor: not-allowed; }
+        .selection-demo-speed {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #475569;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .selection-demo-speed input { width: min(100%, 180px); accent-color: #2563eb; }
+        .selection-demo-speed output {
+            min-width: 3.5rem;
+            color: #334155;
+            font-size: 0.72rem;
+            font-variant-numeric: tabular-nums;
+            text-align: right;
+        }
+        .selection-demo-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .selection-demo-panel:last-child {
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            align-items: center;
+        }
+        .selection-demo-panel:last-child h3,
+        .selection-demo-panel:last-child > p { grid-column: 1 / -1; }
+        .selection-demo-panel:last-child h3 { font-size: 0.9rem; }
+        .selection-demo-stat {
+            border-radius: 0.65rem;
+            background: #f1f5f9;
+            padding: 0.65rem 0.4rem;
+            text-align: center;
+        }
+        .selection-demo-stat strong { display: block; color: #2563eb; font-size: 1.45rem; }
+        .selection-demo-stat span { color: #64748b; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; }
+        .selection-demo-explanation {
+            min-height: 0;
+            border-left: 4px solid #2563eb;
+            border-radius: 0 0.65rem 0.65rem 0;
+            background: #dbeafe;
+            padding: 0.55rem;
+            color: #1e293b;
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+        .selection-demo-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.4rem 0.75rem;
+            color: #475569;
+            font-size: 0.7rem;
+        }
+        .selection-demo-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
+        .selection-demo-swatch { width: 0.65rem; height: 0.65rem; border-radius: 0.2rem; }
+        @media (max-width: 768px) {
+            .selection-demo-chart { height: 130px; }
+        }
 
         @media (max-width: 768px) {
             :root {
@@ -558,7 +755,7 @@
                     <span>Explore Presentation</span>
                     <i class="fa-solid fa-arrow-right text-sm text-purple-600"></i>
                 </button>
-                <span class="hero-slide-count text-slate-300 font-mono">34 Slides • 17 Spreads</span>
+                <span class="hero-slide-count text-slate-300 font-mono">38 Slides • 20 Spreads</span>
             </div>
         </div>
     </div>
@@ -598,7 +795,7 @@
                             </p>
                             <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-300/80 to-transparent mx-auto"></div>
                             <p class="text-xs text-slate-300 max-w-xs mx-auto leading-relaxed">
-                                Selection Sort • Insertion Sort • Recursion • Merge Sort • Algorithmic Comparisons
+                                Selection Sort Algortihm • Insertion Sort Algorithm • Recursion and Divide-and-Conquer • Merge Sort Algorrithm • Comparing and Choosing Sorting Algorithms
                             </p>
                         </div>
                         <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-purple-500/20 border border-purple-400/50 text-xs font-bold text-white shadow-lg animate-pulse">
@@ -606,43 +803,8 @@
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </div>
                     </div>
-                    <!-- Back Face: Slide 1 (Selection Sort Introduction) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.0</span>
-                            <h2 class="heading-font text-2xl font-extrabold text-slate-900 mt-2">
-                                Sorting a list, one choice at a time
-                            </h2>
-                        </div>
-                        <div class="space-y-4 my-4 text-base text-slate-700 leading-relaxed">
-                            <p>
-                                Find the smallest unsorted value and move it into its final position. Repeat from left to right.
-                            </p>
-                            <div class="rounded-2xl border-2 border-slate-300 bg-white p-3 shadow-sm">
-                                <p class="text-sm font-bold uppercase tracking-wide text-slate-500">Unsorted list</p>
-                                <div class="mt-2 flex flex-wrap gap-2 font-mono text-base font-bold" aria-label="Unsorted values: 64, 25, 12, 22, 11">
-                                    <span class="rounded-lg bg-slate-100 px-3 py-1.5">64</span>
-                                    <span class="rounded-lg bg-slate-100 px-3 py-1.5">25</span>
-                                    <span class="rounded-lg bg-slate-100 px-3 py-1.5">12</span>
-                                    <span class="rounded-lg bg-slate-100 px-3 py-1.5">22</span>
-                                    <span class="rounded-lg bg-purple-100 px-3 py-1.5 text-purple-800 ring-2 ring-purple-400">11</span>
-                                </div>
-                                <p class="mt-3 text-sm font-semibold text-purple-800">Pass 1 → 11, 25, 12, 22, 64</p>
-                            </div>
-                            <div class="rounded-xl border-l-4 border-purple-600 bg-purple-50 p-3">
-                                <p class="font-bold text-slate-900">The key idea</p>
-                                <p class="mt-1">Each pass places one more value in its final position. The sorted section grows from left to right.</p>
-                            </div>
-                        </div>
-                        <span class="page-folio">01</span>
-                    </div>
-                </div>
-
-                <!-- LEAF 1: Slide 2 & Slide 3 -->
-                <div class="leaf" id="leaf-1" style="z-index: 19;">
-                    <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 2 (Selection Sort Title Header) -->
-                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                    <!-- Back Face: Page 1 (Selection Sort Title Header) -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="absolute top-0 right-0 w-36 h-36 opacity-30"><svg viewBox="0 0 300 260" fill="none"><path d="M120 0C160 60 250 80 300 60V0H120Z" fill="#a855f7"/></svg></div>
                         <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 01</div>
                         <div class="my-auto space-y-4">
@@ -656,126 +818,172 @@
                                 Concept, Mechanics, Execution Trace, and Implementation
                             </p>
                         </div>
-                        <span class="page-folio">02</span>
-                    </div>
-                    <!-- Back Face: Slide 3 (What is Selection Sort) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.1</span>
-                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-                                What is selection sort?
-                            </h2>
-                        </div>
-                        <div class="space-y-3.5 my-auto text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
-                            <div class="p-3 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg">
-                                <p>
-                                    <strong class="text-slate-900 font-bold">Selection sort</strong> is a simple way to put a list in order, from smallest to biggest. It does this by choosing the smallest item, again and again.
-                                </p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm font-mono text-xs">
-                                <div class="flex items-center space-x-2 text-slate-800">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong>Before:</strong> 64, 25, 12, 22, 11</span>
-                                </div>
-                                <div class="flex items-center space-x-2 text-slate-800 mt-1">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong>After:</strong> 11, 12, 22, 25, 64</span>
-                                </div>
-                            </div>
-                            <p class="text-slate-800 font-semibold">In a list, it works the same way. The list has two parts:</p>
-                            <ul class="space-y-1.5 pl-2 text-xs">
-                                <li class="flex items-start space-x-2">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong class="text-slate-900">Sorted part:</strong> grows from the left, one item at a time.</span>
-                                </li>
-                                <li class="flex items-start space-x-2">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong class="text-slate-900">Unsorted part:</strong> shrinks on the right, until nothing is left.</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <span class="page-folio">03</span>
+                        <span class="page-folio">01</span>
                     </div>
                 </div>
 
-                <!-- LEAF 2: Slide 4 & Slide 5 -->
-                <div class="leaf" id="leaf-2" style="z-index: 18;">
-                    <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 4 (How It Works) -->
-                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.2</span>
-                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-                                How it works:
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto">
-                            <div class="p-2.5 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg text-xs sm:text-sm font-semibold text-slate-800">
-                                Find the smallest, put it first, repeat—each round locks one more number into its final place.
-                            </div>
-                            <p class="text-xs font-bold text-slate-900 uppercase tracking-wide">There are only three steps:</p>
-                            <div class="space-y-2 text-xs">
-                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
-                                    <p class="font-semibold text-slate-900">
-                                        <span class="text-purple-600 font-bold mr-1.5">1. Scan</span> – Look through the unsorted part and find the smallest number.
-                                    </p>
-                                </div>
-                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm ml-3">
-                                    <p class="font-semibold text-slate-900">
-                                        <span class="text-purple-600 font-bold mr-1.5">2. Swap</span> – Swap it with the first spot of the unsorted part.
-                                    </p>
-                                </div>
-                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
-                                    <p class="font-semibold text-slate-900">
-                                        <span class="text-purple-600 font-bold mr-1.5">3. Repeat</span> – The sorted part grew by one. Do it again until nothing is left.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="page-folio">04</span>
-                    </div>
-                    <!-- Back Face: Slide 5 (Trace Steps) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.3</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                What happens (Trace steps):
-                            </h2>
-                            <div class="flex items-center space-x-2 mt-1">
-                                <span class="border-2 border-slate-900 bg-white px-2 py-0.5 rounded text-[11px] font-mono font-bold">Start: 64, 25, 12, 22, 11</span>
-                                <span class="text-[11px] text-slate-500 italic">Nothing sorted yet</span>
-                            </div>
-                        </div>
-                        <div class="border-2 border-slate-900 rounded-xl overflow-hidden bg-white shadow-sm my-auto text-xs">
-                            <div class="grid grid-cols-12 border-b border-slate-900">
-                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 1 = 11, 25, 12, 22, 64</div>
-                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 11, swap with 64</div>
-                            </div>
-                            <div class="grid grid-cols-12 border-b border-slate-900">
-                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 2 = 11, 12, 25, 22, 64</div>
-                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 12, swap with 25</div>
-                            </div>
-                            <div class="grid grid-cols-12 border-b border-slate-900">
-                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 3 = 11, 12, 22, 25, 64</div>
-                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 22, swap with 25</div>
-                            </div>
-                            <div class="grid grid-cols-12">
-                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 4 = 11, 12, 22, 25, 64</div>
-                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">25 in place, no swap needed</div>
-                            </div>
-                        </div>
-                        <div class="border-2 border-slate-900 bg-purple-100/90 py-1.5 px-3 rounded-lg text-center text-xs font-bold text-purple-950">
-                            Remember: Scan, Swap, and Repeat
-                        </div>
-                        <span class="page-folio">05</span>
-                    </div>
+              <!-- LEAF 1: Slide 2 & Slide 3 -->
+<div class="leaf" id="leaf-1" style="z-index: 19;">
+    <div class="leaf-shadow"></div>
+    <!-- Back Face: Slide 3 (What is Selection Sort) -->
+    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+        <div>
+            <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.1</span>
+            <h2 class="heading-font text-4xl sm:text-5xl font-extrabold text-slate-900 mt-1">
+                What is selection sort?
+            </h2>
+        </div>
+        <div class="space-y-4 my-auto text-xl sm:text-2xl text-slate-700 font-medium leading-relaxed">
+            <div class="p-4 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg">
+                <p>
+                    <strong class="text-slate-900 font-bold">Selection sort</strong> is a simple way to put a list in order, from smallest to biggest. It does this by choosing the smallest item, again and again.
+                </p>
+            </div>
+            <div class="border-2 border-slate-900 bg-white rounded-xl p-4 shadow-sm font-mono text-base sm:text-lg">
+                <div class="flex items-center space-x-2 text-slate-800">
+                    <span class="text-purple-600 font-bold">•</span>
+                    <span><strong>Before:</strong> 64, 25, 12, 22, 11</span>
                 </div>
+                <div class="flex items-center space-x-2 text-slate-800 mt-1">
+                    <span class="text-purple-600 font-bold">•</span>
+                    <span><strong>After:</strong> 11, 12, 22, 25, 64</span>
+                </div>
+            </div>
+            <p class="text-slate-800 font-semibold">In a list, it works the same way. The list has two parts:</p>
+            <ul class="space-y-2.5 pl-2 text-base sm:text-lg">
+                <li class="flex items-start space-x-2">
+                    <span class="text-purple-600 font-bold">•</span>
+                    <span><strong class="text-slate-900">Sorted part:</strong> grows from the left, one item at a time.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-purple-600 font-bold">•</span>
+                    <span><strong class="text-slate-900">Unsorted part:</strong> shrinks on the right, until nothing is left.</span>
+                </li>
+            </ul>
+        </div>
+        <span class="page-folio">03</span>
+    </div>
+</div>
+                <!-- LEAF 2: Slide 4 & Slide 5 -->
+<div class="leaf" id="leaf-2" style="z-index: 18;">
+    <div class="leaf-shadow"></div>
+    <!-- Front Face: Slide 4 (How It Works) -->
+    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+        <div>
+            <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.2</span>
+            <h2 class="heading-font text-4xl sm:text-5xl font-extrabold text-slate-900 mt-1">
+                How it works:
+            </h2>
+        </div>
+        <div class="space-y-4 my-auto">
+            <div class="p-4 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg text-lg sm:text-xl font-semibold text-slate-800">
+                Find the smallest, put it first, repeat—each round locks one more number into its final place.
+            </div>
+            <p class="text-base sm:text-lg font-bold text-slate-900 uppercase tracking-wide">There are only three steps:</p>
+            <div class="space-y-3 text-base sm:text-lg">
+                <div class="border-2 border-slate-900 bg-white rounded-xl p-3.5 shadow-sm">
+                    <p class="font-semibold text-slate-900">
+                        <span class="text-purple-600 font-bold mr-1.5">1. Scan</span> – Look through the unsorted part and find the smallest number.
+                    </p>
+                </div>
+                <div class="border-2 border-slate-900 bg-white rounded-xl p-3.5 shadow-sm">
+                    <p class="font-semibold text-slate-900">
+                        <span class="text-purple-600 font-bold mr-1.5">2. Swap</span> – Swap it with the first spot of the unsorted part.
+                    </p>
+                </div>
+                <div class="border-2 border-slate-900 bg-white rounded-xl p-3.5 shadow-sm">
+                    <p class="font-semibold text-slate-900">
+                        <span class="text-purple-600 font-bold mr-1.5">3. Repeat</span> – The sorted part grew by one. Do it again until nothing is left.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <span class="page-folio">04</span>
+    </div>
+    <!-- Back Face: Slide 5 (Trace Steps) -->
+    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+        <div>
+            <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.3</span>
+            <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">
+                What happens (Trace steps):
+            </h2>
+            <div class="flex items-center space-x-2 mt-2">
+                <span class="border-2 border-slate-900 bg-white px-3 py-1 rounded text-sm sm:text-base font-mono font-bold">Start: 64, 25, 12, 22, 11</span>
+                <span class="text-sm sm:text-base text-slate-500 italic">Nothing sorted yet</span>
+            </div>
+        </div>
+        <div class="border-2 border-slate-900 rounded-xl overflow-hidden bg-white shadow-sm my-auto text-sm sm:text-base">
+            <div class="grid grid-cols-12 border-b border-slate-900">
+                <div class="col-span-6 p-3 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 1 = 11, 25, 12, 22, 64</div>
+                <div class="col-span-6 p-3 font-medium text-slate-700 flex items-center">Smallest 11, swap with 64</div>
+            </div>
+            <div class="grid grid-cols-12 border-b border-slate-900">
+                <div class="col-span-6 p-3 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 2 = 11, 12, 25, 22, 64</div>
+                <div class="col-span-6 p-3 font-medium text-slate-700 flex items-center">Smallest 12, swap with 25</div>
+            </div>
+            <div class="grid grid-cols-12 border-b border-slate-900">
+                <div class="col-span-6 p-3 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 3 = 11, 12, 22, 25, 64</div>
+                <div class="col-span-6 p-3 font-medium text-slate-700 flex items-center">Smallest 22, swap with 25</div>
+            </div>
+            <div class="grid grid-cols-12">
+                <div class="col-span-6 p-3 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 4 = 11, 12, 22, 25, 64</div>
+                <div class="col-span-6 p-3 font-medium text-slate-700 flex items-center">25 in place, no swap needed</div>
+            </div>
+        </div>
+        <div class="border-2 border-slate-900 bg-purple-100/90 py-2.5 px-4 rounded-lg text-center text-sm sm:text-base font-bold text-purple-950">
+            Remember: Scan, Swap, and Repeat
+        </div>
+        <span class="page-folio">05</span>
+    </div>
+            <!-- Slide 5: Interactive Selection Sort Visualizer (copied from index.html) -->
+            <div id="selectionSortInteractive" class="page-face back-face bg-slate-50 text-slate-800 p-4 sm:p-6 pb-10 flex flex-col gap-2 page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                <div class="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                        <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.4 • Interactive</span>
+                        <h2 class="selection-demo-title heading-font font-extrabold text-slate-900">Selection Sort Visualizer</h2>
+                    </div>
+                    <span class="selection-demo-fact rounded-full bg-blue-100 px-3 py-1 font-bold text-blue-800">O(n²) • In-place</span>
+                </div>
+                <p class="selection-demo-description text-slate-600">Click the graph or use the controls to step through each comparison and swap.</p>
+                <div class="selection-demo-layout">
+                    <div class="selection-demo-panel">
+                        <div class="selection-demo-chart" data-selection-role="array" role="button" tabindex="0" aria-label="Selection sort graph. Activate to advance one step."></div>
+                        <div class="selection-demo-controls" aria-label="Selection sort animation controls">
+                            <button type="button" data-selection-action="reset">Restart</button>
+                            <button type="button" data-selection-action="previous" disabled>Step Back</button>
+                            <button type="button" data-selection-action="play" aria-pressed="false">Play</button>
+                            <button type="button" data-selection-action="next">Step Forward</button>
+                        </div>
+                        <label class="selection-demo-speed">
+                            <span>Speed</span>
+                            <input type="range" data-selection-role="speed" min="50" max="5000" step="50" value="1200" aria-label="Animation speed">
+                            <output data-selection-role="speed-value">208 ms/step</output>
+                        </label>
+                        <div class="selection-demo-legend" aria-label="Visualization legend">
+                            <span><i class="selection-demo-swatch" style="background:#64748b"></i>Unsorted</span>
+                            <span><i class="selection-demo-swatch" style="background:#ca8a04"></i>Minimum</span>
+                            <span><i class="selection-demo-swatch" style="background:#dc2626"></i>Comparing</span>
+                            <span><i class="selection-demo-swatch" style="background:#16a34a"></i>Sorted</span>
+                        </div>
+                    </div>
+                    <aside class="selection-demo-panel">
+                        <h3 class="font-bold text-slate-800">Live Algorithm State</h3>
+                        <div class="selection-demo-stats">
+                            <div class="selection-demo-stat"><strong data-selection-role="comparisons">0</strong><span>Comparisons</span></div>
+                            <div class="selection-demo-stat"><strong data-selection-role="swaps">0</strong><span>Swaps</span></div>
+                        </div>
+                        <div class="selection-demo-explanation" data-selection-role="explanation" aria-live="polite"></div>
+                    </aside>
+                </div>
+                <span class="page-folio">05</span>
+            </div>
+</div>
 
                 <!-- LEAF 3: Slide 6 & Slide 7 -->
                 <div class="leaf" id="leaf-3" style="z-index: 17;">
                     <div class="leaf-shadow"></div>
                     <!-- Front Face: Slide 6 (Python Code) -->
-                    <div class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
+                    <div id="selectionSortCodePage" class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
                         <div class="flex justify-between items-center">
                             <div>
                                 <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
@@ -815,7 +1023,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         <span class="page-folio">06</span>
                     </div>
                     <!-- Back Face: Slide 7 (Time Complexity Title Header) -->
-                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
+                    <div id="selectionSortComplexityPage" class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 02</div>
                         <div class="my-auto space-y-4">
                             <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
@@ -836,63 +1044,106 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                 <div class="leaf" id="leaf-4" style="z-index: 16;">
                     <div class="leaf-shadow"></div>
                     <!-- Front Face: Slide 8 (Summary & Key Concepts) -->
-                    <div class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div class="border-b border-slate-200 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Overview</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">SELECTION SORT SUMMARY</h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
-                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-1.5">What is Selection Sort?</h3>
-                                <ul class="space-y-1 text-slate-700">
-                                    <li>• Finds the smallest value in the unsorted section.</li>
-                                    <li>• Moves that value to the front of the unsorted part.</li>
-                                    <li>• Repeats until the entire array is sorted.</li>
-                                </ul>
-                            </div>
-                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
-                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-1.5">The Basic Steps</h3>
-                                <div class="grid grid-cols-2 gap-1.5 text-slate-700 font-medium">
-                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">1</span><span>Scan unsorted</span></div>
-                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">2</span><span>Find smallest</span></div>
-                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">3</span><span>Swap to front</span></div>
-                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">4</span><span>Repeat</span></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-center space-x-2 pt-1 font-mono font-bold text-xs">
-                                <span class="bg-white px-2 py-1 rounded border border-slate-300">[4, 2, 5, 1]</span>
-                                <span class="text-blue-600 font-bold">→</span>
-                                <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-1 rounded">[1, 2, 4, 5]</span>
-                            </div>
-                        </div>
-                        <span class="page-folio">08</span>
-                    </div>
+                    <div id="selectionSortSummaryPage" class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+    <div class="border-b border-slate-200 pb-2">
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">SELECTION SORT </h2>
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Time Complexity • Basic idea and how the algorithm works</span>
+    </div>
+    <div id="selectionSortSummaryContent" class="space-y-4 my-auto text-base sm:text-lg">
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-2">What is Selection Sort?</h3>
+            <ul class="space-y-2 text-slate-700">
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-600 font-bold">•</span>
+                    <span>A sorting algorithm that finds the smallest value.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-600 font-bold">•</span>
+                    <span>It moves that value to the front of the unsorted part.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-600 font-bold">•</span>
+                    <span>It repeats until the whole array is sorted.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-600 font-bold">•</span>
+                    <span>The sorted part grows after each pass.</span>
+                </li>
+            </ul>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-2">The Basic Steps</h3>
+            <div class="grid grid-cols-2 gap-2 text-slate-700 font-medium text-sm sm:text-base">
+                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">1</span><span>Scan unsorted</span></div>
+                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">2</span><span>Find smallest</span></div>
+                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">3</span><span>Swap to front</span></div>
+                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">4</span><span>Repeat</span></div>
+            </div>
+        </div>
+        <div class="flex items-center justify-center space-x-3 pt-2 font-mono font-bold text-sm sm:text-base">
+            <span class="bg-white px-3 py-1.5 rounded border border-slate-300">[4, 2, 5, 1]</span>
+            <span class="text-blue-600 font-bold text-lg">→</span>
+            <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1.5 rounded">[1, 2, 4, 5]</span>
+        </div>
+    </div>
+    <span class="page-folio">08</span>
+</div>
                     <!-- Back Face: Slide 9 (Why Time Complexity is O(n²)) -->
-                    <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div class="border-b border-slate-200 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Mathematical Rationale</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Why Time Complexity is O(n²)?</h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
-                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-2">Comparisons in Each Pass</h3>
-                                <div class="space-y-1 font-semibold text-slate-800">
-                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 1</span><span class="text-blue-600 font-mono">n – 1 comparisons</span></div>
-                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 2</span><span class="text-blue-600 font-mono">n – 2 comparisons</span></div>
-                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 3</span><span class="text-blue-600 font-mono">n – 3 comparisons</span></div>
-                                    <div class="flex justify-between"><span>Last pass</span><span class="text-blue-600 font-mono">1 comparison</span></div>
-                                </div>
-                            </div>
-                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center font-bold text-blue-900 text-xs">
-                                Total comparisons = n(n – 1) / 2
-                            </div>
-                            <div class="text-[11px] text-slate-600 leading-tight">
-                                <strong>Example for n=8:</strong><br>
-                                7 + 6 + 5 + 4 + 3 + 2 + 1 = <strong>28 total comparisons</strong>
-                            </div>
-                        </div>
-                        <span class="page-folio">09</span>
-                    </div>
+<div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+    <div class="border-b border-slate-200 pb-2">
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Mathematical Rationale</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Why Time Complexity is O(n²)?</h2>
+    </div>
+    <div class="space-y-4 my-auto text-base sm:text-lg">
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-3">Comparisons in Each Pass</h3>
+            <div class="space-y-2 font-semibold text-slate-800">
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 1</span><span class="text-blue-600 font-mono">n – 1 comparisons</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 2</span><span class="text-blue-600 font-mono">n – 2 comparisons</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 3</span><span class="text-blue-600 font-mono">n – 3 comparisons</span></div>
+                <div class="flex justify-between pt-1"><span>Last pass</span><span class="text-blue-600 font-mono">1 comparison</span></div>
+            </div>
+        </div>
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-center font-bold text-blue-900 text-base sm:text-lg">
+            Total comparisons = n(n – 1) / 2
+        </div>
+    </div>
+    <span class="page-folio">09</span>
+</div>
+<div id="selectionSortWorkedExamplePage" class="page-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+    <div class="border-b border-slate-200 pb-2">
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Worked Example</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Selection Sort Comparisons</h2>
+    </div>
+    <div class="my-auto space-y-2 text-base sm:text-lg">
+        <div class="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+            <p class="font-bold text-slate-900">Example n = 8</p>
+            <p class="font-mono text-slate-600">[8, 7, 6, 5, 4, 3, 2, 1]</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm sm:text-base">
+            <div class="rounded-lg border border-slate-200 bg-white p-2.5">
+                <p class="font-bold text-blue-700">Pass 1</p>
+                <p>8 numbers → 7 comparisons</p>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-2.5">
+                <p class="font-bold text-blue-700">Pass 2</p>
+                <p>7 numbers → 6 comparisons</p>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-2.5">
+                <p class="font-bold text-blue-700">Pass 3</p>
+                <p>6 numbers → 5 comparisons</p>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-2.5">
+                <p class="font-bold text-blue-700">Last pass</p>
+                <p>2 numbers → 1 comparison</p>
+            </div>
+        </div>
+        <div class="rounded-xl border border-blue-200 bg-blue-50 p-3 text-center font-bold text-blue-900">
+            7 + 6 + 5 + 4 + 3 + 2 + 1 = 28 comparisons
+        </div>
+    </div>
+    <span class="page-folio">10</span>
+</div>
                 </div>
 
                 <!-- LEAF 5: Slide 10 & Slide 11 -->
@@ -901,11 +1152,11 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     <!-- Front Face: Slide 10 (Formula Evaluation) -->
                     <div class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
                         <div class="border-b border-slate-200 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Formula Evaluation</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Selection Sort Formula</h2>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Formula</h2>
                         </div>
                         <div class="space-y-3 my-auto text-xs">
                             <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 text-center">
+                                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Formula for Selection Sort Time Complexity</span>
                                 <div class="text-base sm:text-lg font-bold italic text-slate-900 my-1">
                                     T(n) = 
                                     <div class="math-fraction">
@@ -914,48 +1165,128 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                                     </div>
                                 </div>
                                 <p class="text-[11px] text-slate-500 font-medium">T(n) = total comparisons for n elements</p>
-                            </div>
-                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 font-mono text-[11px] space-y-1">
-                                <div class="font-bold text-slate-900">Solving for n=8:</div>
-                                <div>T(8) = (8² – 8) / 2</div>
-                                <div>T(8) = (64 – 8) / 2 = 56 / 2</div>
-                                <div class="pt-1 font-bold text-blue-600">Result: T(8) = 28 comparisons</div>
+                                <ul class="space-y-3 text-slate-700 text-base sm:text-lg font-medium">
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span class="font-bold text-slate-900">Where:</span>
+    </li>
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span><strong class="text-slate-900 font-mono">T(n)</strong> = total number of comparisons</span>
+    </li>
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span><strong class="text-slate-900 font-mono">n</strong> = number of elements in the array</span>
+    </li>
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span><strong class="text-slate-900 font-mono">n²</strong> = number of elements multiplied by itself</span>
+    </li>
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span><strong class="text-slate-900 font-mono">-n</strong> = subtract number of elements</span>
+    </li>
+    <li class="flex items-start space-x-2">
+        <span class="text-blue-600 font-bold">•</span>
+        <span><strong class="text-slate-900 font-mono">/2</strong> = divide the result by 2</span>
+    </li>
+</ul>
                             </div>
                         </div>
                         <span class="page-folio">10</span>
                     </div>
+                    <div id="selectionSortFormulaExamplePage" class="page-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+
+                        <div class="my-auto space-y-4 text-base sm:text-lg">
+                            <p class="text-slate-700">Let's solve the formula using n=8.<br> the formula for selection sort is:</p>
+                            <div class="flex flex-col items-center justify-center space-y-6 font-serif text-xl sm:text-2xl text-slate-800">
+        <!-- Step 1 -->
+        <div class="flex items-center space-x-2">
+            <span><i>T</i>(<i>n</i>)</span>
+            <span>=</span>
+            <div class="inline-flex flex-col items-center align-middle">
+                <span class="border-b-2 border-slate-800 px-1 pb-0.5"><i>n</i><sup>2</sup> − <i>n</i></span>
+                <span class="pt-0.5">2</span>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex items-center space-x-2">
+            <span><i>T</i>(8)</span>
+            <span>=</span>
+            <div class="inline-flex flex-col items-center align-middle">
+                <span class="border-b-2 border-slate-800 px-1 pb-0.5">8<sup>2</sup> − 8</span>
+                <span class="pt-0.5">2</span>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex items-center space-x-2">
+            <span><i>T</i>(8)</span>
+            <span>=</span>
+            <div class="inline-flex flex-col items-center align-middle">
+                <span class="border-b-2 border-slate-800 px-1 pb-0.5">64 − 8</span>
+                <span class="pt-0.5">2</span>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flex items-center space-x-2">
+            <span><i>T</i>(8)</span>
+            <span>=</span>
+            <div class="inline-flex flex-col items-center align-middle">
+                <span class="border-b-2 border-slate-800 px-1 pb-0.5">56</span>
+                <span class="pt-0.5">2</span>
+            </div>
+        </div>
+
+        <!-- Step 5 (Final Answer Boxed) -->
+        <div class="border-2 border-slate-900 px-4 py-1.5 mt-2 font-bold text-2xl sm:text-3xl text-slate-900">
+            <i>T</i>(8) = 28
+        </div>
+    </div>
+
+                        </div>
+                        <span class="page-folio">12</span>
+                    </div>
                     <!-- Back Face: Slide 11 (Best, Average, Worst Cases) -->
                     <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div class="border-b border-slate-200 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Cases</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Best, Average &amp; Worst Case</h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 space-y-2">
-                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                                    <span class="font-bold text-slate-900">Best Case:</span>
-                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-600">Array already sorted; full comparisons still required to confirm minimum.</p>
+    <div class="border-b border-slate-200 pb-2">
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900">Best, Average &amp; Worst Case</h2>
+    </div>
+    <div class="space-y-4 my-auto text-base sm:text-lg">
+        <div class="bg-white rounded-xl p-5 shadow-sm border border-slate-200 space-y-4">
+            <div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Best Case:</span>
+                                    <p class="text-sm sm:text-base text-slate-600 mt-1.5">Array already sorted; comparisons are still needed.</p>
+                    <span class="font-mono font-bold text-blue-600 text-xl sm:text-2xl">O(n²)</span>
+                </div>
+            </div>
 
-                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5 pt-1">
-                                    <span class="font-bold text-slate-900">Average Case:</span>
-                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-600">Typical random order; scans unsorted segment in every pass.</p>
+            <div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2 pt-1">
+                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Average Case:</span>
+                                    <p class="text-sm sm:text-base text-slate-600 mt-1.5">Values are in a typical random order.</p>
+                    <span class="font-mono font-bold text-blue-600 text-xl sm:text-2xl">O(n²)</span>
+                </div>
+            </div>
 
-                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5 pt-1">
-                                    <span class="font-bold text-slate-900">Worst Case:</span>
-                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-600">Reverse sorted order; identical scan iterations.</p>
-                            </div>
-                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2 text-center text-xs font-bold text-blue-900">
-                                Performs at most n – 1 swaps (write-efficient).
-                            </div>
-                        </div>
-                        <span class="page-folio">11</span>
-                    </div>
+            <div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2 pt-1">
+                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Worst Case:</span>
+                                    <p class="text-sm sm:text-base text-slate-600 mt-1.5">Values are in an unfavorable order.</p>
+                    <span class="font-mono font-bold text-blue-600 text-xl sm:text-2xl">O(n²)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-center text-base sm:text-lg font-bold text-blue-900">
+            Performs at most n – 1 swaps.
+        </div>
+    </div>
+    <span class="page-folio">11</span>
+</div>
                 </div>
 
                 <!-- LEAF 6: Slide 12 & Slide 13 -->
@@ -982,31 +1313,31 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         <div>
                             <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.1</span>
                             <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-                                Insertion Sort Definition
+                                Insertion Sort
                             </h2>
                         </div>
-                        <div class="space-y-3.5 my-auto text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <p class="text-slate-900 font-normal">
-                                    <strong class="font-bold text-slate-900">Insertion sort</strong> works the way we sort playing cards in our hands: taking one item at a time and inserting it into its correct position.
-                                </p>
-                            </div>
-                            <p class="font-bold text-slate-900 text-xs uppercase tracking-wide">Two Virtual Sections:</p>
-                            <ul class="space-y-1.5 text-xs pl-2">
-                                <li class="flex items-start space-x-2">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong class="text-slate-900">Sorted:</strong> starts with the first item on the left.</span>
-                                </li>
-                                <li class="flex items-start space-x-2">
-                                    <span class="text-purple-600 font-bold">•</span>
-                                    <span><strong class="text-slate-900">Unsorted:</strong> remains on the right until inserted.</span>
-                                </li>
-                            </ul>
-                            <div class="p-2.5 rounded-lg bg-slate-200 font-mono font-semibold text-xs text-slate-900 space-y-1">
-                                <p>Array: [40, 10, 30, 20]</p>
-                                <p>Pass 1: [10, 40 | 30, 20]</p>
-                            </div>
-                        </div>
+                        <div class="space-y-5 my-auto text-lg sm:text-xl text-slate-700 font-medium leading-relaxed">
+    <div class="border-2 border-slate-900 bg-white rounded-xl p-5 shadow-sm">
+        <p class="text-slate-900 font-normal">
+            <strong class="font-bold text-slate-900">Insertion Sort</strong> is a simple sorting algorithm that works the way we sort playing cards in our hands, by taking one item at a time and inserting it into its correct position
+        </p>
+    </div>
+    <p class="font-bold text-slate-900 text-sm sm:text-base uppercase tracking-wide">Two Virtual Sections:</p>
+    <ul class="space-y-3 text-base sm:text-lg pl-2">
+        <li class="flex items-start space-x-2">
+            <span class="text-purple-600 font-bold">•</span>
+            <span><strong class="text-slate-900">Sorted:</strong> starts with the first item on the left.</span>
+        </li>
+        <li class="flex items-start space-x-2">
+            <span class="text-purple-600 font-bold">•</span>
+            <span><strong class="text-slate-900">Unsorted:</strong> remains on the right until inserted.</span>
+        </li>
+    </ul>
+    <div class="p-4 rounded-xl bg-slate-200 font-mono font-semibold text-base sm:text-lg text-slate-900 space-y-2">
+        <p>Array: [40, 10, 30, 20]</p>
+        <p>Pass 1: [10, 40 | 30, 20]</p>
+    </div>
+</div>
                         <span class="page-folio">13</span>
                     </div>
                 </div>
@@ -1022,24 +1353,66 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                                 3-Step Iteration Loop
                             </h2>
                         </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
-                                <p><strong class="text-slate-900">1. Pick:</strong> Look at the first number in unsorted part.</p>
+                        <div class="space-y-5 my-auto text-lg sm:text-xl leading-relaxed">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-4 shadow-sm">
+                                <p><strong class="text-slate-900">1. Pick:</strong> Choose the first value in the unsorted section.</p>
                             </div>
-                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
-                                <p><strong class="text-slate-900">2. Slide:</strong> Compare backward and slide larger numbers right.</p>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-4 shadow-sm">
+                                <p><strong class="text-slate-900">2. Slide:</strong> Compare from right to left, shifting each larger sorted value one place right.</p>
                             </div>
-                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
-                                <p><strong class="text-slate-900">3. Insert:</strong> Drop the number into its correct slot.</p>
-                            </div>
-                            <div class="pt-1 space-y-1 font-mono text-[11px] text-slate-700">
-                                <p><strong>Start:</strong> [40 | 10, 30, 20] – 40 sorted</p>
-                                <p><strong>Pass 1:</strong> [10, 40 | 30, 20] – 10 &lt; 40, shift 40</p>
-                                <p><strong>Pass 2:</strong> [10, 30, 40 | 20] – drop 30</p>
-                                <p><strong>Pass 3:</strong> [10, 20, 30, 40 |] – drop 20</p>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-4 shadow-sm">
+                                <p><strong class="text-slate-900">3. Insert:</strong> Place the chosen value in the open slot, then repeat until sorted.</p>
                             </div>
                         </div>
                         <span class="page-folio">14</span>
+                    </div>
+                    <div id="insertionSortWalkthroughPage" class="page-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.3 • Worked Example</span>
+                            <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Insertion Sort Step by Step</h2>
+                        </div>
+                        <div class="space-y-2 my-auto text-xs sm:text-sm leading-snug">
+                            <div class="rounded-xl border border-slate-300 bg-slate-100 p-2">
+                                <p><strong class="text-slate-900">Start:</strong> <span class="font-mono font-bold">[40 | 10, 30, 20]</span> — 40 starts sorted.</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-300 bg-white p-2">
+                                <p><strong class="text-purple-800">Pass 1:</strong> <span class="font-mono font-bold">[10, 40 | 30, 20]</span> — Pick 10; shift 40 right.</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-300 bg-white p-2">
+                                <p><strong class="text-purple-800">Pass 2:</strong> <span class="font-mono font-bold">[10, 30, 40 | 20]</span> — Pick 30; shift 40, insert after 10.</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-300 bg-white p-2">
+                                <p><strong class="text-purple-800">Pass 3:</strong> <span class="font-mono font-bold">[10, 20, 30, 40 |]</span> — Pick 20; shift 40 and 30 right.</p>
+                            </div>
+                        </div>
+                        <span class="page-folio">17</span>
+                    </div>
+                    <div id="insertionSortInteractivePage" class="page-face bg-slate-50 text-slate-800 p-5 sm:p-7 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.4 • Interactive</span>
+                            <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Insertion Sort Visualizer</h2>
+                        </div>
+                        <p class="text-sm text-slate-600 mt-1">Use the controls or activate the chart to step through the sort.</p>
+                        <div class="my-auto space-y-2">
+                            <div id="insertionSortArray" data-insertion-role="array" role="button" tabindex="0" aria-label="Insertion sort graph. Activate to advance one step." class="h-32 flex items-end justify-center gap-3 rounded-xl border border-slate-200 bg-white p-2 shadow-inner cursor-pointer select-none"></div>
+                            <div class="flex flex-wrap items-center justify-center gap-2">
+                                <button type="button" data-insertion-action="reset" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Restart</button>
+                                <button type="button" data-insertion-action="previous" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Step Back</button>
+                                <button type="button" data-insertion-action="play" aria-pressed="false" class="rounded-lg bg-purple-700 px-2.5 py-1.5 text-sm font-bold text-white hover:bg-purple-600">Play</button>
+                                <button type="button" data-insertion-action="next" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Step Forward</button>
+                            </div>
+                            <div class="flex items-center justify-center gap-2 text-xs sm:text-sm">
+                                <label for="insertionSortSpeed" class="font-bold text-slate-700">Speed</label>
+                                <input id="insertionSortSpeed" type="range" min="50" max="5000" step="50" value="1200" dir="rtl" aria-label="Insertion sort animation speed" class="w-28 accent-purple-700">
+                                <output id="insertionSortSpeedValue" for="insertionSortSpeed" class="min-w-14 font-mono text-slate-600"></output>
+                            </div>
+                            <div class="flex justify-center gap-5 text-sm font-semibold text-slate-700">
+                                <span>Comparisons: <strong id="insertionSortComparisons">0</strong></span>
+                                <span>Shifts: <strong id="insertionSortShifts">0</strong></span>
+                            </div>
+                            <p id="insertionSortExplanation" aria-live="polite" class="min-h-8 rounded-lg bg-purple-50 p-1.5 text-center text-sm font-medium text-purple-950"></p>
+                        </div>
+                        <span class="page-folio">18</span>
                     </div>
                     <!-- Back Face: Slide 15 (Insertion Sort Python Code) -->
                     <div class="page-face back-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'left')">
@@ -1659,6 +2032,12 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                         <p class="text-[11px] text-purple-300 font-mono mt-1">Sorting &amp; Divide-and-Conquer</p>
                     </div>
                 </div>
+                <div class="leaf" id="leaf-19" style="z-index: 1;">
+                    <div class="leaf-shadow"></div>
+                </div>
+                <div class="leaf" id="leaf-20" style="z-index: 0;">
+                    <div class="leaf-shadow"></div>
+                </div>
 
             </div>
         </div>
@@ -1729,7 +2108,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 <div id="tocList" class="mt-4 space-y-2 text-xs font-medium"></div>
             </div>
             <div class="pt-6 border-t border-purple-500/20 text-center text-slate-500 text-[11px]">
-                Chapter 5: Sorting &amp; Divide-and-Conquer • 34 Slides
+                Chapter 5: Sorting &amp; Divide-and-Conquer • 38 Slides
             </div>
         </div>
     </div>
@@ -1771,9 +2150,38 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
     <!-- JavaScript Interactive Presentation Engine -->
     <script>
-        // Total Spreads: 0 (Closed Cover), 1..17 (Slides 1 to 34), 18 (Summary & End Cover)
-        const totalSpreads = 18;
-        const totalLeaves = 19; // Leaf 0 to 18
+        // Spread 0 is the closed cover; spreads 1..20 show pages 1 to 40; spread 21 is the back cover.
+        const presentationLeaves = [...document.querySelectorAll('#bookPages > .leaf')];
+        const frontCover = presentationLeaves[0].querySelector('.front-face');
+        const orderedPages = [...document.querySelectorAll('#bookPages .page-face')]
+            .filter((face) => face !== frontCover);
+
+        const leafShadows = presentationLeaves.map((leaf) => leaf.querySelector('.leaf-shadow'));
+        presentationLeaves.forEach((leaf, index) => {
+            leaf.replaceChildren(leafShadows[index]);
+        });
+        presentationLeaves[0].append(frontCover);
+
+        orderedPages.forEach((face, index) => {
+            const pageNumber = index + 1;
+            const leafIndex = Math.ceil(index / 2);
+            const isFront = index % 2 === 1;
+            const leaf = presentationLeaves[leafIndex];
+            face.classList.toggle('front-face', isFront);
+            face.classList.toggle('back-face', !isFront);
+            face.setAttribute(
+                'onclick',
+                face.querySelector('.cover-hardcover h3')
+                    ? 'closeBook()'
+                    : `handlePageClick(event, '${isFront ? 'right' : 'left'}')`
+            );
+            const folio = face.querySelector('.page-folio');
+            if (folio) folio.textContent = String(pageNumber).padStart(2, '0');
+            leaf.append(face);
+        });
+
+        const totalSpreads = 21;
+        const totalLeaves = presentationLeaves.length;
         let currentSpread = 0;
         let isBookOpen = false;
         let autoplayInterval = null;
@@ -1792,25 +2200,417 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         // Spreads Data for Index Navigation
         const spreadsMeta = [
             { title: "Cover", pages: "Cover", desc: "Front Book Cover" },
-            { title: "Selection Sort Introduction & Section Header", pages: "Pages 1 & 2", desc: "Sorting concept, example & Section 1 Title" },
-            { title: "What is Selection Sort? & How It Works", pages: "Pages 3 & 4", desc: "Concept, Before/After & 3 Steps" },
-            { title: "Trace Steps & Python Implementation", pages: "Pages 5 & 6", desc: "Pass 1-4 Trace & Python Code" },
-            { title: "Time Complexity Header & Summary", pages: "Pages 7 & 8", desc: "Section 2 Title & Basic Idea" },
-            { title: "Why O(n²)? & Formula Evaluation", pages: "Pages 9 & 10", desc: "Comparisons per Pass & Math Solver" },
-            { title: "Best/Avg/Worst Cases & Insertion Sort", pages: "Pages 11 & 12", desc: "Cases & Section 3 Title" },
-            { title: "Insertion Sort Definition & 3-Step Loop", pages: "Pages 13 & 14", desc: "Virtual Sections & Pick-Slide-Insert" },
-            { title: "Insertion Code & Time Complexity Title", pages: "Pages 15 & 16", desc: "Python Snippet & Section 4 Title" },
-            { title: "Insertion Sort Intro & Cases Analysis", pages: "Pages 17 & 18", desc: "Example Trace & Best/Avg/Worst Cases" },
-            { title: "Space Complexity & Recursion Title", pages: "Pages 19 & 20", desc: "O(1) Memory & Section 5 Title" },
-            { title: "Recursion Definition & Rules of Recursion", pages: "Pages 21 & 22", desc: "Countdown Code & Base Case Rules" },
-            { title: "Divide-and-Conquer & Sorting Tree", pages: "Pages 23 & 24", desc: "Strategy & Tree Diagram" },
-            { title: "Merge Sort Header & Algorithm Overview", pages: "Pages 25 & 26", desc: "Section 6 Title & Inventor" },
-            { title: "How Merge Sort Works & Python Code", pages: "Pages 27 & 28", desc: "Divide/Compare/Merge & Code" },
-            { title: "Recursion Tree Header & Recurrence", pages: "Pages 29 & 30", desc: "Section 7 Title & T(n) = 2T(n/2)+O(n)" },
-            { title: "Time Analysis & Algorithm Comparison", pages: "Pages 31 & 32", desc: "O(n log n) & Section 8 Title" },
-            { title: "Comparing Algorithms & When to Use", pages: "Pages 33 & 34", desc: "Matrix & Selection Criteria" },
-            { title: "Summary & Review", pages: "Pages 35 & 36", desc: "Recap & Closing Cover" }
+            { title: "Selection Sort Header & What Is Selection Sort?", pages: "Pages 1 & 2", desc: "Section 1 title & sorting concept" },
+            { title: "How Selection Sort Works & Trace Steps", pages: "Pages 3 & 4", desc: "Three-step process & worked trace" },
+            { title: "Interactive Selection Sort & Python Code", pages: "Pages 5 & 6", desc: "Step-through visualizer & implementation" },
+            { title: "Selection Sort Complexity & Summary", pages: "Pages 7 & 8", desc: "Complexity overview & comparison count" },
+            { title: "Selection Sort Analysis & Worked Example", pages: "Pages 9 & 10", desc: "Comparison count and worked n=8 example" },
+            { title: "Selection Sort Formula & Worked Calculation", pages: "Pages 11 & 12", desc: "Comparison formula and n=8 calculation" },
+            { title: "Selection Sort Cases & Insertion Sort Introduction", pages: "Pages 13 & 14", desc: "Best/average/worst cases and section introduction" },
+            { title: "Insertion Sort Definition & Iteration Loop", pages: "Pages 15 & 16", desc: "Algorithm concept and enlarged three-step iteration" },
+            { title: "Insertion Sort Walkthrough & Visualizer", pages: "Pages 17 & 18", desc: "Pass-by-pass example and interactive graph" },
+            { title: "Insertion Sort Python & Complexity", pages: "Pages 19 & 20", desc: "Implementation and complexity overview" },
+            { title: "Insertion Sort Example & Cases", pages: "Pages 21 & 22", desc: "Worked example, performance cases, and memory use" },
+            { title: "Insertion Sort Space & Recursion Introduction", pages: "Pages 23 & 24", desc: "Space complexity and recursive functions" },
+            { title: "Recursion Definition & Divide-and-Conquer Rules", pages: "Pages 25 & 26", desc: "Recursive functions, base cases, and decomposition" },
+            { title: "Divide-and-Conquer & Sorting Tree", pages: "Pages 27 & 28", desc: "Problem decomposition and merge sort tree" },
+            { title: "Merge Sort Introduction & Algorithm", pages: "Pages 29 & 30", desc: "Section introduction and algorithm overview" },
+            { title: "Merge Sort Process & Python Code", pages: "Pages 31 & 32", desc: "Divide/merge steps and implementation" },
+            { title: "Recurrence Header & Relation", pages: "Pages 33 & 34", desc: "Analysis section and recurrence equation" },
+            { title: "Merge Sort Complexity & Algorithm Comparison", pages: "Pages 35 & 36", desc: "O(n log n) analysis and sorting comparison" },
+            { title: "Comparison Details & When to Use", pages: "Pages 37 & 38", desc: "Algorithm strengths and selection guide" },
+            { title: "Chapter Summary & End-sheet", pages: "Pages 39 & 40", desc: "Chapter recap and series end-sheet" },
+            { title: "Presentation Closing", pages: "Back cover", desc: "Outside back cover" }
         ];
+
+        const selectionDemo = document.getElementById('selectionSortInteractive');
+        const selectionDemoLeaf = selectionDemo.parentElement;
+        const bookPagesElement = document.getElementById('bookPages');
+        const selectionDemoArray = [8, 3, 5, 9, 2, 7, 1, 6, 4];
+        const selectionDemoFrames = [];
+        let selectionDemoPosition = 0;
+        let selectionDemoTimer = null;
+
+        // Keep the interactive page out of the flipped 3D leaf so its controls stay hit-testable.
+        function showSelectionDemoOnLeftPage() {
+            if (selectionDemo.parentElement === bookPagesElement) return;
+            selectionDemo.classList.remove('back-face');
+            selectionDemo.classList.add('selection-demo-open-page');
+            bookPagesElement.append(selectionDemo);
+        }
+
+        function restoreSelectionDemoToLeaf() {
+            if (selectionDemo.parentElement === selectionDemoLeaf) return;
+            selectionDemo.classList.remove('selection-demo-open-page');
+            selectionDemo.classList.add('back-face');
+            selectionDemoLeaf.append(selectionDemo);
+        }
+
+        selectionDemoLeaf.addEventListener('transitionend', (event) => {
+            if (event.target === selectionDemoLeaf && event.propertyName === 'transform' && currentSpread === 3) {
+                showSelectionDemoOnLeftPage();
+            }
+        });
+
+        function createSelectionDemoFrames() {
+            const values = [...selectionDemoArray];
+            let comparisons = 0;
+            let swaps = 0;
+            const frames = [];
+            const saveFrame = (currentIndex, comparingIndex, sortedCount, message) => {
+                frames.push({
+                    values: [...values],
+                    currentIndex,
+                    comparingIndex,
+                    sortedCount,
+                    comparisons,
+                    swaps,
+                    message
+                });
+            };
+
+            saveFrame(-1, -1, 0, 'The array is ready. Scan the unsorted section to find its smallest value.');
+            for (let start = 0; start < values.length - 1; start++) {
+                let minimum = start;
+                saveFrame(minimum, -1, start, `Pass ${start + 1}: begin by treating ${values[minimum]} as the minimum.`);
+                for (let scan = start + 1; scan < values.length; scan++) {
+                    comparisons++;
+                    saveFrame(minimum, scan, start, `Compare ${values[scan]} with the current minimum ${values[minimum]}.`);
+                    if (values[scan] < values[minimum]) {
+                        minimum = scan;
+                        saveFrame(minimum, -1, start, `${values[minimum]} is the new minimum for this pass.`);
+                    }
+                }
+
+                if (minimum !== start) {
+                    [values[start], values[minimum]] = [values[minimum], values[start]];
+                    swaps++;
+                    saveFrame(-1, -1, start + 1, `Swap ${values[start]} into position ${start + 1}. The sorted section grows.`);
+                } else {
+                    saveFrame(-1, -1, start + 1, `${values[start]} is already in place. No swap is needed.`);
+                }
+            }
+            saveFrame(-1, -1, values.length, 'Selection sort is complete. The values are in ascending order.');
+            return frames;
+        }
+
+        function renderSelectionDemo() {
+            const frame = selectionDemoFrames[selectionDemoPosition];
+            const chart = selectionDemo.querySelector('[data-selection-role="array"]');
+            chart.replaceChildren();
+            frame.values.forEach((value, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'selection-demo-bar';
+                bar.style.height = `${Math.max(26, value * 12)}px`;
+                bar.textContent = String(value);
+                bar.setAttribute('aria-label', `Value ${value}`);
+                if (index < frame.sortedCount) {
+                    bar.classList.add('sorted');
+                } else if (index === frame.currentIndex) {
+                    bar.classList.add('current');
+                } else if (index === frame.comparingIndex) {
+                    bar.classList.add('comparing');
+                }
+                chart.append(bar);
+            });
+
+            selectionDemo.querySelector('[data-selection-role="comparisons"]').textContent = frame.comparisons;
+            selectionDemo.querySelector('[data-selection-role="swaps"]').textContent = frame.swaps;
+            selectionDemo.querySelector('[data-selection-role="explanation"]').textContent = frame.message;
+            selectionDemo.querySelector('[data-selection-action="previous"]').disabled = selectionDemoPosition === 0;
+            selectionDemo.querySelector('[data-selection-action="next"]').disabled = selectionDemoPosition === selectionDemoFrames.length - 1;
+            chart.setAttribute('aria-disabled', String(selectionDemoPosition === selectionDemoFrames.length - 1));
+            chart.setAttribute(
+                'aria-label',
+                `Selection sort graph, step ${selectionDemoPosition + 1} of ${selectionDemoFrames.length}. Activate to advance one step.`
+            );
+        }
+
+        function pauseSelectionDemo() {
+            if (selectionDemoTimer !== null) {
+                clearTimeout(selectionDemoTimer);
+                selectionDemoTimer = null;
+            }
+            if (selectionDemo) {
+                const playButton = selectionDemo.querySelector('[data-selection-action="play"]');
+                playButton.textContent = 'Play';
+                playButton.setAttribute('aria-pressed', 'false');
+            }
+        }
+
+        function getSelectionDemoStepDelay() {
+            const minSpeed = Number(selectionDemoSpeed.min);
+            const maxSpeed = Number(selectionDemoSpeed.max);
+            const speed = Number(selectionDemoSpeed.value);
+            return Math.round((minSpeed * maxSpeed) / speed);
+        }
+
+        function updateSelectionDemoSpeedLabel() {
+            const delay = getSelectionDemoStepDelay();
+            const delayLabel = delay >= 1000
+                ? `${(delay / 1000).toFixed(delay % 1000 === 0 ? 0 : 1)} s/step`
+                : `${delay} ms/step`;
+            selectionDemoSpeedValue.value = delayLabel;
+            selectionDemoSpeed.setAttribute('aria-valuetext', `${delayLabel} at the selected speed`);
+        }
+
+        function scheduleSelectionDemoFrame() {
+            selectionDemoTimer = setTimeout(() => {
+                if (selectionDemoPosition < selectionDemoFrames.length - 1) {
+                    selectionDemoPosition++;
+                    renderSelectionDemo();
+                    scheduleSelectionDemoFrame();
+                } else {
+                    pauseSelectionDemo();
+                }
+            }, getSelectionDemoStepDelay());
+        }
+
+        function playSelectionDemo() {
+            if (selectionDemoPosition === selectionDemoFrames.length - 1) {
+                selectionDemoPosition = 0;
+                renderSelectionDemo();
+            }
+            const playButton = selectionDemo.querySelector('[data-selection-action="play"]');
+            playButton.textContent = 'Pause';
+            playButton.setAttribute('aria-pressed', 'true');
+            scheduleSelectionDemoFrame();
+        }
+
+        selectionDemoFrames.push(...createSelectionDemoFrames());
+        renderSelectionDemo();
+        function handleSelectionDemoAction(action) {
+            if (action === 'play') {
+                if (selectionDemoTimer === null) playSelectionDemo();
+                else pauseSelectionDemo();
+                return;
+            }
+
+            pauseSelectionDemo();
+            if (action === 'reset') selectionDemoPosition = 0;
+            else if (action === 'previous') selectionDemoPosition = Math.max(0, selectionDemoPosition - 1);
+            else if (action === 'next') selectionDemoPosition = Math.min(selectionDemoFrames.length - 1, selectionDemoPosition + 1);
+            renderSelectionDemo();
+        }
+
+        selectionDemo.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-selection-action]');
+            if (button) {
+                handleSelectionDemoAction(button.dataset.selectionAction);
+                return;
+            }
+
+            if (event.target.closest('[data-selection-role="array"]')) {
+                event.stopPropagation();
+                if (selectionDemoPosition < selectionDemoFrames.length - 1) {
+                    handleSelectionDemoAction('next');
+                }
+            }
+        });
+        selectionDemo.querySelector('[data-selection-role="array"]').addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            event.stopPropagation();
+            if (selectionDemoPosition < selectionDemoFrames.length - 1) {
+                handleSelectionDemoAction('next');
+            }
+        });
+        const selectionDemoSpeed = selectionDemo.querySelector('[data-selection-role="speed"]');
+        const selectionDemoSpeedValue = selectionDemo.querySelector('[data-selection-role="speed-value"]');
+        selectionDemoSpeed.addEventListener('input', () => {
+            updateSelectionDemoSpeedLabel();
+            if (selectionDemoTimer !== null) {
+                pauseSelectionDemo();
+                playSelectionDemo();
+            }
+        });
+        updateSelectionDemoSpeedLabel();
+
+        const insertionSortPage = document.getElementById('insertionSortInteractivePage');
+        const insertionSortArray = document.getElementById('insertionSortArray');
+        const insertionSortSpeed = document.getElementById('insertionSortSpeed');
+        const insertionSortSpeedValue = document.getElementById('insertionSortSpeedValue');
+        const insertionSortFrames = [];
+        let insertionSortPosition = 0;
+        let insertionSortTimer = null;
+
+        function createInsertionSortFrames() {
+            const values = [40, 10, 30, 20];
+            const frames = [];
+            let comparisons = 0;
+            let shifts = 0;
+            const saveFrame = (keyIndex, comparingIndex, sortedCount, message) => {
+                frames.push({
+                    values: [...values],
+                    keyIndex,
+                    comparingIndex,
+                    sortedCount,
+                    comparisons,
+                    shifts,
+                    message
+                });
+            };
+
+            saveFrame(-1, -1, 1, 'The first value is already sorted. Pick the next value to begin.');
+            for (let index = 1; index < values.length; index++) {
+                const key = values[index];
+                let previousIndex = index - 1;
+                saveFrame(index, -1, index, `Pick ${key} from the unsorted section.`);
+
+                while (previousIndex >= 0) {
+                    comparisons++;
+                    saveFrame(
+                        previousIndex + 1,
+                        previousIndex,
+                        index,
+                        `Compare ${values[previousIndex]} with key ${key}.`
+                    );
+                    if (values[previousIndex] <= key) break;
+
+                    [values[previousIndex], values[previousIndex + 1]] =
+                        [values[previousIndex + 1], values[previousIndex]];
+                    shifts++;
+                    saveFrame(
+                        previousIndex,
+                        previousIndex + 1,
+                        index,
+                        `${values[previousIndex + 1]} shifts right as ${key} moves left.`
+                    );
+                    previousIndex--;
+                }
+
+                saveFrame(-1, -1, index + 1, `Insert ${key} into its correct position.`);
+            }
+            saveFrame(-1, -1, values.length, 'Insertion sort is complete. The array is in ascending order.');
+            return frames;
+        }
+
+        function renderInsertionSortFrame() {
+            const frame = insertionSortFrames[insertionSortPosition];
+            insertionSortArray.replaceChildren();
+            frame.values.forEach((value, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'flex items-end justify-center rounded-t-lg pb-1 text-sm font-extrabold text-white shadow-sm';
+                bar.style.height = `${Math.max(36, value * 2.4)}px`;
+                bar.style.width = 'min(20%, 3.5rem)';
+                bar.style.backgroundColor = index === frame.keyIndex
+                    ? '#d97706'
+                    : index === frame.comparingIndex
+                        ? '#dc2626'
+                        : index < frame.sortedCount
+                            ? '#059669'
+                            : '#64748b';
+                bar.textContent = String(value);
+                bar.setAttribute('aria-label', `Value ${value}`);
+                insertionSortArray.append(bar);
+            });
+
+            document.getElementById('insertionSortComparisons').textContent = frame.comparisons;
+            document.getElementById('insertionSortShifts').textContent = frame.shifts;
+            document.getElementById('insertionSortExplanation').textContent = frame.message;
+            insertionSortPage.querySelector('[data-insertion-action="previous"]').disabled =
+                insertionSortPosition === 0;
+            insertionSortPage.querySelector('[data-insertion-action="next"]').disabled =
+                insertionSortPosition === insertionSortFrames.length - 1;
+            insertionSortArray.setAttribute(
+                'aria-label',
+                `Insertion sort graph, step ${insertionSortPosition + 1} of ${insertionSortFrames.length}. Activate to advance one step.`
+            );
+        }
+
+        function getInsertionSortStepDelay() {
+            return Math.round(
+                (Number(insertionSortSpeed.min) * Number(insertionSortSpeed.max)) /
+                Number(insertionSortSpeed.value)
+            );
+        }
+
+        function updateInsertionSortSpeedLabel() {
+            const delay = getInsertionSortStepDelay();
+            insertionSortSpeedValue.textContent = delay >= 1000
+                ? `${(delay / 1000).toFixed(delay % 1000 === 0 ? 0 : 1)} s/step`
+                : `${delay} ms/step`;
+            insertionSortSpeed.setAttribute('aria-valuetext', insertionSortSpeedValue.textContent);
+        }
+
+        function pauseInsertionSortDemo() {
+            if (insertionSortTimer !== null) {
+                clearTimeout(insertionSortTimer);
+                insertionSortTimer = null;
+            }
+            const playButton = insertionSortPage.querySelector('[data-insertion-action="play"]');
+            playButton.textContent = 'Play';
+            playButton.setAttribute('aria-pressed', 'false');
+        }
+
+        function scheduleInsertionSortFrame() {
+            insertionSortTimer = setTimeout(() => {
+                if (insertionSortPosition < insertionSortFrames.length - 1) {
+                    insertionSortPosition++;
+                    renderInsertionSortFrame();
+                    scheduleInsertionSortFrame();
+                } else {
+                    pauseInsertionSortDemo();
+                }
+            }, getInsertionSortStepDelay());
+        }
+
+        function handleInsertionSortAction(action) {
+            if (action === 'play') {
+                if (insertionSortTimer !== null) {
+                    pauseInsertionSortDemo();
+                    return;
+                }
+                if (insertionSortPosition === insertionSortFrames.length - 1) {
+                    insertionSortPosition = 0;
+                    renderInsertionSortFrame();
+                }
+                const playButton = insertionSortPage.querySelector('[data-insertion-action="play"]');
+                playButton.textContent = 'Pause';
+                playButton.setAttribute('aria-pressed', 'true');
+                scheduleInsertionSortFrame();
+                return;
+            }
+
+            pauseInsertionSortDemo();
+            if (action === 'reset') insertionSortPosition = 0;
+            else if (action === 'previous') insertionSortPosition = Math.max(0, insertionSortPosition - 1);
+            else if (action === 'next') {
+                insertionSortPosition = Math.min(
+                    insertionSortFrames.length - 1,
+                    insertionSortPosition + 1
+                );
+            }
+            renderInsertionSortFrame();
+        }
+
+        insertionSortFrames.push(...createInsertionSortFrames());
+        renderInsertionSortFrame();
+        insertionSortPage.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-insertion-action]');
+            if (button) {
+                handleInsertionSortAction(button.dataset.insertionAction);
+                return;
+            }
+            if (event.target.closest('[data-insertion-role="array"]')) {
+                event.stopPropagation();
+                handleInsertionSortAction('next');
+            }
+        });
+        insertionSortArray.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            event.stopPropagation();
+            handleInsertionSortAction('next');
+        });
+        insertionSortSpeed.addEventListener('input', () => {
+            updateInsertionSortSpeedLabel();
+            if (insertionSortTimer !== null) {
+                pauseInsertionSortDemo();
+                handleInsertionSortAction('play');
+            }
+        });
+        updateInsertionSortSpeedLabel();
 
         // Synthesize authentic paper turn sound with Web Audio API
         function playPageTurnSound() {
@@ -1859,6 +2659,9 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
         // Initialize Book Stacking & State
         function updateBookState() {
+            if (currentSpread !== 3) restoreSelectionDemoToLeaf();
+            if (currentSpread !== 9) pauseInsertionSortDemo();
+
             for (let i = 0; i < totalLeaves; i++) {
                 const leaf = document.getElementById(`leaf-${i}`);
                 if (!leaf) continue;
@@ -1872,6 +2675,13 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                     leaf.classList.remove('flipped');
                     leaf.style.zIndex = totalLeaves - i;
                 }
+            }
+            if (currentSpread === 3) {
+                setTimeout(() => {
+                    if (currentSpread === 3 && selectionDemoLeaf.classList.contains('flipped')) {
+                        showSelectionDemoOnLeftPage();
+                    }
+                }, 950);
             }
 
             // Update UI & Stack thicknesses
@@ -1891,11 +2701,9 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
                 const pageNumLeft = (currentSpread * 2) - 1;
                 const pageNumRight = currentSpread * 2;
-                if (currentSpread < totalSpreads) {
-                    spreadCounter.textContent = `Pages ${pageNumLeft}-${pageNumRight} / 34`;
-                } else {
-                    spreadCounter.textContent = "Summary";
-                }
+                spreadCounter.textContent = currentSpread < totalSpreads
+                    ? `Pages ${pageNumLeft}-${pageNumRight} / 40`
+                    : "Closing";
 
                 stackLeft.style.opacity = "1";
                 stackLeft.style.width = `${Math.min(16, 4 + currentSpread)}px`;
@@ -1907,6 +2715,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function nextSpread() {
+            pauseSelectionDemo();
             if (currentSpread < totalSpreads) {
                 const leafToFlip = document.getElementById(`leaf-${currentSpread}`);
                 if (leafToFlip) {
@@ -1923,6 +2732,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function prevSpread() {
+            pauseSelectionDemo();
             if (currentSpread > 0) {
                 currentSpread--;
                 const leafToUnflip = document.getElementById(`leaf-${currentSpread}`);
@@ -1943,6 +2753,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function closeBook() {
+            pauseSelectionDemo();
             currentSpread = 0;
             playPageTurnSound();
             updateBookState();
@@ -1958,6 +2769,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
         function goToSpread(index) {
             if (index >= 0 && index <= totalSpreads) {
+                pauseSelectionDemo();
                 currentSpread = index;
                 playPageTurnSound();
                 updateBookState();
@@ -1966,8 +2778,8 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function handlePageClick(e, side) {
-            // Prevent flip if clicking interactive controls (buttons, links, pre)
-            if (e.target.closest('button, input, select, a, pre, code')) return;
+            // Controls and graph clicks are interactions, not page turns.
+            if (e.target.closest('button, input, select, a, pre, code, [data-selection-role="array"], [data-insertion-role="array"]')) return;
 
             if (side === 'right') {
                 nextSpread();
