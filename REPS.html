@@ -367,6 +367,47 @@
             z-index: 50;
             border-radius: 8px 0 0 8px;
         }
+        #insertionSortInteractivePage.insertion-demo-open-page {
+            left: 50%;
+            right: auto;
+            width: 50%;
+            height: 100%;
+            transform: none;
+            backface-visibility: visible;
+            -webkit-backface-visibility: visible;
+            z-index: 50;
+            border-radius: 0 8px 8px 0;
+        }
+        #mergeSortInteractivePage.merge-demo-open-page {
+            left: 50%;
+            right: auto;
+            width: 50%;
+            height: 100%;
+            transform: none;
+            backface-visibility: visible;
+            -webkit-backface-visibility: visible;
+            z-index: 50;
+            border-radius: 0 8px 8px 0;
+        }
+        #bookPages #insertionSortCodePage {
+            padding: 1rem 1.5rem 2rem;
+        }
+        #bookPages #insertionSortCodePage > div:first-child h3 {
+            font-size: 1.75rem;
+        }
+        #bookPages #insertionSortCodePage #codeInsertionSort {
+            padding: 0.85rem;
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+        #bookPages #insertionSortComplexityTitlePage h1 {
+            font-size: 2.5rem;
+            line-height: 1.1;
+        }
+        #bookPages #insertionSortComplexityTitlePage p {
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
 
         .selection-demo-layout {
             display: grid;
@@ -442,6 +483,11 @@
             cursor: pointer;
         }
         .selection-demo-controls button[data-selection-action="play"] {
+            border-color: #1d4ed8;
+            background: #2563eb;
+            color: #ffffff;
+        }
+        .selection-demo-controls button[data-merge-action="play"] {
             border-color: #1d4ed8;
             background: #2563eb;
             color: #ffffff;
@@ -755,7 +801,7 @@
                     <span>Explore Presentation</span>
                     <i class="fa-solid fa-arrow-right text-sm text-purple-600"></i>
                 </button>
-                <span class="hero-slide-count text-slate-300 font-mono">38 Slides • 20 Spreads</span>
+                <span class="hero-slide-count text-slate-300 font-mono">40 Slides • 20 Spreads</span>
             </div>
         </div>
     </div>
@@ -774,19 +820,12 @@
 
             <!-- BOOK LEAVES CONTAINER -->
             <div id="bookPages" class="w-full h-full relative">
-                <!-- LEAF 0: Front Hardcover & Slide 1 (TOC) -->
+                <!-- Front Cover & Page 1: Selection Sort Section Title -->
                 <div class="leaf" id="leaf-0" style="z-index: 20;">
                     <div class="leaf-shadow"></div>
                     <!-- Front Face: Hardcover Front (Closed State Cover) -->
                     <div class="page-face front-face cover-hardcover flex flex-col justify-between p-8 sm:p-12 items-center text-center cursor-pointer" onclick="openBook()">
-                        <div class="w-full flex justify-between items-center text-xs tracking-widest text-purple-300 font-mono">
-                            <span class="font-bold tracking-widest text-amber-200/90"></span>
-                            <span>VOL. V</span>
-                        </div>
                         <div class="space-y-4 my-auto">
-                            <div class="w-16 h-16 mx-auto rounded-2xl bg-white/10 backdrop-blur-md border border-purple-400/40 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                                <span class="heading-font font-black text-2xl tracking-wider text-amber-200">KJC</span>
-                            </div>
                             <h2 class="heading-font text-2xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-wider drop-shadow-lg">
                                 Chapter 5
                             </h2>
@@ -803,7 +842,7 @@
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </div>
                     </div>
-                    <!-- Back Face: Page 1 (Selection Sort Title Header) -->
+                    <!-- Page 1: Selection Sort Title Header -->
                     <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="absolute top-0 right-0 w-36 h-36 opacity-30"><svg viewBox="0 0 300 260" fill="none"><path d="M120 0C160 60 250 80 300 60V0H120Z" fill="#a855f7"/></svg></div>
                         <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 01</div>
@@ -822,10 +861,10 @@
                     </div>
                 </div>
 
-              <!-- LEAF 1: Slide 2 & Slide 3 -->
+              <!-- Page 2: Selection Sort Definition -->
 <div class="leaf" id="leaf-1" style="z-index: 19;">
     <div class="leaf-shadow"></div>
-    <!-- Back Face: Slide 3 (What is Selection Sort) -->
+    <!-- Page 2: What Is Selection Sort? -->
     <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
         <div>
             <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.1</span>
@@ -864,10 +903,10 @@
         <span class="page-folio">03</span>
     </div>
 </div>
-                <!-- LEAF 2: Slide 4 & Slide 5 -->
+                <!-- Pages 3-5: Selection Sort Mechanics, Trace, and Visualizer -->
 <div class="leaf" id="leaf-2" style="z-index: 18;">
     <div class="leaf-shadow"></div>
-    <!-- Front Face: Slide 4 (How It Works) -->
+    <!-- Page 3: How Selection Sort Works -->
     <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
         <div>
             <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.2</span>
@@ -900,7 +939,7 @@
         </div>
         <span class="page-folio">04</span>
     </div>
-    <!-- Back Face: Slide 5 (Trace Steps) -->
+    <!-- Page 4: Selection Sort Trace Steps -->
     <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
         <div>
             <span class="text-lg sm:text-xl font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.3</span>
@@ -935,8 +974,8 @@
         </div>
         <span class="page-folio">05</span>
     </div>
-            <!-- Slide 5: Interactive Selection Sort Visualizer (copied from index.html) -->
-            <div id="selectionSortInteractive" class="page-face back-face bg-slate-50 text-slate-800 p-4 sm:p-6 pb-10 flex flex-col gap-2 page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+            <!-- Page 5: Interactive Selection Sort Visualizer -->
+            <div id="selectionSortInteractive" data-no-page-turn class="page-face back-face bg-slate-50 text-slate-800 p-4 sm:p-6 pb-10 flex flex-col gap-2 page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
                 <div class="flex flex-wrap items-start justify-between gap-2">
                     <div>
                         <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.4 • Interactive</span>
@@ -979,10 +1018,10 @@
             </div>
 </div>
 
-                <!-- LEAF 3: Slide 6 & Slide 7 -->
+                <!-- Pages 6 & 7: Selection Sort Code and Complexity Title -->
                 <div class="leaf" id="leaf-3" style="z-index: 17;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 6 (Python Code) -->
+                    <!-- Page 6: Selection Sort Python Code -->
                     <div id="selectionSortCodePage" class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
                         <div class="flex justify-between items-center">
                             <div>
@@ -1022,7 +1061,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">06</span>
                     </div>
-                    <!-- Back Face: Slide 7 (Time Complexity Title Header) -->
+                    <!-- Page 7: Selection Sort Time Complexity Title -->
                     <div id="selectionSortComplexityPage" class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 02</div>
                         <div class="my-auto space-y-4">
@@ -1040,10 +1079,10 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     </div>
                 </div>
 
-                <!-- LEAF 4: Slide 8 & Slide 9 -->
+                <!-- Pages 8-10: Selection Sort Summary, Analysis, and Worked Example -->
                 <div class="leaf" id="leaf-4" style="z-index: 16;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 8 (Summary & Key Concepts) -->
+                    <!-- Page 8: Selection Sort Summary and Key Concepts -->
                     <div id="selectionSortSummaryPage" class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
     <div class="border-b border-slate-200 pb-2">
         <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">SELECTION SORT </h2>
@@ -1088,7 +1127,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
     </div>
     <span class="page-folio">08</span>
 </div>
-                    <!-- Back Face: Slide 9 (Why Time Complexity is O(n²)) -->
+                    <!-- Page 9: Why Selection Sort Is O(n²) -->
 <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
     <div class="border-b border-slate-200 pb-2">
         <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Mathematical Rationale</span>
@@ -1146,10 +1185,10 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
 </div>
                 </div>
 
-                <!-- LEAF 5: Slide 10 & Slide 11 -->
+                <!-- Pages 11-13: Selection Sort Formula, Calculation, and Cases -->
                 <div class="leaf" id="leaf-5" style="z-index: 15;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 10 (Formula Evaluation) -->
+                    <!-- Page 11: Selection Sort Comparison Formula -->
                     <div class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
                         <div class="border-b border-slate-200 pb-2">
                             <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Formula</h2>
@@ -1195,6 +1234,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">10</span>
                     </div>
+                    <!-- Page 12: Applying the Formula for n = 8 -->
                     <div id="selectionSortFormulaExamplePage" class="page-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
 
                         <div class="my-auto space-y-4 text-base sm:text-lg">
@@ -1249,7 +1289,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">12</span>
                     </div>
-                    <!-- Back Face: Slide 11 (Best, Average, Worst Cases) -->
+                    <!-- Page 13: Selection Sort Best, Average, and Worst Cases -->
                     <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
     <div class="border-b border-slate-200 pb-2">
         <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900">Best, Average &amp; Worst Case</h2>
@@ -1289,10 +1329,10 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
 </div>
                 </div>
 
-                <!-- LEAF 6: Slide 12 & Slide 13 -->
+                <!-- Pages 14 & 15: Insertion Sort Section Title and Definition -->
                 <div class="leaf" id="leaf-6" style="z-index: 14;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 12 (Insertion Sort Title Header) -->
+                    <!-- Page 14: Insertion Sort Section Title -->
                     <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
                         <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 03</div>
                         <div class="my-auto space-y-4">
@@ -1308,7 +1348,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">12</span>
                     </div>
-                    <!-- Back Face: Slide 13 (Insertion Sort Definition & Virtual Sections) -->
+                    <!-- Page 15: Insertion Sort Definition and Virtual Sections -->
                     <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
                         <div>
                             <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.1</span>
@@ -1342,10 +1382,10 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     </div>
                 </div>
 
-                <!-- LEAF 7: Slide 14 & Slide 15 -->
+                <!-- Pages 16-19: Insertion Sort Iteration, Walkthrough, Visualizer, and Code -->
                 <div class="leaf" id="leaf-7" style="z-index: 13;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 14 (3-Step Iteration Loop) -->
+                    <!-- Page 16: 3-Step Iteration Loop -->
                     <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
                         <div>
                             <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.2</span>
@@ -1366,6 +1406,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">14</span>
                     </div>
+                    <!-- Page 17: Insertion Sort Worked Walkthrough -->
                     <div id="insertionSortWalkthroughPage" class="page-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
                         <div class="border-b border-slate-200 pb-2">
                             <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.3 • Worked Example</span>
@@ -1387,35 +1428,50 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">17</span>
                     </div>
-                    <div id="insertionSortInteractivePage" class="page-face bg-slate-50 text-slate-800 p-5 sm:p-7 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div class="border-b border-slate-200 pb-2">
-                            <span class="text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.4 • Interactive</span>
-                            <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Insertion Sort Visualizer</h2>
+                    <!-- Page 18: Insertion Sort Interactive Visualizer -->
+                    <div id="insertionSortInteractivePage" data-no-page-turn class="page-face bg-slate-50 text-slate-800 p-4 sm:p-6 pb-10 flex flex-col gap-2 page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="flex flex-wrap items-start justify-between gap-2">
+                            <div>
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.4 • Interactive</span>
+                                <h2 class="selection-demo-title heading-font font-extrabold text-slate-900">Insertion Sort Visualizer</h2>
+                            </div>
+                            <span class="selection-demo-fact rounded-full bg-blue-100 px-3 py-1 font-bold text-blue-800">O(n²) • In-place</span>
                         </div>
-                        <p class="text-sm text-slate-600 mt-1">Use the controls or activate the chart to step through the sort.</p>
-                        <div class="my-auto space-y-2">
-                            <div id="insertionSortArray" data-insertion-role="array" role="button" tabindex="0" aria-label="Insertion sort graph. Activate to advance one step." class="h-32 flex items-end justify-center gap-3 rounded-xl border border-slate-200 bg-white p-2 shadow-inner cursor-pointer select-none"></div>
-                            <div class="flex flex-wrap items-center justify-center gap-2">
-                                <button type="button" data-insertion-action="reset" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Restart</button>
-                                <button type="button" data-insertion-action="previous" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Step Back</button>
-                                <button type="button" data-insertion-action="play" aria-pressed="false" class="rounded-lg bg-purple-700 px-2.5 py-1.5 text-sm font-bold text-white hover:bg-purple-600">Play</button>
-                                <button type="button" data-insertion-action="next" class="rounded-lg bg-slate-200 px-2.5 py-1.5 text-sm font-bold text-slate-800 hover:bg-slate-300">Step Forward</button>
+                        <p class="selection-demo-description text-slate-600">Click the graph or use the controls to step through each comparison and shift.</p>
+                        <div class="selection-demo-layout">
+                            <div class="selection-demo-panel">
+                                <div id="insertionSortArray" data-insertion-role="array" role="button" tabindex="0" aria-label="Insertion sort graph. Activate to advance one step." class="selection-demo-chart"></div>
+                                <div class="selection-demo-controls" aria-label="Insertion sort animation controls">
+                                    <button type="button" data-insertion-action="reset">Restart</button>
+                                    <button type="button" data-insertion-action="previous" disabled>Step Back</button>
+                                    <button type="button" data-insertion-action="play" aria-pressed="false">Play</button>
+                                    <button type="button" data-insertion-action="next">Step Forward</button>
+                                </div>
+                                <label class="selection-demo-speed">
+                                    <span>Speed</span>
+                                    <input id="insertionSortSpeed" type="range" min="50" max="5000" step="50" value="1200" aria-label="Insertion sort animation speed">
+                                    <output id="insertionSortSpeedValue" for="insertionSortSpeed"></output>
+                                </label>
+                                <div class="selection-demo-legend" aria-label="Visualization legend">
+                                    <span><i class="selection-demo-swatch" style="background:#64748b"></i>Unsorted</span>
+                                    <span><i class="selection-demo-swatch" style="background:#ca8a04"></i>Key</span>
+                                    <span><i class="selection-demo-swatch" style="background:#dc2626"></i>Comparing</span>
+                                    <span><i class="selection-demo-swatch" style="background:#16a34a"></i>Sorted</span>
+                                </div>
                             </div>
-                            <div class="flex items-center justify-center gap-2 text-xs sm:text-sm">
-                                <label for="insertionSortSpeed" class="font-bold text-slate-700">Speed</label>
-                                <input id="insertionSortSpeed" type="range" min="50" max="5000" step="50" value="1200" dir="rtl" aria-label="Insertion sort animation speed" class="w-28 accent-purple-700">
-                                <output id="insertionSortSpeedValue" for="insertionSortSpeed" class="min-w-14 font-mono text-slate-600"></output>
-                            </div>
-                            <div class="flex justify-center gap-5 text-sm font-semibold text-slate-700">
-                                <span>Comparisons: <strong id="insertionSortComparisons">0</strong></span>
-                                <span>Shifts: <strong id="insertionSortShifts">0</strong></span>
-                            </div>
-                            <p id="insertionSortExplanation" aria-live="polite" class="min-h-8 rounded-lg bg-purple-50 p-1.5 text-center text-sm font-medium text-purple-950"></p>
+                            <aside class="selection-demo-panel">
+                                <h3 class="font-bold text-slate-800">Live Algorithm State</h3>
+                                <div class="selection-demo-stats">
+                                    <div class="selection-demo-stat"><strong id="insertionSortComparisons">0</strong><span>Comparisons</span></div>
+                                    <div class="selection-demo-stat"><strong id="insertionSortShifts">0</strong><span>Shifts</span></div>
+                                </div>
+                                <div id="insertionSortExplanation" class="selection-demo-explanation" aria-live="polite"></div>
+                            </aside>
                         </div>
                         <span class="page-folio">18</span>
                     </div>
-                    <!-- Back Face: Slide 15 (Insertion Sort Python Code) -->
-                    <div class="page-face back-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'left')">
+                    <!-- Page 19: Insertion Sort Python Code -->
+                    <div id="insertionSortCodePage" class="page-face back-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'left')">
                         <div class="flex justify-between items-center">
                             <div>
                                 <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
@@ -1451,11 +1507,11 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     </div>
                 </div>
 
-                <!-- LEAF 8: Slide 16 & Slide 17 -->
+                <!-- Pages 20 & 21: Insertion Sort Complexity and Introduction -->
                 <div class="leaf" id="leaf-8" style="z-index: 12;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 16 (Insertion Sort Time Complexity Title) -->
-                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                    <!-- Page 20: Insertion Sort Time Complexity Title -->
+                    <div id="insertionSortComplexityTitlePage" class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
                         <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 04</div>
                         <div class="my-auto space-y-4">
                             <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
@@ -1470,142 +1526,188 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                         </div>
                         <span class="page-folio">16</span>
                     </div>
-                    <!-- Back Face: Slide 17 (Insertion Sort Intro & Trace) -->
+                    <!-- Page 21: Insertion Sort Introduction and Trace -->
                     <div class="page-face back-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div class="border-b border-slate-800 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Analysis</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">INSERTION SORT INTRODUCTION</h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="bg-[#1e293b] rounded-2xl p-3 border border-slate-700/80 space-y-1.5">
-                                <p class="text-blue-300 font-bold">What is Insertion Sort?</p>
-                                <ul class="space-y-1 text-slate-300">
-                                    <li>• Arranges elements like playing cards in your hand.</li>
-                                    <li>• Takes one element at a time, inserting it into position.</li>
-                                    <li>• Efficient for small or partially sorted datasets.</li>
-                                </ul>
-                            </div>
-                            <div class="bg-[#1e293b] rounded-2xl p-3 border border-slate-700/80 text-center space-y-2">
-                                <span class="text-slate-400 uppercase font-mono text-[10px]">Example Trace</span>
-                                <div class="flex justify-center space-x-1.5 font-bold font-mono text-xs">
-                                    <span class="bg-slate-800 px-2 py-1 rounded">5</span>
-                                    <span class="bg-slate-800 px-2 py-1 rounded">3</span>
-                                    <span class="bg-slate-800 px-2 py-1 rounded">4</span>
-                                    <span class="bg-slate-800 px-2 py-1 rounded">1</span>
-                                    <span class="bg-slate-800 px-2 py-1 rounded">2</span>
-                                </div>
-                                <div class="text-blue-400 text-xs font-bold">↓ SORTED ↓</div>
-                                <div class="flex justify-center space-x-1.5 font-bold font-mono text-xs text-emerald-300">
-                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">1</span>
-                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">2</span>
-                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">3</span>
-                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">4</span>
-                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="page-folio">17</span>
-                    </div>
+    <div class="border-b border-slate-800 pb-2">
+        <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-white">INSERTION SORT INTRODUCTION</h2>
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 mt-0.5 block">Time Complexity Slide 1 • Introduction</span>
+    </div>
+    <div class="space-y-4 my-auto text-sm sm:text-base">
+        <div class="bg-[#1e293b] rounded-xl p-4 border border-slate-700/80 space-y-2">
+            <p class="text-blue-300 font-bold text-base sm:text-lg">What is Insertion Sort?</p>
+            <ul class="space-y-1.5 text-slate-300">
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-400 font-bold">•</span>
+                    <span>A sorting algorithm that arranges elements in order.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-400 font-bold">•</span>
+                    <span>Works like arranging playing cards in your hands.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-blue-400 font-bold">•</span>
+                    <span>Takes one element at a time and inserts it into its correct position.</span>
+                </li>
+            </ul>
+            <p class="text-slate-300 text-xs sm:text-sm pt-1">Time complexity measures how running time grows as input size increases.</p>
+        </div>
+        <div class="bg-[#1e293b] rounded-xl p-4 border border-slate-700/80 text-center space-y-2">
+            <span class="text-slate-400 uppercase font-mono text-xs font-bold tracking-wider">Example Trace</span>
+            <div class="flex justify-center space-x-1.5 font-bold font-mono text-sm sm:text-base">
+                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">5</span>
+                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">3</span>
+                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">4</span>
+                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">1</span>
+                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">2</span>
+            </div>
+            <div class="text-blue-400 text-xs font-extrabold tracking-wider">↓ SORTED ↓</div>
+            <div class="flex justify-center space-x-1.5 font-bold font-mono text-sm sm:text-base text-emerald-300">
+                <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">1</span>
+                <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">2</span>
+                <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">3</span>
+                <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">4</span>
+                <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">5</span>
+            </div>
+        </div>
+    </div>
+    <span class="page-folio">17</span>
+</div>
                 </div>
 
-                <!-- LEAF 9: Slide 18 & Slide 19 -->
+                <!-- Pages 22 & 23: Insertion Sort Cases and Space Summary -->
                 <div class="leaf" id="leaf-9" style="z-index: 11;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 18 (Best, Average, Worst Cases) -->
+                    <!-- Page 22: Insertion Sort Best, Average, and Worst Cases -->
                     <div class="page-face front-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div class="border-b border-slate-800 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Cases</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">Time Complexity by Case</h2>
-                        </div>
-                        <div class="grid grid-cols-3 gap-2 my-auto text-center text-xs">
-                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-emerald-500/80">
-                                <span class="text-emerald-400 font-bold uppercase text-[10px]">BEST</span>
-                                <div class="text-xl font-black text-white my-1 font-sans">O(n)</div>
-                                <p class="text-[10px] text-slate-300">Already sorted; 1 pass only.</p>
-                            </div>
-                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-amber-500/80">
-                                <span class="text-amber-400 font-bold uppercase text-[10px]">AVG</span>
-                                <div class="text-xl font-black text-white my-1 font-sans">O(n²)</div>
-                                <p class="text-[10px] text-slate-300">Random order; elements shift.</p>
-                            </div>
-                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-red-500/80">
-                                <span class="text-red-400 font-bold uppercase text-[10px]">WORST</span>
-                                <div class="text-xl font-black text-white my-1 font-sans">O(n²)</div>
-                                <p class="text-[10px] text-slate-300">Reverse order; max shifts.</p>
-                            </div>
-                        </div>
-                        <div class="text-center text-[11px] text-slate-400 bg-slate-900/60 p-2 rounded-lg border border-slate-800">
-                            Why O(n²)? In average and worst cases, comparisons and shifts scale with n × n.
-                        </div>
-                        <span class="page-folio">18</span>
-                    </div>
-                    <!-- Back Face: Slide 19 (Space Complexity & Conclusion) -->
+    <div class="border-b border-slate-800 pb-2">
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-400">Cases</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-white mt-1">Time Complexity by Case</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto text-center text-sm sm:text-base">
+        <div class="bg-[#1e293b] rounded-xl p-4 border-2 border-emerald-500/80 flex flex-col justify-between">
+            <div>
+                <span class="text-emerald-400 font-bold uppercase text-xs sm:text-sm tracking-wider">BEST</span>
+                <div class="text-3xl sm:text-4xl font-black text-white my-2 font-sans">O(n)</div>
+                <p class="text-base sm:text-lg font-bold text-white mb-2">Already sorted</p>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">About n - 1 comparisons.<br>Only one pass through the array is needed.</p>
+        </div>
+        <div class="bg-[#1e293b] rounded-xl p-4 border-2 border-amber-500/80 flex flex-col justify-between">
+            <div>
+                <span class="text-amber-400 font-bold uppercase text-xs sm:text-sm tracking-wider">AVG</span>
+                <div class="text-3xl sm:text-4xl font-black text-white my-2 font-sans">O(n²)</div>
+                <p class="text-base sm:text-lg font-bold text-white mb-2">Random order</p>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Elements may need several comparisons and shifts to reach their correct positions.</p>
+        </div>
+        <div class="bg-[#1e293b] rounded-xl p-4 border-2 border-red-500/80 flex flex-col justify-between">
+            <div>
+                <span class="text-red-400 font-bold uppercase text-xs sm:text-sm tracking-wider">WORST</span>
+                <div class="text-3xl sm:text-4xl font-black text-white my-2 font-sans">O(n²)</div>
+                <p class="text-base sm:text-lg font-bold text-white mb-2">Reverse order</p>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Each new element may need to move past all previously sorted elements.</p>
+        </div>
+    </div>
+    <div class="text-center text-xs sm:text-sm text-slate-300 bg-slate-900/80 p-3 rounded-lg border border-slate-700 font-medium">
+        Why O(n²)? In average and worst cases, comparisons and shifts scale with n × n.
+    </div>
+    <span class="page-folio">18</span>
+</div>
+                    <!-- Page 23: Insertion Sort Space Complexity and Conclusion -->
                     <div class="page-face back-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div class="border-b border-slate-800 pb-2">
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Summary</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">Space Complexity &amp; Conclusion</h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-blue-500/80 flex items-center justify-between">
-                                <div>
-                                    <span class="text-blue-400 font-bold text-[10px] uppercase">Space Complexity</span>
-                                    <p class="text-[11px] text-slate-300">In-place, uses fixed extra memory.</p>
-                                </div>
-                                <div class="text-2xl font-black text-white font-sans">O(1)</div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 text-[11px]">
-                                <div class="bg-[#1e293b] rounded-lg p-2 border border-emerald-500/60">
-                                    <span class="text-emerald-400 font-bold uppercase block mb-1">Advantages</span>
-                                    <p class="text-slate-300">Easy to build; fast on small or nearly sorted lists.</p>
-                                </div>
-                                <div class="bg-[#1e293b] rounded-lg p-2 border border-red-500/60">
-                                    <span class="text-red-400 font-bold uppercase block mb-1">Disadvantage</span>
-                                    <p class="text-slate-300">Slow for large datasets due to O(n²) worst case.</p>
-                                </div>
-                            </div>
-                            <div class="bg-blue-950/40 border border-blue-500/40 rounded-xl p-2 text-[11px] text-slate-300 text-center">
-                                <strong>Conclusion:</strong> Best for small arrays and streaming real-time inputs.
-                            </div>
-                        </div>
-                        <span class="page-folio">19</span>
-                    </div>
+    <div class="border-b border-slate-800 pb-2">
+        <h2 class="heading-font text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-white">SPACE COMPLEXITY &amp; CONCLUSION</h2>
+        <span class="text-xs font-mono text-slate-400 mt-1 block">Slide 3: Strengths and limitations</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-auto text-slate-200">
+        <!-- Left Box: Space Complexity -->
+        <div class="bg-[#1e293b]/60 border-2 border-blue-400/60 rounded-3xl p-5 flex flex-col justify-between text-center min-h-[220px]">
+            <span class="text-blue-400 font-bold uppercase text-xs sm:text-sm tracking-wider">SPACE COMPLEXITY</span>
+            <div class="text-3xl sm:text-4xl font-black text-white font-sans my-2">O(1)</div>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Insertion Sort works in the original array and uses only a small, fixed amount of extra memory.
+            </p>
+        </div>
+
+        <!-- Middle Column: Advantages & Disadvantage -->
+        <div class="flex flex-col justify-between space-y-4">
+            <!-- Top Box: Advantages -->
+            <div class="bg-[#1e293b]/60 border-2 border-emerald-500/60 rounded-2xl p-4 flex-1 flex flex-col justify-center">
+                <span class="text-emerald-400 font-bold uppercase text-xs sm:text-sm tracking-wider mb-2 block">ADVANTAGES</span>
+                <ul class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+                    <li class="flex items-start space-x-1.5">
+                        <span>•</span>
+                        <span>Easy to understand</span>
+                    </li>
+                    <li class="flex items-start space-x-1.5">
+                        <span>•</span>
+                        <span>Good for small or nearly sorted data</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Bottom Box: Disadvantage -->
+            <div class="bg-[#1e293b]/60 border-2 border-red-500/60 rounded-2xl p-4 flex-1 flex flex-col justify-center">
+                <span class="text-red-400 font-bold uppercase text-xs sm:text-sm tracking-wider mb-2 block">DISADVANTAGE</span>
+                <ul class="space-y-1.5 text-xs sm:text-sm text-slate-300">
+                    <li class="flex items-start space-x-1.5">
+                        <span>•</span>
+                        <span>Can be slow for large datasets because average and worst cases are O(n²).</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Box: Conclusion -->
+        <div class="bg-[#1e293b]/60 border-2 border-blue-400/60 rounded-3xl p-5 flex flex-col justify-between text-center min-h-[220px]">
+            <span class="text-blue-400 font-bold uppercase text-xs sm:text-sm tracking-wider">CONCLUSION</span>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed my-auto">
+                Insertion Sort is simple and memory-efficient. It is best suited for small or nearly sorted datasets, while more efficient algorithms may be preferable for large inputs.
+            </p>
+        </div>
+    </div>
+
+    <span class="page-folio">19</span>
+</div>
                 </div>
 
-                <!-- LEAF 10: Slide 20 & Slide 21 -->
-                <div class="leaf" id="leaf-10" style="z-index: 10;">
-                    <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 20 (Recursion & Divide-and-Conquer Title) -->
-                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
-                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 05</div>
-                        <div class="my-auto space-y-4">
-                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
-                                <i class="fa-solid fa-sitemap"></i>
-                            </div>
-                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
-                                5. RECURSION AND DIVIDE-AND-CONQUER
-                            </h1>
-                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
-                                Self-referential Functions, Base Cases &amp; Problem Decomposition
-                            </p>
-                        </div>
-                        <span class="page-folio">20</span>
-                    </div>
-                    <!-- Back Face: Slide 21 (Recursion Definition & Example) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.1</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                Recursion Definition
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm leading-relaxed">
-                                <strong class="text-slate-900 uppercase font-bold">RECURSION:</strong> A function that calls itself to solve a smaller version of the problem until it reaches the end condition.
-                            </div>
-                            <div class="grid grid-cols-12 gap-2 font-mono">
-                                <div class="col-span-7 bg-slate-950 text-slate-100 rounded-xl p-2.5 text-[11px] space-y-0.5">
-                                    <div class="text-slate-400 pb-1 font-bold">Example:</div>
-                                    <pre><code><span class="text-purple-400">def</span> <span class="text-blue-400">countdown</span>(n):
+                <!-- Pages 24 & 25: Recursion Title and Definition -->
+<div class="leaf" id="leaf-10" style="z-index: 10;">
+    <div class="leaf-shadow"></div>
+    <!-- Page 24: Recursion and Divide-and-Conquer Title -->
+    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+        <div class="text-left text-sm sm:text-base font-mono text-purple-400 tracking-wider">SECTION 05</div>
+        <div class="my-auto space-y-4">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-3xl shadow-lg">
+                <i class="fa-solid fa-sitemap"></i>
+            </div>
+            <h1 class="heading-font text-3xl sm:text-4xl font-black text-white uppercase tracking-tight leading-tight">
+                5. RECURSION AND DIVIDE-AND-CONQUER
+            </h1>
+            <p class="text-sm sm:text-base text-purple-200 max-w-xs mx-auto">
+                Self-referential Functions, Base Cases &amp; Problem Decomposition
+            </p>
+        </div>
+        <span class="page-folio">20</span>
+    </div>
+    <!-- Page 25: Recursion Definition and Example -->
+    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+        <div>
+            <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.1</span>
+            <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">
+                Recursion Definition
+            </h2>
+        </div>
+        <div class="space-y-4 my-auto text-base sm:text-lg">
+            <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm leading-relaxed text-base sm:text-lg">
+                <strong class="text-slate-900 uppercase font-bold">RECURSION-</strong> in programming, recursion is a function that calls itself to solve a smaller version of the problem until it reaches the end.
+            </div>
+            <div class="grid grid-cols-12 gap-3 font-mono">
+                <div class="col-span-7 bg-slate-950 text-slate-100 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm space-y-1">
+                    <div class="text-slate-400 pb-1 font-bold text-sm sm:text-base">EXAMPLE:</div>
+                    <pre class="leading-relaxed"><code><span class="text-purple-400">def</span> <span class="text-blue-400">countdown</span>(n):
   <span class="text-purple-400">if</span> n &lt;= <span class="text-amber-300">0</span>:
     <span class="text-cyan-400">print</span>(<span class="text-emerald-300">"Done!"</span>)
   <span class="text-purple-400">else</span>:
@@ -1613,78 +1715,99 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
     countdown(n - <span class="text-amber-300">1</span>)
 
 countdown(<span class="text-amber-300">5</span>)</code></pre>
-                                </div>
-                                <div class="col-span-5 bg-slate-950 text-emerald-400 rounded-xl p-2.5 text-[11px] space-y-0.5 flex flex-col justify-between">
-                                    <div class="text-slate-400 font-bold">Output:</div>
-                                    <div>5<br>4<br>3<br>2<br>1<br><span class="text-cyan-300 font-bold">Done!</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="page-folio">21</span>
-                    </div>
                 </div>
+                <div class="col-span-5 bg-slate-950 text-emerald-400 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm space-y-1 flex flex-col justify-between">
+                    <div class="text-slate-400 font-bold text-sm sm:text-base">OUTPUT:</div>
+                    <div class="leading-relaxed font-bold">5<br>4<br>3<br>2<br>1<br><span class="text-emerald-400">Done!</span></div>
+                </div>
+            </div>
+        </div>
+        <span class="page-folio">21</span>
+    </div>
+</div>
 
-                <!-- LEAF 11: Slide 22 & Slide 23 -->
+                <!-- Pages 26 & 27: Recursion Rules and Divide-and-Conquer -->
                 <div class="leaf" id="leaf-11" style="z-index: 9;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 22 (Rules of Recursion) -->
+                    <!-- Page 26: Rules of Recursion -->
                     <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.2</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                Rules of Recursion
-                            </h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm space-y-1">
-                                <p class="font-bold text-slate-900">1. Base Case</p>
-                                <p class="text-slate-600">The condition that stops the recursion.</p>
-                                <div class="code-font text-[11px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
-                                    if n &lt;= 0: print("Done!")
-                                </div>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm space-y-1">
-                                <p class="font-bold text-slate-900">2. Recursive Step</p>
-                                <p class="text-slate-600">The function calling itself with a smaller input.</p>
-                                <div class="code-font text-[11px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
-                                    countdown(n - 1)
-                                </div>
-                            </div>
-                            <div class="border-2 border-red-500 bg-red-50 rounded-xl p-2 text-[11px] text-red-950">
-                                <strong>WARNING:</strong> Without a base case, recursion executes infinitely until stack overflow!
-                            </div>
-                        </div>
-                        <span class="page-folio">22</span>
-                    </div>
-                    <!-- Back Face: Slide 23 (Divide and Conquer) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.3</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                Divide-and-Conquer
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="border-l-4 border-slate-900 pl-3 py-1.5 bg-slate-100 rounded-r-lg leading-relaxed">
-                                <strong class="text-slate-900 font-bold">Divide-and-conquer:</strong> Breaking a big problem into smaller subproblems, solving each independently, and combining solutions.
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <strong class="text-purple-700 font-bold block mb-1">DIVIDE</strong>
-                                <p class="text-slate-700">Break down the original problem into smaller pieces until no further division is possible.</p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <strong class="text-blue-700 font-bold block mb-1">CONQUER</strong>
-                                <p class="text-slate-700">Solve each subproblem individually (directly if small, or recursively).</p>
-                            </div>
-                        </div>
-                        <span class="page-folio">23</span>
-                    </div>
-                </div>
+    <div>
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.2</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">
+            Rules of Recursion
+        </h2>
+    </div>
 
-                <!-- LEAF 12: Slide 24 & Slide 25 -->
+    <div class="space-y-4 my-auto text-base sm:text-lg">
+        <!-- Base Case Card -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center space-y-2">
+            <p class="text-slate-900 text-lg sm:text-xl font-normal">
+                <strong class="font-bold">Base Case</strong> – The condition that stops the recursion
+            </p>
+            <div class="font-mono text-sm sm:text-base text-slate-900 leading-relaxed pt-1">
+                if n &lt;= 0:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;print("Done!")
+            </div>
+        </div>
+
+        <!-- Recursive Step Card -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center space-y-2">
+            <p class="text-slate-900 text-lg sm:text-xl font-normal">
+                <strong class="font-bold">Recursive Step</strong> – The function calling itself, but on a smaller piece.
+            </p>
+            <div class="font-mono text-sm sm:text-base text-slate-900 pt-1">
+                countdown(n - 1)
+            </div>
+        </div>
+
+        <!-- Note Card -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center leading-relaxed">
+            <p class="text-slate-900 text-base sm:text-lg">
+                <strong class="font-bold uppercase">NOTE:</strong> without the base case, the function will call itself over and over, causing a stack overflow error.
+            </p>
+        </div>
+    </div>
+
+    <span class="page-folio">22</span>
+</div>
+                    <!-- Page 27: Divide and Conquer -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+    <div>
+        <span class="text-base sm:text-lg font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.3</span>
+        <h2 class="heading-font text-4xl sm:text-5xl font-extrabold text-slate-900 mt-1">
+            Divide-and-Conquer
+        </h2>
+    </div>
+
+    <div class="space-y-6 my-auto text-lg sm:text-xl">
+        <!-- Main Definition Box with Left Border Line -->
+        <div class="border-l-4 border-slate-900 pl-5 py-3 bg-slate-100 rounded-r-xl leading-relaxed text-lg sm:text-xl">
+            <strong class="text-slate-900 font-bold">Divide-and-conquer –</strong> Breaking a big problem into smaller pieces, solving each piece separately, and combining the results to get t he final answer.
+        </div>
+
+        <!-- Divide Box -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 sm:p-7 shadow-sm text-center leading-relaxed">
+            <p class="text-slate-900 text-lg sm:text-xl">
+                <strong class="font-bold">Divide –</strong> breaks down the original problem into smaller pieces, until no further division is possible.
+            </p>
+        </div>
+
+        <!-- Conquer Box -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 sm:p-7 shadow-sm text-center leading-relaxed">
+            <p class="text-slate-900 text-lg sm:text-xl">
+                <strong class="font-bold">Conquer –</strong> solve each subproblems individually
+            </p>
+        </div>
+    </div>
+
+    <span class="page-folio">23</span>
+</div>
+    </div>
+
+                <!-- Pages 28 & 29: Merge Sort Tree and Section Title -->
                 <div class="leaf" id="leaf-12" style="z-index: 8;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 24 (Merge - Sorting Tree Diagram) -->
+                    <!-- Page 28: Merge Sort Tree Diagram -->
                     <div class="page-face front-face bg-slate-50 text-slate-800 p-5 sm:p-6 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
                         <div>
                             <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.4</span>
@@ -1692,35 +1815,129 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                                 Merge &amp; Sorting Tree Diagram
                             </h2>
                         </div>
-                        <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm my-auto text-center font-mono text-xs">
-                            <div class="flex justify-center items-center space-x-1.5 mb-1.5">
-                                <span class="font-sans text-[11px] text-slate-500 font-bold">Unsorted:</span>
-                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800 bg-white">
-                                    <span class="px-1.5 py-0.5">70</span><span class="px-1.5 py-0.5">30</span><span class="px-1.5 py-0.5">50</span><span class="px-1.5 py-0.5">10</span>
-                                </div>
-                            </div>
-                            <div class="text-slate-400 text-[10px]">↓ Divide ↓</div>
-                            <div class="flex justify-around px-4 my-1">
-                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800"><span class="px-1.5 py-0.5">70</span><span class="px-1.5 py-0.5">30</span></div>
-                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800"><span class="px-1.5 py-0.5">50</span><span class="px-1.5 py-0.5">10</span></div>
-                            </div>
-                            <div class="text-slate-400 text-[10px]">↓ Split Single Elements ↓</div>
-                            <div class="flex justify-around text-[10px] my-1">
-                                <span class="border border-slate-800 px-1 rounded">70</span><span class="border border-slate-800 px-1 rounded">30</span><span class="border border-slate-800 px-1 rounded">50</span><span class="border border-slate-800 px-1 rounded">10</span>
-                            </div>
-                            <div class="text-emerald-600 font-bold text-[10px]">↑ Conquer &amp; Merge ↑</div>
-                            <div class="flex justify-around px-4 my-1">
-                                <div class="flex border border-emerald-800 rounded divide-x divide-emerald-800 bg-emerald-100"><span class="px-1.5 py-0.5">30</span><span class="px-1.5 py-0.5">70</span></div>
-                                <div class="flex border border-emerald-800 rounded divide-x divide-emerald-800 bg-emerald-100"><span class="px-1.5 py-0.5">10</span><span class="px-1.5 py-0.5">50</span></div>
-                            </div>
-                            <div class="text-emerald-700 font-bold text-[10px]">↑ Final Combine ↑</div>
-                            <div class="inline-flex border-2 border-emerald-900 rounded divide-x-2 divide-emerald-900 bg-emerald-700 text-white font-bold px-2 py-0.5">
-                                <span class="px-1">10</span><span class="px-1">30</span><span class="px-1">50</span><span class="px-1">70</span>
-                            </div>
+                        <div class="space-y-3 my-auto text-slate-900">
+    <!-- Top Definition Block -->
+    <div class="border-l-4 border-slate-900 pl-3 py-1.5 bg-slate-100 rounded-r-lg leading-relaxed text-xs sm:text-sm">
+        <strong class="font-bold">Merge –</strong> Combines the solutions of the subproblems to build the final answer to the main problem.
+    </div>
+
+    <p class="text-xs sm:text-sm font-normal">
+        Example: sorting an array
+    </p>
+
+    <!-- Compact Diagram Container -->
+    <div class="border-2 border-slate-900 bg-white rounded-xl p-3 sm:p-4 shadow-sm font-mono text-xs sm:text-sm relative overflow-hidden">
+        
+        <div class="grid grid-cols-12 gap-1 items-center">
+            <!-- Left Side: Diagram Tree with Adjusted SVG Arrows -->
+            <div class="col-span-9 sm:col-span-10 relative">
+                
+                <!-- SVG Overlay with Fixed Marker Visibility & Precise Endpoints -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-slate-800" style="z-index: 10;">
+                    <defs>
+                        <marker id="arrow-compact" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1e293b" />
+                        </marker>
+                    </defs>
+
+                    <!-- Level 1 -> Level 2 -->
+                    <line x1="44%" y1="10%" x2="33%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="56%" y1="10%" x2="67%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+
+                    <!-- Level 2 -> Level 3 -->
+                    <line x1="28%" y1="33%" x2="20%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="36%" y1="33%" x2="42%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="64%" y1="33%" x2="58%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="72%" y1="33%" x2="80%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+
+                    <!-- Level 3 -> Level 4 -->
+                    <line x1="20%" y1="56%" x2="28%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="42%" y1="56%" x2="36%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="58%" y1="56%" x2="64%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="80%" y1="56%" x2="72%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+
+                    <!-- Level 4 -> Level 5 (Shortened to ensure arrowheads are 100% visible) -->
+                    <line x1="32%" y1="78%" x2="43%" y2="86%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="68%" y1="78%" x2="57%" y2="86%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                </svg>
+
+                <div class="relative z-0 space-y-4 py-1">
+                    <!-- Row 1: Unsorted Array -->
+                    <div class="flex justify-center items-center space-x-1.5">
+                        <span class="font-sans text-xs sm:text-sm text-slate-800 font-normal">UnSorted Array :</span>
+                        <div class="inline-flex border border-slate-700 bg-white">
+                            <span class="px-2 py-0.5 border-r border-slate-700">70</span>
+                            <span class="px-2 py-0.5 border-r border-slate-700">30</span>
+                            <span class="px-2 py-0.5 border-r border-slate-700">50</span>
+                            <span class="px-2 py-0.5">10</span>
                         </div>
+                    </div>
+
+                    <!-- Row 2: Divide Level 1 -->
+                    <div class="flex justify-around px-6">
+                        <div class="inline-flex border border-slate-700 bg-white">
+                            <span class="px-2 py-0.5 border-r border-slate-700">70</span>
+                            <span class="px-2 py-0.5">30</span>
+                        </div>
+                        <div class="inline-flex border border-slate-700 bg-white">
+                            <span class="px-2 py-0.5 border-r border-slate-700">50</span>
+                            <span class="px-2 py-0.5">10</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Single Elements Split -->
+                    <div class="flex justify-around px-1">
+                        <span class="border border-slate-700 px-2 py-0.5 bg-white">70</span>
+                        <span class="border border-slate-700 px-2 py-0.5 bg-white">30</span>
+                        <span class="border border-slate-700 px-2 py-0.5 bg-white">50</span>
+                        <span class="border border-slate-700 px-2 py-0.5 bg-white">10</span>
+                    </div>
+
+                    <!-- Row 4: Conquer & Merge -->
+                    <div class="flex justify-around px-6">
+                        <div class="inline-flex border border-emerald-800 bg-[#d1e7dd] text-slate-900">
+                            <span class="px-2 py-0.5 border-r border-emerald-800">30</span>
+                            <span class="px-2 py-0.5">70</span>
+                        </div>
+                        <div class="inline-flex border border-emerald-800 bg-[#d1e7dd] text-slate-900">
+                            <span class="px-2 py-0.5 border-r border-emerald-800">10</span>
+                            <span class="px-2 py-0.5">50</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Sorted Array -->
+                    <div class="flex justify-center items-center space-x-1.5 pt-1">
+                        <span class="font-sans text-xs sm:text-sm text-slate-800 font-normal">Sorted Array :</span>
+                        <div class="inline-flex border border-emerald-900 bg-[#1e7e34] text-white font-bold">
+                            <span class="px-2 py-0.5 border-r border-emerald-900">10</span>
+                            <span class="px-2 py-0.5 border-r border-emerald-900">30</span>
+                            <span class="px-2 py-0.5 border-r border-emerald-900">50</span>
+                            <span class="px-2 py-0.5">70</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar Labels -->
+            <div class="col-span-3 sm:col-span-2 flex flex-col justify-between font-sans text-xs sm:text-sm text-slate-800 h-full py-1">
+                <!-- Divide Bracket: Top 3 levels -->
+                <div class="flex items-center space-x-1 h-[55%] my-auto">
+                    <div class="border-r border-t border-b border-dashed border-slate-400 h-full w-2"></div>
+                    <span class="font-medium">Divide</span>
+                </div>
+
+                <!-- Conquer & Merge Bracket: Bottom 2 levels -->
+                <div class="flex items-center space-x-1 h-[40%] my-auto">
+                    <div class="border-r border-t border-b border-dashed border-slate-400 h-full w-2"></div>
+                    <span class="font-medium leading-tight text-[11px] sm:text-xs">Conquer<br>&amp; Merge</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                         <span class="page-folio">24</span>
                     </div>
-                    <!-- Back Face: Slide 25 (Merge Sort Title Header) -->
+                    <!-- Page 29: Merge Sort Section Title -->
                     <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 06</div>
                         <div class="my-auto space-y-4">
@@ -1738,85 +1955,179 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                     </div>
                 </div>
 
-                <!-- LEAF 13: Slide 26 & Slide 27 -->
+                <!-- Pages 30 & 31: Merge Sort Overview and Process -->
                 <div class="leaf" id="leaf-13" style="z-index: 7;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 26 (Merge Sort Overview & Inventor) -->
+                    <!-- Page 30: Merge Sort Overview and Inventor -->
                     <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.1</span>
-                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-                                Merge Sort Algorithm
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs leading-relaxed">
-                            <ul class="space-y-1.5 text-slate-700">
-                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Sorts elements in ascending or descending order.</span></li>
-                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Uses the <u class="font-bold">DIVIDE AND CONQUER</u> technique.</span></li>
-                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Divides array recursively, then merges ordered halves.</span></li>
-                            </ul>
-                            <div class="p-2.5 rounded-lg bg-purple-50 border border-purple-200 font-bold text-slate-900 flex items-center space-x-2">
-                                <i class="fa-solid fa-user-astronaut text-purple-600"></i>
-                                <span>INVENTOR: John von Neumann (1945)</span>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 text-center shadow-sm">
-                                <div class="flex items-center justify-center space-x-3 font-black text-xs sm:text-sm tracking-widest text-slate-900">
-                                    <span>DIVIDE</span><span class="text-slate-400">→</span><span>SORT</span><span class="text-slate-400">→</span><span>MERGE</span>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="page-folio">26</span>
-                    </div>
-                    <!-- Back Face: Slide 27 (How Merge Sort Works) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.2</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                How Merge Sort Works
-                            </h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="space-y-1.5 text-slate-800">
-                                <p><strong class="text-purple-700">DIVIDE:</strong> Split array until each has 1 item.</p>
-                                <p><strong class="text-blue-700">COMPARE:</strong> Compare items from subarrays to determine order.</p>
-                                <p><strong class="text-emerald-700">MERGE:</strong> Combine in sorted order until 1 complete array remains.</p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-[#8cc63f] rounded-xl p-2.5 text-center font-mono font-bold text-slate-950 text-xs space-y-1 shadow-sm">
-                                <div>[8, 3, 6, 2]</div>
-                                <div class="text-[10px]">↓</div>
-                                <div class="flex justify-around"><span>[8, 3]</span><span>[6, 2]</span></div>
-                                <div class="text-[10px]">↓</div>
-                                <div class="flex justify-around text-[10px]"><span>[8]</span><span>[3]</span><span>[6]</span><span>[2]</span></div>
-                                <div class="text-[10px]">↓</div>
-                                <div class="flex justify-around"><span>[3, 8]</span><span>[2, 6]</span></div>
-                                <div class="text-[10px]">↓</div>
-                                <div class="bg-white px-2 py-0.5 rounded border border-slate-900 inline-block">[2, 3, 6, 8]</div>
-                            </div>
-                        </div>
-                        <span class="page-folio">27</span>
-                    </div>
+    <div>
+        <span class="text-base sm:text-lg font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.1</span>
+        <h2 class="heading-font text-4xl sm:text-5xl font-black text-slate-900 uppercase tracking-tight mt-1">
+            MERGE SORT ALGORITHM
+        </h2>
+    </div>
+    <div class="space-y-6 my-auto text-xl sm:text-2xl leading-relaxed">
+        <ul class="space-y-4 text-slate-900 font-normal">
+            <li class="flex items-start space-x-3">
+                <span class="text-slate-900 font-bold text-2xl">❏</span>
+                <span>A sorting algorithm that arranges elements in ascending or descending order.</span>
+            </li>
+            <li class="flex items-start space-x-3">
+                <span class="text-slate-900 font-bold text-2xl">❏</span>
+                <span>Uses the <u class="font-bold">DIVIDE AND CONQUER</u> techniques.</span>
+            </li>
+            <li class="flex items-start space-x-3">
+                <span class="text-slate-900 font-bold text-2xl">❏</span>
+                <span>Divides an array into smaller sub-arrays then merges them in sorted order.</span>
+            </li>
+        </ul>
+        
+        <div class="flex items-center space-x-3 pt-2 text-slate-900 font-bold text-xl sm:text-2xl">
+            <span class="text-2xl">➤</span>
+            <span>INVENTOR: John von Neumann (1945)</span>
+        </div>
+
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 text-center shadow-sm mt-6">
+            <div class="flex items-center justify-center space-x-6 sm:space-x-12 font-black text-xl sm:text-2xl tracking-widest text-slate-900">
+                <span>DIVIDE</span>
+                <span class="text-slate-700">→</span>
+                <span>SORT</span>
+                <span class="text-slate-700">→</span>
+                <span>MERGE</span>
+            </div>
+        </div>
+    </div>
+    <span class="page-folio">26</span>
+</div>
+                    <!-- Page 31: How Merge Sort Works -->
+<div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+    <div>
+        <span class="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.2</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-black text-slate-900 uppercase tracking-tight mt-0.5">
+            HOW MERGE SORT WORKS
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-0.5 font-medium">Three main steps</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 my-auto text-slate-900">
+        <!-- Left Side: Steps -->
+        <div class="md:col-span-7 space-y-3 text-base sm:text-lg leading-snug my-auto">
+            <div>
+                <p class="font-bold">
+                    <span class="text-base sm:text-lg mr-1">➤</span>
+                    <strong class="font-black">DIVIDE-</strong> Split the array into smaller sub-arrays until each contains one element.
+                </p>
+            </div>
+
+            <div>
+                <p class="font-bold">
+                    <span class="text-base sm:text-lg mr-1">➤</span>
+                    <strong class="font-black">COMPARE-</strong> Compare the elements from the sub-arrays to determine their order.
+                </p>
+            </div>
+
+            <div>
+                <p class="font-bold">
+                    <span class="text-base sm:text-lg mr-1">➤</span>
+                    <strong class="font-black">MERGE-</strong> Combine the elements in sorted order until one completed sorted array remains.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Compact Green Example Box -->
+        <div class="md:col-span-5 border-2 border-slate-900 bg-[#8cc63f] rounded-xl p-3 text-center font-mono font-bold text-slate-950 text-xs sm:text-sm space-y-1 shadow-sm flex flex-col justify-center">
+            <div class="font-sans font-normal text-xs text-slate-900 mb-0.5 text-left">Example: Ascending Order</div>
+            
+            <div class="text-sm sm:text-base">[8,3,6,2]</div>
+            <div class="text-xs">↓</div>
+            <div class="flex justify-around text-sm sm:text-base">
+                <span>[8,3]</span>
+                <span>[6,2]</span>
+            </div>
+            <div class="text-xs">↓</div>
+            <div class="flex justify-around text-xs sm:text-sm">
+                <span>[8]</span>
+                <span>[3]</span>
+                <span>[6]</span>
+                <span>[2]</span>
+            </div>
+            <div class="text-xs">↓</div>
+            <div class="flex justify-around text-sm sm:text-base">
+                <span>[3,8]</span>
+                <span>[2,6]</span>
+            </div>
+            <div class="text-xs">↓</div>
+            <div class="text-sm sm:text-base">[2,3,6,8]</div>
+        </div>
+    </div>
+
+    <span class="page-folio">27</span>
+</div>
                 </div>
 
-                <!-- LEAF 14: Slide 28 & Slide 29 -->
+                <!-- Pages 32-34: Merge Sort Visualizer, Code, and Recursion Tree Section -->
                 <div class="leaf" id="leaf-14" style="z-index: 6;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 28 (Merge Sort Python Code) -->
-                    <div class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
-                        <div class="flex justify-between items-center">
+                    <!-- Page 32: Merge Sort Interactive Visualizer -->
+                    <div id="mergeSortInteractivePage" data-no-page-turn class="page-face front-face bg-slate-50 text-slate-800 p-4 sm:p-6 pb-10 flex flex-col gap-2 page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="flex flex-wrap items-start justify-between gap-2">
                             <div>
-                                <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
-                                <h3 class="heading-font text-lg font-bold text-white">Merge Sort <span class="text-pink-400">Python</span></h3>
+                                <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.3 • Interactive</span>
+                                <h2 class="selection-demo-title heading-font font-extrabold text-slate-900">Merge Sort Visualizer</h2>
                             </div>
-                            <button onclick="event.stopPropagation(); copyCode('codeMergeSort', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-purple-300 border border-slate-700 transition flex items-center space-x-1">
-                                <i class="fa-regular fa-copy"></i>
-                                <span>Copy</span>
-                            </button>
+                            <span class="selection-demo-fact rounded-full bg-blue-100 px-3 py-1 font-bold text-blue-800">O(n log n) • Stable</span>
                         </div>
-                        <div class="border border-slate-800 bg-[#0a192f] rounded-xl overflow-hidden shadow-lg my-auto">
-                            <div class="bg-[#020c1b] px-3 py-1 border-b border-slate-800 text-[11px] text-slate-400 font-mono">
-                                mergesort.py
+                        <p class="selection-demo-description text-slate-600">Watch the array split into smaller groups, then merge back in ascending order.</p>
+                        <div class="selection-demo-layout">
+                            <div class="selection-demo-panel">
+                                <div id="mergeSortArray" data-merge-role="array" role="button" tabindex="0" aria-label="Merge sort graph. Activate to advance one step." class="selection-demo-chart"></div>
+                                <div class="selection-demo-controls" aria-label="Merge sort animation controls">
+                                    <button type="button" data-merge-action="reset">Restart</button>
+                                    <button type="button" data-merge-action="previous" disabled>Step Back</button>
+                                    <button type="button" data-merge-action="play" aria-pressed="false">Play</button>
+                                    <button type="button" data-merge-action="next">Step Forward</button>
+                                </div>
+                                <label class="selection-demo-speed">
+                                    <span>Speed</span>
+                                    <input type="range" data-merge-role="speed" min="50" max="5000" step="50" value="1200" aria-label="Merge sort animation speed">
+                                    <output data-merge-role="speed-value">208 ms/step</output>
+                                </label>
+                                <div class="selection-demo-legend" aria-label="Visualization legend">
+                                    <span><i class="selection-demo-swatch" style="background:#64748b"></i>Unsorted</span>
+                                    <span><i class="selection-demo-swatch" style="background:#ca8a04"></i>Active group</span>
+                                    <span><i class="selection-demo-swatch" style="background:#dc2626"></i>Comparing</span>
+                                    <span><i class="selection-demo-swatch" style="background:#16a34a"></i>Merged</span>
+                                </div>
                             </div>
-                            <pre id="codeMergeSort" class="code-font p-3 text-[10px] sm:text-[11px] leading-tight overflow-x-auto text-slate-200"><code><span class="text-pink-400 font-semibold">def</span> <span class="text-amber-300 font-semibold">merge_sort</span>(arr):
+                            <aside class="selection-demo-panel">
+                                <h3 class="font-bold text-slate-800">Live Algorithm State</h3>
+                                <div class="selection-demo-stats">
+                                    <div class="selection-demo-stat"><strong data-merge-role="comparisons">0</strong><span>Comparisons</span></div>
+                                    <div class="selection-demo-stat"><strong data-merge-role="merges">0</strong><span>Merges</span></div>
+                                </div>
+                                <div class="selection-demo-explanation" data-merge-role="explanation" aria-live="polite"></div>
+                            </aside>
+                        </div>
+                        <span class="page-folio">32</span>
+                    </div>
+                    <!-- Page 33: Merge Sort Python Code -->
+<div class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
+    <div class="flex justify-between items-center">
+        <div>
+            <span class="text-xs sm:text-sm font-mono text-purple-400 uppercase tracking-wider">Implementation</span>
+            <h3 class="heading-font text-2xl sm:text-3xl font-bold text-white mt-0.5">Merge Sort <span class="text-pink-400">Python</span></h3>
+        </div>
+        <button onclick="event.stopPropagation(); copyCode('codeMergeSort', this)" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-mono text-purple-300 border border-slate-700 transition flex items-center space-x-1.5">
+            <i class="fa-regular fa-copy"></i>
+            <span>Copy</span>
+        </button>
+    </div>
+    
+    <div class="border border-slate-800 bg-[#0a192f] rounded-xl overflow-hidden shadow-lg my-auto">
+        <div class="bg-[#020c1b] px-4 py-2 border-b border-slate-800 text-xs sm:text-sm text-slate-400 font-mono">
+            mergesort.py
+        </div>
+        <pre id="codeMergeSort" class="code-font p-4 text-xs sm:text-sm leading-relaxed overflow-x-auto text-slate-200"><code><span class="text-pink-400 font-semibold">def</span> <span class="text-amber-300 font-semibold">merge_sort</span>(arr):
     <span class="text-pink-400 font-semibold">if</span> <span class="text-cyan-400">len</span>(arr) &lt;= <span class="text-amber-300">1</span>:
         <span class="text-pink-400 font-semibold">return</span> arr
     mid = <span class="text-cyan-400">len</span>(arr) // <span class="text-amber-300">2</span>
@@ -1831,14 +2142,16 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
     result.extend(left[i:])
     result.extend(right[j:])
     <span class="text-pink-400 font-semibold">return</span> result</code></pre>
-                        </div>
-                        <div class="flex items-center justify-between text-xs bg-slate-950 p-2 rounded-lg border border-slate-800 font-mono">
-                            <span class="text-slate-400">Output:</span>
-                            <span class="text-emerald-400 font-bold">[2, 3, 6, 8]</span>
-                        </div>
-                        <span class="page-folio">28</span>
-                    </div>
-                    <!-- Back Face: Slide 29 (Merge Sort Recursion Tree Title) -->
+    </div>
+
+    <div class="flex items-center justify-between text-sm sm:text-base bg-slate-950 px-4 py-2.5 rounded-lg border border-slate-800 font-mono">
+        <span class="text-slate-400">Output:</span>
+        <span class="text-emerald-400 font-bold">[2, 3, 6, 8]</span>
+    </div>
+    
+    <span class="page-folio">28</span>
+</div>
+                    <!-- Page 34: Recursion Tree and Time Complexity Title -->
                     <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
                         <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 07</div>
                         <div class="my-auto space-y-4">
@@ -1856,64 +2169,158 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                     </div>
                 </div>
 
-                <!-- LEAF 15: Slide 30 & Slide 31 -->
+                <!-- Pages 35 & 36: Recurrence Relation and Time Complexity -->
                 <div class="leaf" id="leaf-15" style="z-index: 5;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 30 (Recursion Tree & Recurrence Relation) -->
+                    <!-- Page 35: Recurrence Relation -->
                     <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.1</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                Recurrence Relation
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm text-center">
-                                <h3 class="font-extrabold text-slate-900 text-sm mb-1">Merge Sort Recurrence</h3>
-                                <p class="code-font text-base font-bold text-purple-900">T(n) = 2T(n/2) + O(n)</p>
-                            </div>
-                            <div class="p-2.5 border border-slate-300 rounded-xl bg-white font-mono text-center text-xs space-y-0.5">
-                                <div class="font-bold text-slate-900">Tree (N=8)</div>
-                                <div class="text-[10px] text-slate-400">8</div>
-                                <div class="text-[10px] text-slate-400">↙ ↘</div>
-                                <div class="flex justify-around px-8 text-slate-800 font-bold"><span>4</span><span>4</span></div>
-                                <div class="text-[10px] text-slate-400">↙ ↘  ↙ ↘</div>
-                                <div class="flex justify-between px-4 text-slate-800 font-bold"><span>2</span><span>2</span><span>2</span><span>2</span></div>
-                                <div class="text-[10px] text-slate-400">↙↘ ↙↘ ↙↘ ↙↘</div>
-                                <div class="flex justify-between text-[10px] text-slate-600"><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></div>
-                            </div>
-                        </div>
-                        <span class="page-folio">30</span>
+    <div>
+        <span class="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.1</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">
+            Recurrence Relation
+        </h2>
+    </div>
+
+    <div class="space-y-4 my-auto text-sm sm:text-base">
+        <!-- Recurrence Formula Box -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-3 sm:p-4 shadow-sm text-center">
+            <h3 class="font-extrabold text-slate-900 text-base sm:text-lg mb-1">Merge Sort Recurrence</h3>
+            <p class="code-font text-xl sm:text-2xl font-bold text-purple-900">T(n) = 2T(n/2) + O(n)</p>
+        </div>
+
+        <!-- Recursion Tree Visualization Box -->
+        <div class="border-2 border-slate-900 rounded-xl bg-white p-3 sm:p-4 shadow-sm relative overflow-hidden font-mono text-xs sm:text-sm text-slate-900">
+            <div class="font-bold text-slate-900 font-sans text-center mb-2 text-sm sm:text-base">Recursion Tree (N=8)</div>
+
+            <div class="relative py-1 sm:py-2">
+                <!-- SVG Overlay with Pixel-Perfect Line Coordinates -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-slate-400" style="z-index: 1;">
+                    <!-- Level 1 (8) -> Level 2 (4, 4) -->
+                    <line x1="50%" y1="12%" x2="28.5%" y2="30%" stroke-width="1.5" />
+                    <line x1="50%" y1="12%" x2="71.5%" y2="30%" stroke-width="1.5" />
+
+                    <!-- Level 2 (4) -> Level 3 (2, 2) Left & Right -->
+                    <line x1="28.5%" y1="38%" x2="16.5%" y2="58%" stroke-width="1.5" />
+                    <line x1="28.5%" y1="38%" x2="40.5%" y2="58%" stroke-width="1.5" />
+                    <line x1="71.5%" y1="38%" x2="59.5%" y2="58%" stroke-width="1.5" />
+                    <line x1="71.5%" y1="38%" x2="83.5%" y2="58%" stroke-width="1.5" />
+
+                    <!-- Level 3 (2) -> Level 4 (1, 1) Ultra-Precise Alignment -->
+                    <!-- 1st '2' -> nodes 1 & 2 -->
+                    <line x1="16.5%" y1="66%" x2="4.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="16.5%" y1="66%" x2="17.5%" y2="84%" stroke-width="1.2" />
+
+                    <!-- 2nd '2' -> nodes 3 & 4 -->
+                    <line x1="40.5%" y1="66%" x2="30.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="40.5%" y1="66%" x2="43.5%" y2="84%" stroke-width="1.2" />
+
+                    <!-- 3rd '2' -> nodes 5 & 6 -->
+                    <line x1="59.5%" y1="66%" x2="56.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="59.5%" y1="66%" x2="69.5%" y2="84%" stroke-width="1.2" />
+
+                    <!-- 4th '2' -> nodes 7 & 8 -->
+                    <line x1="83.5%" y1="66%" x2="82.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="83.5%" y1="66%" x2="95.5%" y2="84%" stroke-width="1.2" />
+                </svg>
+
+                <div class="relative z-10 space-y-4 sm:space-y-5">
+                    <!-- Root Level: N=8 -->
+                    <div class="flex justify-center items-center">
+                        <span class="w-8 h-8 rounded-full bg-purple-100 border-2 border-purple-800 text-purple-950 font-extrabold flex items-center justify-center text-sm shadow-sm">8</span>
                     </div>
-                    <!-- Back Face: Slide 31 (Time Complexity Analysis) -->
-                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.2</span>
-                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
-                                Time Complexity Analysis
-                            </h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 text-center font-bold text-slate-900 shadow-sm text-sm">
-                                Merge Sort: <span class="text-purple-600 font-mono font-extrabold">O(n log n)</span>
-                            </div>
-                            <div class="border border-slate-300 bg-white rounded-xl p-2.5 space-y-1">
-                                <p class="font-bold text-slate-900">• O(log n) = Number of Levels</p>
-                                <p class="text-slate-600 text-[11px]">Repeatedly dividing problem size by 2 stops at log₂(n) levels.</p>
-                            </div>
-                            <div class="border border-slate-300 bg-white rounded-xl p-2.5 space-y-1">
-                                <p class="font-bold text-slate-900">• O(n) = Work per Level</p>
-                                <p class="text-slate-600 text-[11px]">Merging all subarrays at any given level requires processing n total items.</p>
-                            </div>
-                        </div>
-                        <span class="page-folio">31</span>
+
+                    <!-- Level 1: N/2 = 4 -->
+                    <div class="flex justify-around px-10 items-center">
+                        <span class="w-7 h-7 rounded-full bg-slate-100 border-2 border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs shadow-sm">4</span>
+                        <span class="w-7 h-7 rounded-full bg-slate-100 border-2 border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs shadow-sm">4</span>
+                    </div>
+
+                    <!-- Level 2: N/4 = 2 -->
+                    <div class="flex justify-around px-2 items-center">
+                        <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs">2</span>
+                        <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs">2</span>
+                        <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs">2</span>
+                        <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-800 text-slate-900 font-bold flex items-center justify-center text-xs">2</span>
+                    </div>
+
+                    <!-- Base Case Level: N/8 = 1 -->
+                    <div class="flex justify-between text-xs px-0.5 items-center">
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
+                        <span class="w-5 h-5 rounded-full bg-emerald-100 border border-emerald-700 text-emerald-950 font-bold flex items-center justify-center text-[10px]">1</span>
                     </div>
                 </div>
+            </div>
 
-                <!-- LEAF 16: Slide 32 & Slide 33 -->
+            <!-- Bulleted Explanatory Notes -->
+            <ul class="mt-3 pt-3 border-t border-slate-200 space-y-1.5 text-xs sm:text-sm font-sans text-slate-800 leading-snug">
+                <li class="flex items-start space-x-2">
+                    <span class="text-purple-700 font-bold">•</span>
+                    <span>Each node represents a recursive subproblem.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-purple-700 font-bold">•</span>
+                    <span>The array is divided until each subarray contains one element.</span>
+                </li>
+                <li class="flex items-start space-x-2">
+                    <span class="text-purple-700 font-bold">•</span>
+                    <span>The process then returns upward as the subarrays are merged.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <span class="page-folio">30</span>
+</div>
+                    <!-- Page 36: Time Complexity Analysis -->
+<div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+    <div>
+        <span class="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.2</span>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">
+            TIME COMPLEXITY
+        </h2>
+    </div>
+
+    <div class="space-y-4 my-auto text-slate-900 max-w-2xl mx-auto w-full">
+        <!-- Box 1: Overall Complexity -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-5 shadow-sm text-center">
+            <p class="text-base sm:text-lg font-bold text-slate-800">Merge sort</p>
+            <p class="text-base sm:text-lg font-bold text-slate-800">Time complexity:</p>
+            <p class="code-font text-3xl sm:text-4xl font-black text-purple-900 mt-1">O(n log n)</p>
+        </div>
+
+        <!-- Box 2: O(log n) Breakdown -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-5 shadow-sm text-center space-y-2">
+            <p class="code-font text-xl sm:text-2xl font-extrabold text-purple-900">O(log n)</p>
+            <ul class="text-base sm:text-lg text-slate-800 space-y-1 font-medium">
+                <li>- number of levels</li>
+                <li>- repeatedly divide by 2 until the subproblem size is 1.</li>
+            </ul>
+        </div>
+
+        <!-- Box 3: O(n) Breakdown -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-5 shadow-sm text-center space-y-2">
+            <p class="code-font text-xl sm:text-2xl font-extrabold text-purple-900">O(n)</p>
+            <ul class="text-base sm:text-lg text-slate-800 space-y-1 font-medium">
+                <li>- work per level</li>
+                <li>- All subarrays collectively contain n elements to process.</li>
+            </ul>
+        </div>
+    </div>
+
+    <span class="page-folio">31</span>
+</div>
+                </div>
+
+                <!-- Pages 37 & 38: Algorithm Comparison -->
                 <div class="leaf" id="leaf-16" style="z-index: 4;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 32 (Comparing Section Header) -->
+                    <!-- Page 37: Algorithm Comparison Section Title -->
                     <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
                         <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 08</div>
                         <div class="my-auto space-y-4">
@@ -1929,101 +2336,87 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                         </div>
                         <span class="page-folio">32</span>
                     </div>
-                    <!-- Back Face: Slide 33 (Comparing Each Sorting Algorithm) -->
+                    <!-- Page 38: Comparing Each Sorting Algorithm -->
                     <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.1</span>
-                            <h2 class="heading-font text-base sm:text-lg font-extrabold text-slate-900 mt-1">
-                                Comparing Each Algorithm:
-                            </h2>
-                        </div>
-                        <div class="space-y-2.5 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
-                                <p class="text-slate-900 font-medium">
-                                    <strong class="font-bold text-purple-700">a. Selection Sort:</strong> Repeatedly finds the minimum element and places it into the sorted partition.
-                                </p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
-                                <p class="text-slate-900 font-medium">
-                                    <strong class="font-bold text-blue-700">b. Insertion Sort:</strong> Inserts each unsorted element into its suitable place by shifting larger elements.
-                                </p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
-                                <p class="text-slate-900 font-medium">
-                                    <strong class="font-bold text-emerald-700">c. Merge Sort:</strong> Divides array into two halves, recursively sorts, then merges the sorted halves.
-                                </p>
-                            </div>
-                        </div>
-                        <span class="page-folio">33</span>
-                    </div>
+    <div>
+        <span class="text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.1</span>
+        <h2 class="heading-font text-2xl sm:text-3xl font-black text-slate-900 uppercase tracking-tight mt-1">
+            COMPARING EACH SORTING ALGORITHM:
+        </h2>
+    </div>
+
+    <div class="space-y-4 my-auto text-slate-900 max-w-2xl mx-auto w-full">
+        <!-- Option A: Selection Sort Algorithm -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center">
+            <p class="text-base sm:text-lg font-medium text-slate-900 leading-snug">
+                <strong class="font-black">a. Selection Sort algorithm</strong> - Repeatedly finding the minimum element
+            </p>
+        </div>
+
+        <!-- Option B: Insertion Sort Algorithm -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center">
+            <p class="text-base sm:text-lg font-medium text-slate-900 leading-snug">
+                <strong class="font-black">b. Insertion Sort Algorithm</strong> - Places unsorted element at its suitable place in each iteration
+            </p>
+        </div>
+
+        <!-- Option C: Merge Sort -->
+        <div class="border-2 border-slate-900 bg-white rounded-xl p-4 sm:p-5 shadow-sm text-center">
+            <p class="text-base sm:text-lg font-medium text-slate-900 leading-snug">
+                <strong class="font-black">c. Merge Sort</strong> - divides input array into two-halves and then merges as sorted halves.
+            </p>
+        </div>
+    </div>
+
+    <span class="page-folio">33</span>
+</div>
                 </div>
 
-                <!-- LEAF 17: Slide 34 & Chapter Summary -->
+                <!-- Pages 39 & 40: Usage Guide and End-Sheet -->
                 <div class="leaf" id="leaf-17" style="z-index: 3;">
                     <div class="leaf-shadow"></div>
-                    <!-- Front Face: Slide 34 (When to Use) -->
-                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
-                        <div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.2</span>
-                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
-                                When to Use?
-                            </h2>
-                        </div>
-                        <div class="space-y-3 my-auto text-xs">
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <p class="text-slate-900">
-                                    <strong class="font-bold text-purple-700 text-sm block mb-1">a. Selection Sort</strong>
-                                    Use when the list is small or writing to memory is expensive.
-                                </p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <p class="text-slate-900">
-                                    <strong class="font-bold text-blue-700 text-sm block mb-1">b. Insertion Sort</strong>
-                                    Use when the data set is nearly sorted or very small.
-                                </p>
-                            </div>
-                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
-                                <p class="text-slate-900">
-                                    <strong class="font-bold text-emerald-700 text-sm block mb-1">c. Merge Sort</strong>
-                                    Use when sorting large amounts of data requiring predictable O(n log n) performance.
-                                </p>
-                            </div>
-                        </div>
-                        <span class="page-folio">34</span>
-                    </div>
-                    <!-- Back Face: Chapter Summary & Close Action -->
-                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-6 sm:p-8 text-center" onclick="handlePageClick(event, 'left')">
-                        <div class="text-xs font-mono text-purple-300 uppercase tracking-widest">End of Monograph</div>
-                        <div class="space-y-4 my-auto">
-                            <div class="w-16 h-16 mx-auto rounded-2xl bg-white/10 border border-purple-400/40 flex items-center justify-center text-purple-300 text-3xl shadow-xl">
-                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                            </div>
-                            <h2 class="heading-font text-2xl font-black text-white uppercase">
-                                Chapter 5 Complete!
-                            </h2>
-                            <p class="text-xs text-purple-200 max-w-xs mx-auto leading-relaxed">
-                                You have explored Selection Sort, Insertion Sort, Recursion &amp; Divide-and-Conquer, and Merge Sort.
-                            </p>
-                            <div class="pt-2 flex justify-center space-x-3">
-                                <button onclick="event.stopPropagation(); goToSpread(0)" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition">
-                                    <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Read Again
-                                </button>
-                                <button onclick="event.stopPropagation(); closeBook()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-200 font-bold text-xs border border-purple-500/30 transition">
-                                    <i class="fa-solid fa-book mr-1"></i> Close Book
-                                </button>
-                            </div>
-                        </div>
-                        <span class="page-folio">End</span>
-                    </div>
+                    <!-- Page 39: When to Use Each Sorting Algorithm -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-8 sm:p-10 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+    <div>
+        <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.1</span>
+        <h2 class="heading-font text-4xl sm:text-5xl font-black text-slate-900 uppercase tracking-tight mt-1">
+            WHEN TO USE?
+        </h2>
+    </div>
+
+    <div class="space-y-6 my-auto text-slate-900 max-w-3xl mx-auto w-full">
+        <!-- Option A: Selection Sort -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 sm:p-8 shadow-sm text-center">
+            <p class="text-xl sm:text-2xl font-medium text-slate-900">
+                <strong class="font-black">a. Selection Sort</strong> - When the list is small
+            </p>
+        </div>
+
+        <!-- Option B: Insertion Sort -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 sm:p-8 shadow-sm text-center">
+            <p class="text-xl sm:text-2xl font-medium text-slate-900">
+                <strong class="font-black">b. Insertion Sort</strong> - Nearly sorted, and small data set
+            </p>
+        </div>
+
+        <!-- Option C: Merge Sort -->
+        <div class="border-2 border-slate-900 bg-white rounded-2xl p-6 sm:p-8 shadow-sm text-center">
+            <p class="text-xl sm:text-2xl font-medium text-slate-900">
+                <strong class="font-black">c. Merge Sort</strong> - When sorting large amounts of data
+            </p>
+        </div>
+    </div>
+
+    <span class="page-folio">33</span>
+</div>
                 </div>
 
-                <!-- LEAF 18: Outside Back Cover -->
+                <!-- Page 40: Inside End-Sheet; outside back cover is unnumbered -->
                 <div class="leaf" id="leaf-18" style="z-index: 2;">
                     <div class="leaf-shadow"></div>
                     <!-- Front Face: Inside End-sheet -->
                     <div class="page-face front-face cover-hardcover flex flex-col justify-center items-center p-8 text-center" onclick="handlePageClick(event, 'right')">
                         <i class="fa-solid fa-shapes text-purple-400 text-4xl mb-4 opacity-50"></i>
-                        <p class="text-xs text-purple-300 font-mono tracking-widest uppercase">Ubznatural Presentation Series</p>
                     </div>
                     <!-- Back Face: Outside Back Cover (When book is closed from behind) -->
                     <div class="page-face back-face cover-hardcover flex flex-col justify-center items-center p-8 text-center" onclick="closeBook()">
@@ -2041,7 +2434,6 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
             </div>
         </div>
-
     </div>
 
     <!-- Floating Glassmorphic Dock at Bottom -->
@@ -2108,7 +2500,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 <div id="tocList" class="mt-4 space-y-2 text-xs font-medium"></div>
             </div>
             <div class="pt-6 border-t border-purple-500/20 text-center text-slate-500 text-[11px]">
-                Chapter 5: Sorting &amp; Divide-and-Conquer • 38 Slides
+                Chapter 5: Sorting &amp; Divide-and-Conquer • 40 Slides
             </div>
         </div>
     </div>
@@ -2150,7 +2542,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
     <!-- JavaScript Interactive Presentation Engine -->
     <script>
-        // Spread 0 is the closed cover; spreads 1..20 show pages 1 to 40; spread 21 is the back cover.
+        // Spread 0 is the closed cover; spreads 1..20 show pages 1 to 40.
         const presentationLeaves = [...document.querySelectorAll('#bookPages > .leaf')];
         const frontCover = presentationLeaves[0].querySelector('.front-face');
         const orderedPages = [...document.querySelectorAll('#bookPages .page-face')]
@@ -2169,21 +2561,24 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             const leaf = presentationLeaves[leafIndex];
             face.classList.toggle('front-face', isFront);
             face.classList.toggle('back-face', !isFront);
-            face.setAttribute(
-                'onclick',
-                face.querySelector('.cover-hardcover h3')
-                    ? 'closeBook()'
-                    : `handlePageClick(event, '${isFront ? 'right' : 'left'}')`
-            );
+            if (face.hasAttribute('data-no-page-turn')) {
+                face.removeAttribute('onclick');
+            } else {
+                face.setAttribute(
+                    'onclick',
+                    face.querySelector('.cover-hardcover h3')
+                        ? 'closeBook()'
+                        : `handlePageClick(event, '${isFront ? 'right' : 'left'}')`
+                );
+            }
             const folio = face.querySelector('.page-folio');
             if (folio) folio.textContent = String(pageNumber).padStart(2, '0');
             leaf.append(face);
         });
 
-        const totalSpreads = 21;
+        const totalSpreads = 20;
         const totalLeaves = presentationLeaves.length;
         let currentSpread = 0;
-        let isBookOpen = false;
         let autoplayInterval = null;
         let soundEnabled = true;
         let audioCtx = null;
@@ -2215,42 +2610,188 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             { title: "Recursion Definition & Divide-and-Conquer Rules", pages: "Pages 25 & 26", desc: "Recursive functions, base cases, and decomposition" },
             { title: "Divide-and-Conquer & Sorting Tree", pages: "Pages 27 & 28", desc: "Problem decomposition and merge sort tree" },
             { title: "Merge Sort Introduction & Algorithm", pages: "Pages 29 & 30", desc: "Section introduction and algorithm overview" },
-            { title: "Merge Sort Process & Python Code", pages: "Pages 31 & 32", desc: "Divide/merge steps and implementation" },
-            { title: "Recurrence Header & Relation", pages: "Pages 33 & 34", desc: "Analysis section and recurrence equation" },
-            { title: "Merge Sort Complexity & Algorithm Comparison", pages: "Pages 35 & 36", desc: "O(n log n) analysis and sorting comparison" },
-            { title: "Comparison Details & When to Use", pages: "Pages 37 & 38", desc: "Algorithm strengths and selection guide" },
-            { title: "Chapter Summary & End-sheet", pages: "Pages 39 & 40", desc: "Chapter recap and series end-sheet" },
-            { title: "Presentation Closing", pages: "Back cover", desc: "Outside back cover" }
+            { title: "Merge Sort Process & Interactive Visualizer", pages: "Pages 31 & 32", desc: "Divide/merge steps and step-through graph" },
+            { title: "Merge Sort Python & Recursion Header", pages: "Pages 33 & 34", desc: "Implementation and complexity section title" },
+            { title: "Recurrence Relation & Time Complexity", pages: "Pages 35 & 36", desc: "Merge sort recurrence and O(n log n) analysis" },
+            { title: "Algorithm Comparison & Comparison Details", pages: "Pages 37 & 38", desc: "Sorting comparison and algorithm strengths" },
+            { title: "When to Use & Final Page", pages: "Pages 39 & 40", desc: "Algorithm selection guide and final end-sheet" }
         ];
+
+        function createVisualizerControls({
+            page,
+            chart,
+            speed,
+            speedValue,
+            actionAttribute,
+            algorithmName,
+            getFrameCount,
+            getPosition,
+            setPosition,
+            render
+        }) {
+            let timer = null;
+            const actionSelector = `[${actionAttribute}]`;
+            const lastPosition = () => getFrameCount() - 1;
+            const getStepDelay = () => Math.round(
+                (Number(speed.min) * Number(speed.max)) / Number(speed.value)
+            );
+
+            function renderFrame() {
+                render();
+                page.querySelector(`[${actionAttribute}="previous"]`).disabled = getPosition() === 0;
+                page.querySelector(`[${actionAttribute}="next"]`).disabled = getPosition() === lastPosition();
+                chart.setAttribute('aria-disabled', String(getPosition() === lastPosition()));
+                chart.setAttribute(
+                    'aria-label',
+                    `${algorithmName} graph, step ${getPosition() + 1} of ${getFrameCount()}. Activate to advance one step.`
+                );
+            }
+
+            function pause() {
+                if (timer !== null) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+                const playButton = page.querySelector(`[${actionAttribute}="play"]`);
+                playButton.textContent = 'Play';
+                playButton.setAttribute('aria-pressed', 'false');
+            }
+
+            function scheduleNextFrame() {
+                timer = setTimeout(() => {
+                    if (getPosition() < lastPosition()) {
+                        setPosition(getPosition() + 1);
+                        renderFrame();
+                        scheduleNextFrame();
+                    } else {
+                        pause();
+                    }
+                }, getStepDelay());
+            }
+
+            function handleAction(action) {
+                if (action === 'play') {
+                    if (timer !== null) {
+                        pause();
+                        return;
+                    }
+                    if (getPosition() === lastPosition()) {
+                        setPosition(0);
+                        renderFrame();
+                    }
+                    const playButton = page.querySelector(`[${actionAttribute}="play"]`);
+                    playButton.textContent = 'Pause';
+                    playButton.setAttribute('aria-pressed', 'true');
+                    scheduleNextFrame();
+                    return;
+                }
+
+                pause();
+                if (action === 'reset') setPosition(0);
+                else if (action === 'previous') setPosition(Math.max(0, getPosition() - 1));
+                else if (action === 'next') setPosition(Math.min(lastPosition(), getPosition() + 1));
+                renderFrame();
+            }
+
+            function updateSpeedLabel() {
+                const delay = getStepDelay();
+                const label = delay >= 1000
+                    ? `${(delay / 1000).toFixed(delay % 1000 === 0 ? 0 : 1)} s/step`
+                    : `${delay} ms/step`;
+                speedValue.textContent = label;
+                speed.setAttribute('aria-valuetext', label);
+            }
+
+            page.addEventListener('click', (event) => {
+                const button = event.target.closest(`button${actionSelector}`);
+                if (button) {
+                    handleAction(button.getAttribute(actionAttribute));
+                } else if (chart.contains(event.target)) {
+                    event.stopPropagation();
+                    if (getPosition() < lastPosition()) handleAction('next');
+                }
+            });
+            chart.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter' && event.key !== ' ') return;
+                event.preventDefault();
+                event.stopPropagation();
+                if (getPosition() < lastPosition()) handleAction('next');
+            });
+            speed.addEventListener('input', () => {
+                updateSpeedLabel();
+                if (timer !== null) {
+                    pause();
+                    handleAction('play');
+                }
+            });
+
+            updateSpeedLabel();
+            renderFrame();
+            return { pause, handleAction };
+        }
+
+        const bookPagesElement = document.getElementById('bookPages');
+        function createPageOverlay(page, leaf, openClass, faceClass) {
+            return {
+                show() {
+                    if (page.parentElement === bookPagesElement) return;
+                    page.classList.remove('back-face');
+                    page.classList.add(openClass);
+                    bookPagesElement.append(page);
+                },
+                restore() {
+                    if (page.parentElement === leaf) return;
+                    page.classList.remove(openClass);
+                    page.classList.add(faceClass);
+                    leaf.append(page);
+                }
+            };
+        }
+        function revealDemoAfterPageTurn(spread, overlay) {
+            const turnAnimations = presentationLeaves
+                .flatMap((leaf) => leaf.getAnimations())
+                .filter((animation) => animation.transitionProperty === 'transform');
+            const transitionDuration = Math.max(...presentationLeaves.map((leaf) => {
+                const style = getComputedStyle(leaf);
+                const durations = style.transitionDuration.split(',').map((value) =>
+                    value.trim().endsWith('ms')
+                        ? parseFloat(value)
+                        : parseFloat(value) * 1000
+                );
+                const delays = style.transitionDelay.split(',').map((value) =>
+                    value.trim().endsWith('ms')
+                        ? parseFloat(value)
+                        : parseFloat(value) * 1000
+                );
+                return Math.max(...durations.map((duration, index) =>
+                    duration + (delays[index % delays.length] || 0)
+                ));
+            }));
+            const animationComplete = Promise.all(
+                turnAnimations.map((animation) => animation.finished.catch(() => {}))
+            );
+            let fallbackTimer;
+            const fallbackComplete = new Promise((resolve) => {
+                fallbackTimer = setTimeout(resolve, transitionDuration + 500);
+            });
+
+            Promise.race([animationComplete, fallbackComplete]).then(() => {
+                clearTimeout(fallbackTimer);
+                if (currentSpread === spread) overlay.show();
+            });
+        }
 
         const selectionDemo = document.getElementById('selectionSortInteractive');
         const selectionDemoLeaf = selectionDemo.parentElement;
-        const bookPagesElement = document.getElementById('bookPages');
-        const selectionDemoArray = [8, 3, 5, 9, 2, 7, 1, 6, 4];
+        const selectionDemoOverlay = createPageOverlay(
+            selectionDemo,
+            selectionDemoLeaf,
+            'selection-demo-open-page',
+            'back-face'
+        );
+        const selectionDemoArray = [64, 25, 12, 22, 11];
         const selectionDemoFrames = [];
         let selectionDemoPosition = 0;
-        let selectionDemoTimer = null;
-
-        // Keep the interactive page out of the flipped 3D leaf so its controls stay hit-testable.
-        function showSelectionDemoOnLeftPage() {
-            if (selectionDemo.parentElement === bookPagesElement) return;
-            selectionDemo.classList.remove('back-face');
-            selectionDemo.classList.add('selection-demo-open-page');
-            bookPagesElement.append(selectionDemo);
-        }
-
-        function restoreSelectionDemoToLeaf() {
-            if (selectionDemo.parentElement === selectionDemoLeaf) return;
-            selectionDemo.classList.remove('selection-demo-open-page');
-            selectionDemo.classList.add('back-face');
-            selectionDemoLeaf.append(selectionDemo);
-        }
-
-        selectionDemoLeaf.addEventListener('transitionend', (event) => {
-            if (event.target === selectionDemoLeaf && event.propertyName === 'transform' && currentSpread === 3) {
-                showSelectionDemoOnLeftPage();
-            }
-        });
 
         function createSelectionDemoFrames() {
             const values = [...selectionDemoArray];
@@ -2297,11 +2838,12 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         function renderSelectionDemo() {
             const frame = selectionDemoFrames[selectionDemoPosition];
             const chart = selectionDemo.querySelector('[data-selection-role="array"]');
+            const tallestValue = Math.max(...frame.values);
             chart.replaceChildren();
             frame.values.forEach((value, index) => {
                 const bar = document.createElement('div');
                 bar.className = 'selection-demo-bar';
-                bar.style.height = `${Math.max(26, value * 12)}px`;
+                bar.style.height = `${Math.round(24 + (value / tallestValue) * 96)}px`;
                 bar.textContent = String(value);
                 bar.setAttribute('aria-label', `Value ${value}`);
                 if (index < frame.sortedCount) {
@@ -2317,122 +2859,34 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             selectionDemo.querySelector('[data-selection-role="comparisons"]').textContent = frame.comparisons;
             selectionDemo.querySelector('[data-selection-role="swaps"]').textContent = frame.swaps;
             selectionDemo.querySelector('[data-selection-role="explanation"]').textContent = frame.message;
-            selectionDemo.querySelector('[data-selection-action="previous"]').disabled = selectionDemoPosition === 0;
-            selectionDemo.querySelector('[data-selection-action="next"]').disabled = selectionDemoPosition === selectionDemoFrames.length - 1;
-            chart.setAttribute('aria-disabled', String(selectionDemoPosition === selectionDemoFrames.length - 1));
-            chart.setAttribute(
-                'aria-label',
-                `Selection sort graph, step ${selectionDemoPosition + 1} of ${selectionDemoFrames.length}. Activate to advance one step.`
-            );
-        }
-
-        function pauseSelectionDemo() {
-            if (selectionDemoTimer !== null) {
-                clearTimeout(selectionDemoTimer);
-                selectionDemoTimer = null;
-            }
-            if (selectionDemo) {
-                const playButton = selectionDemo.querySelector('[data-selection-action="play"]');
-                playButton.textContent = 'Play';
-                playButton.setAttribute('aria-pressed', 'false');
-            }
-        }
-
-        function getSelectionDemoStepDelay() {
-            const minSpeed = Number(selectionDemoSpeed.min);
-            const maxSpeed = Number(selectionDemoSpeed.max);
-            const speed = Number(selectionDemoSpeed.value);
-            return Math.round((minSpeed * maxSpeed) / speed);
-        }
-
-        function updateSelectionDemoSpeedLabel() {
-            const delay = getSelectionDemoStepDelay();
-            const delayLabel = delay >= 1000
-                ? `${(delay / 1000).toFixed(delay % 1000 === 0 ? 0 : 1)} s/step`
-                : `${delay} ms/step`;
-            selectionDemoSpeedValue.value = delayLabel;
-            selectionDemoSpeed.setAttribute('aria-valuetext', `${delayLabel} at the selected speed`);
-        }
-
-        function scheduleSelectionDemoFrame() {
-            selectionDemoTimer = setTimeout(() => {
-                if (selectionDemoPosition < selectionDemoFrames.length - 1) {
-                    selectionDemoPosition++;
-                    renderSelectionDemo();
-                    scheduleSelectionDemoFrame();
-                } else {
-                    pauseSelectionDemo();
-                }
-            }, getSelectionDemoStepDelay());
-        }
-
-        function playSelectionDemo() {
-            if (selectionDemoPosition === selectionDemoFrames.length - 1) {
-                selectionDemoPosition = 0;
-                renderSelectionDemo();
-            }
-            const playButton = selectionDemo.querySelector('[data-selection-action="play"]');
-            playButton.textContent = 'Pause';
-            playButton.setAttribute('aria-pressed', 'true');
-            scheduleSelectionDemoFrame();
         }
 
         selectionDemoFrames.push(...createSelectionDemoFrames());
-        renderSelectionDemo();
-        function handleSelectionDemoAction(action) {
-            if (action === 'play') {
-                if (selectionDemoTimer === null) playSelectionDemo();
-                else pauseSelectionDemo();
-                return;
-            }
-
-            pauseSelectionDemo();
-            if (action === 'reset') selectionDemoPosition = 0;
-            else if (action === 'previous') selectionDemoPosition = Math.max(0, selectionDemoPosition - 1);
-            else if (action === 'next') selectionDemoPosition = Math.min(selectionDemoFrames.length - 1, selectionDemoPosition + 1);
-            renderSelectionDemo();
-        }
-
-        selectionDemo.addEventListener('click', (event) => {
-            const button = event.target.closest('button[data-selection-action]');
-            if (button) {
-                handleSelectionDemoAction(button.dataset.selectionAction);
-                return;
-            }
-
-            if (event.target.closest('[data-selection-role="array"]')) {
-                event.stopPropagation();
-                if (selectionDemoPosition < selectionDemoFrames.length - 1) {
-                    handleSelectionDemoAction('next');
-                }
-            }
+        const selectionPlayback = createVisualizerControls({
+            page: selectionDemo,
+            chart: selectionDemo.querySelector('[data-selection-role="array"]'),
+            speed: selectionDemo.querySelector('[data-selection-role="speed"]'),
+            speedValue: selectionDemo.querySelector('[data-selection-role="speed-value"]'),
+            actionAttribute: 'data-selection-action',
+            algorithmName: 'Selection sort',
+            getFrameCount: () => selectionDemoFrames.length,
+            getPosition: () => selectionDemoPosition,
+            setPosition: (position) => { selectionDemoPosition = position; },
+            render: renderSelectionDemo
         });
-        selectionDemo.querySelector('[data-selection-role="array"]').addEventListener('keydown', (event) => {
-            if (event.key !== 'Enter' && event.key !== ' ') return;
-            event.preventDefault();
-            event.stopPropagation();
-            if (selectionDemoPosition < selectionDemoFrames.length - 1) {
-                handleSelectionDemoAction('next');
-            }
-        });
-        const selectionDemoSpeed = selectionDemo.querySelector('[data-selection-role="speed"]');
-        const selectionDemoSpeedValue = selectionDemo.querySelector('[data-selection-role="speed-value"]');
-        selectionDemoSpeed.addEventListener('input', () => {
-            updateSelectionDemoSpeedLabel();
-            if (selectionDemoTimer !== null) {
-                pauseSelectionDemo();
-                playSelectionDemo();
-            }
-        });
-        updateSelectionDemoSpeedLabel();
 
         const insertionSortPage = document.getElementById('insertionSortInteractivePage');
+        const insertionSortPageLeaf = insertionSortPage.parentElement;
+        const insertionSortOverlay = createPageOverlay(
+            insertionSortPage,
+            insertionSortPageLeaf,
+            'insertion-demo-open-page',
+            'front-face'
+        );
         const insertionSortArray = document.getElementById('insertionSortArray');
         const insertionSortSpeed = document.getElementById('insertionSortSpeed');
-        const insertionSortSpeedValue = document.getElementById('insertionSortSpeedValue');
         const insertionSortFrames = [];
         let insertionSortPosition = 0;
-        let insertionSortTimer = null;
 
         function createInsertionSortFrames() {
             const values = [40, 10, 30, 20];
@@ -2490,127 +2944,193 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             insertionSortArray.replaceChildren();
             frame.values.forEach((value, index) => {
                 const bar = document.createElement('div');
-                bar.className = 'flex items-end justify-center rounded-t-lg pb-1 text-sm font-extrabold text-white shadow-sm';
-                bar.style.height = `${Math.max(36, value * 2.4)}px`;
-                bar.style.width = 'min(20%, 3.5rem)';
-                bar.style.backgroundColor = index === frame.keyIndex
-                    ? '#d97706'
-                    : index === frame.comparingIndex
-                        ? '#dc2626'
-                        : index < frame.sortedCount
-                            ? '#059669'
-                            : '#64748b';
+                bar.className = 'selection-demo-bar';
+                bar.style.height = `${Math.max(26, value * 2)}px`;
                 bar.textContent = String(value);
                 bar.setAttribute('aria-label', `Value ${value}`);
+                if (index === frame.keyIndex) {
+                    bar.classList.add('current');
+                } else if (index === frame.comparingIndex) {
+                    bar.classList.add('comparing');
+                } else if (index < frame.sortedCount) {
+                    bar.classList.add('sorted');
+                }
                 insertionSortArray.append(bar);
             });
 
             document.getElementById('insertionSortComparisons').textContent = frame.comparisons;
             document.getElementById('insertionSortShifts').textContent = frame.shifts;
             document.getElementById('insertionSortExplanation').textContent = frame.message;
-            insertionSortPage.querySelector('[data-insertion-action="previous"]').disabled =
-                insertionSortPosition === 0;
-            insertionSortPage.querySelector('[data-insertion-action="next"]').disabled =
-                insertionSortPosition === insertionSortFrames.length - 1;
-            insertionSortArray.setAttribute(
-                'aria-label',
-                `Insertion sort graph, step ${insertionSortPosition + 1} of ${insertionSortFrames.length}. Activate to advance one step.`
-            );
-        }
-
-        function getInsertionSortStepDelay() {
-            return Math.round(
-                (Number(insertionSortSpeed.min) * Number(insertionSortSpeed.max)) /
-                Number(insertionSortSpeed.value)
-            );
-        }
-
-        function updateInsertionSortSpeedLabel() {
-            const delay = getInsertionSortStepDelay();
-            insertionSortSpeedValue.textContent = delay >= 1000
-                ? `${(delay / 1000).toFixed(delay % 1000 === 0 ? 0 : 1)} s/step`
-                : `${delay} ms/step`;
-            insertionSortSpeed.setAttribute('aria-valuetext', insertionSortSpeedValue.textContent);
-        }
-
-        function pauseInsertionSortDemo() {
-            if (insertionSortTimer !== null) {
-                clearTimeout(insertionSortTimer);
-                insertionSortTimer = null;
-            }
-            const playButton = insertionSortPage.querySelector('[data-insertion-action="play"]');
-            playButton.textContent = 'Play';
-            playButton.setAttribute('aria-pressed', 'false');
-        }
-
-        function scheduleInsertionSortFrame() {
-            insertionSortTimer = setTimeout(() => {
-                if (insertionSortPosition < insertionSortFrames.length - 1) {
-                    insertionSortPosition++;
-                    renderInsertionSortFrame();
-                    scheduleInsertionSortFrame();
-                } else {
-                    pauseInsertionSortDemo();
-                }
-            }, getInsertionSortStepDelay());
-        }
-
-        function handleInsertionSortAction(action) {
-            if (action === 'play') {
-                if (insertionSortTimer !== null) {
-                    pauseInsertionSortDemo();
-                    return;
-                }
-                if (insertionSortPosition === insertionSortFrames.length - 1) {
-                    insertionSortPosition = 0;
-                    renderInsertionSortFrame();
-                }
-                const playButton = insertionSortPage.querySelector('[data-insertion-action="play"]');
-                playButton.textContent = 'Pause';
-                playButton.setAttribute('aria-pressed', 'true');
-                scheduleInsertionSortFrame();
-                return;
-            }
-
-            pauseInsertionSortDemo();
-            if (action === 'reset') insertionSortPosition = 0;
-            else if (action === 'previous') insertionSortPosition = Math.max(0, insertionSortPosition - 1);
-            else if (action === 'next') {
-                insertionSortPosition = Math.min(
-                    insertionSortFrames.length - 1,
-                    insertionSortPosition + 1
-                );
-            }
-            renderInsertionSortFrame();
         }
 
         insertionSortFrames.push(...createInsertionSortFrames());
-        renderInsertionSortFrame();
-        insertionSortPage.addEventListener('click', (event) => {
-            const button = event.target.closest('button[data-insertion-action]');
-            if (button) {
-                handleInsertionSortAction(button.dataset.insertionAction);
-                return;
-            }
-            if (event.target.closest('[data-insertion-role="array"]')) {
-                event.stopPropagation();
-                handleInsertionSortAction('next');
-            }
+        const insertionPlayback = createVisualizerControls({
+            page: insertionSortPage,
+            chart: insertionSortArray,
+            speed: insertionSortSpeed,
+            speedValue: document.getElementById('insertionSortSpeedValue'),
+            actionAttribute: 'data-insertion-action',
+            algorithmName: 'Insertion sort',
+            getFrameCount: () => insertionSortFrames.length,
+            getPosition: () => insertionSortPosition,
+            setPosition: (position) => { insertionSortPosition = position; },
+            render: renderInsertionSortFrame
         });
-        insertionSortArray.addEventListener('keydown', (event) => {
-            if (event.key !== 'Enter' && event.key !== ' ') return;
-            event.preventDefault();
-            event.stopPropagation();
-            handleInsertionSortAction('next');
-        });
-        insertionSortSpeed.addEventListener('input', () => {
-            updateInsertionSortSpeedLabel();
-            if (insertionSortTimer !== null) {
-                pauseInsertionSortDemo();
-                handleInsertionSortAction('play');
+
+        const mergeSortPage = document.getElementById('mergeSortInteractivePage');
+        const mergeSortPageLeaf = mergeSortPage.parentElement;
+        const mergeSortOverlay = createPageOverlay(
+            mergeSortPage,
+            mergeSortPageLeaf,
+            'merge-demo-open-page',
+            'front-face'
+        );
+        const mergeSortArray = document.getElementById('mergeSortArray');
+        const mergeSortSpeed = mergeSortPage.querySelector('[data-merge-role="speed"]');
+        const mergeSortValues = [8, 3, 6, 2];
+        const mergeSortFrames = [];
+        let mergeSortPosition = 0;
+
+        function createMergeSortFrames() {
+            const values = [...mergeSortValues];
+            const mergedRanges = [];
+            let comparisons = 0;
+            let merges = 0;
+            const frames = [];
+            const saveFrame = (activeStart, activeEnd, comparingIndices, message, phase) => {
+                frames.push({
+                    values: [...values],
+                    activeStart,
+                    activeEnd,
+                    comparingIndices: [...comparingIndices],
+                    mergedRanges: mergedRanges.map((range) => [...range]),
+                    comparisons,
+                    merges,
+                    message,
+                    phase
+                });
+            };
+
+            saveFrame(-1, -1, [], 'Start with [8, 3, 6, 2]. Split the array until each group has one value.', 'ready');
+
+            function sortRange(start, end) {
+                if (start === end) {
+                    saveFrame(start, end, [], `${values[start]} is a one-value group and is already sorted.`, 'divide');
+                    return;
+                }
+
+                const middle = Math.floor((start + end) / 2);
+                saveFrame(
+                    start,
+                    end,
+                    [],
+                    `Divide [${values.slice(start, end + 1).join(', ')}] into [${values.slice(start, middle + 1).join(', ')}] and [${values.slice(middle + 1, end + 1).join(', ')}].`,
+                    'divide'
+                );
+                sortRange(start, middle);
+                sortRange(middle + 1, end);
+
+                const left = values.slice(start, middle + 1);
+                const right = values.slice(middle + 1, end + 1);
+                const merged = [];
+                let leftIndex = 0;
+                let rightIndex = 0;
+
+                while (leftIndex < left.length && rightIndex < right.length) {
+                    comparisons++;
+                    saveFrame(
+                        start,
+                        end,
+                        [start + leftIndex, middle + 1 + rightIndex],
+                        `Compare ${left[leftIndex]} and ${right[rightIndex]}; take the smaller value first.`,
+                        'merge'
+                    );
+                    if (left[leftIndex] <= right[rightIndex]) {
+                        merged.push(left[leftIndex++]);
+                    } else {
+                        merged.push(right[rightIndex++]);
+                    }
+                    values[start + merged.length - 1] = merged[merged.length - 1];
+                    saveFrame(
+                        start,
+                        end,
+                        [],
+                        `Place ${merged[merged.length - 1]} into the merged group.`,
+                        'merge'
+                    );
+                }
+
+                while (leftIndex < left.length) {
+                    merged.push(left[leftIndex++]);
+                    values[start + merged.length - 1] = merged[merged.length - 1];
+                }
+                while (rightIndex < right.length) {
+                    merged.push(right[rightIndex++]);
+                    values[start + merged.length - 1] = merged[merged.length - 1];
+                }
+
+                for (let index = 0; index < merged.length; index++) {
+                    values[start + index] = merged[index];
+                }
+                merges++;
+                mergedRanges.push([start, end]);
+                saveFrame(
+                    start,
+                    end,
+                    [],
+                    `Merge complete: [${merged.join(', ')}].`,
+                    'merged'
+                );
             }
+
+            sortRange(0, values.length - 1);
+            saveFrame(-1, -1, [], `Merge sort is complete: [${values.join(', ')}].`, 'complete');
+            return frames;
+        }
+
+        function renderMergeSortFrame() {
+            const frame = mergeSortFrames[mergeSortPosition];
+            const tallestValue = Math.max(...frame.values);
+            mergeSortArray.replaceChildren();
+            frame.values.forEach((value, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'selection-demo-bar';
+                bar.style.height = `${Math.round(24 + (value / tallestValue) * 96)}px`;
+                bar.textContent = String(value);
+                bar.setAttribute('aria-label', `Value ${value}`);
+                if (frame.comparingIndices.includes(index)) {
+                    bar.classList.add('comparing');
+                } else if (
+                    (frame.phase === 'complete' || frame.phase === 'merged') &&
+                    frame.mergedRanges.some(([start, end]) => index >= start && index <= end)
+                ) {
+                    bar.classList.add('sorted');
+                } else if (index >= frame.activeStart && index <= frame.activeEnd) {
+                    bar.classList.add('current');
+                } else if (frame.mergedRanges.some(([start, end]) => index >= start && index <= end)) {
+                    bar.classList.add('sorted');
+                }
+                mergeSortArray.append(bar);
+            });
+
+            mergeSortPage.querySelector('[data-merge-role="comparisons"]').textContent = frame.comparisons;
+            mergeSortPage.querySelector('[data-merge-role="merges"]').textContent = frame.merges;
+            mergeSortPage.querySelector('[data-merge-role="explanation"]').textContent = frame.message;
+        }
+
+        mergeSortFrames.push(...createMergeSortFrames());
+        const mergePlayback = createVisualizerControls({
+            page: mergeSortPage,
+            chart: mergeSortArray,
+            speed: mergeSortSpeed,
+            speedValue: mergeSortPage.querySelector('[data-merge-role="speed-value"]'),
+            actionAttribute: 'data-merge-action',
+            algorithmName: 'Merge sort',
+            getFrameCount: () => mergeSortFrames.length,
+            getPosition: () => mergeSortPosition,
+            setPosition: (position) => { mergeSortPosition = position; },
+            render: renderMergeSortFrame
         });
-        updateInsertionSortSpeedLabel();
 
         // Synthesize authentic paper turn sound with Web Audio API
         function playPageTurnSound() {
@@ -2659,8 +3179,15 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
         // Initialize Book Stacking & State
         function updateBookState() {
-            if (currentSpread !== 3) restoreSelectionDemoToLeaf();
-            if (currentSpread !== 9) pauseInsertionSortDemo();
+            if (currentSpread !== 3) selectionDemoOverlay.restore();
+            if (currentSpread !== 9) {
+                insertionPlayback.pause();
+                insertionSortOverlay.restore();
+            }
+            if (currentSpread !== 16) {
+                mergePlayback.pause();
+                mergeSortOverlay.restore();
+            }
 
             for (let i = 0; i < totalLeaves; i++) {
                 const leaf = document.getElementById(`leaf-${i}`);
@@ -2677,16 +3204,17 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 }
             }
             if (currentSpread === 3) {
-                setTimeout(() => {
-                    if (currentSpread === 3 && selectionDemoLeaf.classList.contains('flipped')) {
-                        showSelectionDemoOnLeftPage();
-                    }
-                }, 950);
+                revealDemoAfterPageTurn(3, selectionDemoOverlay);
+            }
+            if (currentSpread === 9) {
+                revealDemoAfterPageTurn(9, insertionSortOverlay);
+            }
+            if (currentSpread === 16) {
+                revealDemoAfterPageTurn(16, mergeSortOverlay);
             }
 
             // Update UI & Stack thicknesses
             if (currentSpread === 0) {
-                isBookOpen = false;
                 bookWrapper.classList.add('closed-view');
                 heroBanner.classList.remove('hidden-mode');
                 bookCoverIcon.className = "fa-solid fa-book";
@@ -2694,16 +3222,13 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 stackLeft.style.opacity = "0";
                 stackRight.style.width = "14px";
             } else {
-                isBookOpen = true;
                 bookWrapper.classList.remove('closed-view');
                 heroBanner.classList.add('hidden-mode');
                 bookCoverIcon.className = "fa-solid fa-book-open";
 
                 const pageNumLeft = (currentSpread * 2) - 1;
                 const pageNumRight = currentSpread * 2;
-                spreadCounter.textContent = currentSpread < totalSpreads
-                    ? `Pages ${pageNumLeft}-${pageNumRight} / 40`
-                    : "Closing";
+                spreadCounter.textContent = `Pages ${pageNumLeft}-${pageNumRight} / 40`;
 
                 stackLeft.style.opacity = "1";
                 stackLeft.style.width = `${Math.min(16, 4 + currentSpread)}px`;
@@ -2711,11 +3236,11 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             }
 
             prevBtn.disabled = currentSpread === 0;
-            nextBtn.disabled = currentSpread >= totalSpreads;
+            nextBtn.disabled = false;
         }
 
         function nextSpread() {
-            pauseSelectionDemo();
+            selectionPlayback.pause();
             if (currentSpread < totalSpreads) {
                 const leafToFlip = document.getElementById(`leaf-${currentSpread}`);
                 if (leafToFlip) {
@@ -2726,13 +3251,14 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 currentSpread++;
                 playPageTurnSound();
                 updateBookState();
-            } else if (autoplayInterval) {
-                toggleAutoplay();
+            } else if (currentSpread === totalSpreads) {
+                if (autoplayInterval) toggleAutoplay();
+                closeBook();
             }
         }
 
         function prevSpread() {
-            pauseSelectionDemo();
+            selectionPlayback.pause();
             if (currentSpread > 0) {
                 currentSpread--;
                 const leafToUnflip = document.getElementById(`leaf-${currentSpread}`);
@@ -2753,7 +3279,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function closeBook() {
-            pauseSelectionDemo();
+            selectionPlayback.pause();
             currentSpread = 0;
             playPageTurnSound();
             updateBookState();
@@ -2769,7 +3295,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
         function goToSpread(index) {
             if (index >= 0 && index <= totalSpreads) {
-                pauseSelectionDemo();
+                selectionPlayback.pause();
                 currentSpread = index;
                 playPageTurnSound();
                 updateBookState();
@@ -2778,8 +3304,9 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         }
 
         function handlePageClick(e, side) {
+            if (e.target.closest('[data-no-page-turn]')) return;
             // Controls and graph clicks are interactions, not page turns.
-            if (e.target.closest('button, input, select, a, pre, code, [data-selection-role="array"], [data-insertion-role="array"]')) return;
+            if (e.target.closest('button, input, select, a, pre, code, [data-selection-role="array"], [data-insertion-role="array"], [data-merge-role="array"]')) return;
 
             if (side === 'right') {
                 nextSpread();
@@ -2909,12 +3436,16 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         // Touch Swipe Support
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartedOnNoPageTurn = false;
         document.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartedOnNoPageTurn = e.target instanceof Element && Boolean(e.target.closest('[data-no-page-turn]'));
         }, { passive: true });
         document.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+            const touchEndedOnNoPageTurn = e.target instanceof Element && Boolean(e.target.closest('[data-no-page-turn]'));
+            if (!touchStartedOnNoPageTurn && !touchEndedOnNoPageTurn) handleSwipe();
+            touchStartedOnNoPageTurn = false;
         }, { passive: true });
 
         function handleSwipe() {
