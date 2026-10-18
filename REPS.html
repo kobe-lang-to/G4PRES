@@ -1,0 +1,2269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5 - Sorting and Divide-and-Conquer | Interactive 3D Portfolio</title>
+    <!-- Tailwind CSS, Google Fonts, Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --book-w: clamp(750px, 80vw, 1180px);
+            --book-h: clamp(480px, 74vh, 680px);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heading-font { font-family: 'Montserrat', sans-serif; }
+        .code-font { font-family: 'Fira Code', monospace; }
+
+        /* ═══════════════════════════════════════════════════════
+           CINEMATIC DARK ROOM — Charcoal Wood Desk with
+           Volumetric Overhead Spotlight & Chiaroscuro Vignette
+           ═══════════════════════════════════════════════════════ */
+        .desk-canvas {
+            position: fixed;
+            inset: 0;
+            /* Base: pitch-black darkness */
+            background-color: #020202;
+            /* Layered charcoal wood grain desk surface */
+            background-image:
+                /* L1: Dramatic overhead spotlight cone — warm directional illumination */
+                radial-gradient(ellipse 48% 42% at 50% 46%,
+                    rgba(255, 235, 205, 0.12) 0%,
+                    rgba(200, 170, 130, 0.07) 25%,
+                    rgba(80, 60, 40, 0.04) 45%,
+                    rgba(10, 8, 6, 0.6) 65%,
+                    rgba(0, 0, 0, 0.92) 80%,
+                    #000000 100%),
+                /* L2: Secondary warm fill light (soft bounce from below) */
+                radial-gradient(ellipse 90% 70% at 50% 55%,
+                    rgba(140, 110, 80, 0.04) 0%,
+                    rgba(0, 0, 0, 0.7) 50%,
+                    #000000 100%),
+                /* L3: Horizontal plank seams — dark charcoal wood */
+                linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.8) 0px, transparent 1.5px,
+                    transparent 160px,
+                    rgba(0, 0, 0, 0.85) 161px, transparent 163px,
+                    transparent 320px,
+                    rgba(0, 0, 0, 0.8) 321px),
+                /* L4: Fine horizontal wood grain texture */
+                repeating-linear-gradient(0deg,
+                    rgba(60, 48, 36, 0.06) 0px,
+                    rgba(40, 32, 24, 0.03) 2px,
+                    rgba(55, 44, 33, 0.05) 4px,
+                    transparent 6px),
+                /* L5: Vertical grain variation streaks */
+                repeating-linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.008) 0px,
+                    rgba(0, 0, 0, 0.015) 30px,
+                    rgba(255, 255, 255, 0.01) 60px,
+                    rgba(0, 0, 0, 0.02) 90px);
+            background-size: 100% 100%, 100% 100%, 100% 323px, 100% 6px, 180px 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Pitch-black vignette overlay — crushes edges into absolute darkness */
+        .desk-canvas::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                /* Heavy corner darkness */
+                radial-gradient(ellipse 55% 50% at 50% 48%,
+                    transparent 0%,
+                    transparent 35%,
+                    rgba(0, 0, 0, 0.5) 55%,
+                    rgba(0, 0, 0, 0.82) 70%,
+                    rgba(0, 0, 0, 0.95) 85%,
+                    #000000 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Volumetric overhead spotlight cone — dramatic directional beam descending onto textbook */
+        .spotlight-cone {
+            position: fixed;
+            top: -20%;
+            left: 50%;
+            width: clamp(750px, 65vw, 1050px);
+            height: 140vh;
+            transform: translateX(-50%);
+            background:
+                conic-gradient(from 180deg at 50% 0%,
+                    transparent 42%,
+                    rgba(255, 245, 225, 0.04) 47%,
+                    rgba(255, 235, 205, 0.12) 50%,
+                    rgba(255, 245, 225, 0.04) 53%,
+                    transparent 58%),
+                radial-gradient(ellipse 70% 60% at 50% 48%,
+                    rgba(255, 240, 220, 0.09) 0%,
+                    rgba(255, 225, 190, 0.04) 35%,
+                    transparent 70%);
+            pointer-events: none;
+            z-index: 14;
+            mix-blend-mode: screen;
+        }
+
+        /* Warm glossy spotlight sheen on desk surface (catches book area) */
+        .spotlight-sheen {
+            position: fixed;
+            width: 750px;
+            height: 520px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse 100% 100% at 50% 40%,
+                rgba(255, 240, 220, 0.07) 0%,
+                rgba(255, 230, 200, 0.035) 30%,
+                transparent 70%);
+            pointer-events: none;
+            z-index: 15;
+            mix-blend-mode: screen;
+        }
+
+        /* Ambient Props on Desk — partially caught by spotlight halo */
+        .desk-prop {
+            position: absolute;
+            pointer-events: auto;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
+            z-index: 10;
+        }
+        .desk-prop:hover {
+            transform: scale(1.04);
+            filter: brightness(1.12);
+        }
+
+        /* Top Navigation Header */
+        .top-nav {
+            position: absolute;
+            top: 22px;
+            left: 36px;
+            right: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        /* Hero Typography (Desk Left) */
+        .hero-banner {
+            position: absolute;
+            left: clamp(28px, 6vw, 84px);
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 440px;
+            z-index: 25;
+            transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+        .hero-banner.hidden-mode {
+            opacity: 0;
+            transform: translateY(-50%) translateX(-45px);
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           3D BOOK SCENE — High-angle overhead (60°–75° pitch)
+           Natural three-quarter top-down view with true spatial depth
+           ═══════════════════════════════════════════════════════ */
+        .scene-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            perspective: 2100px;
+            perspective-origin: 50% 24%;  /* Overhead 60°–75° camera position */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        /* Book Positioning Wrapper */
+        .book-wrapper {
+            position: absolute;
+            width: var(--book-w);
+            height: var(--book-h);
+            transform-style: preserve-3d;
+            transition: left 0.9s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1);
+            left: 50%;
+            top: 50%;
+            /* 18° tilt on X combined with 24% perspective origin creates authentic 65°–70° high-angle overhead view */
+            transform: translate(-50%, -50%) rotateX(18deg);
+        }
+
+        /* Closed state: book offset right, angled with 3D tilt */
+        .book-wrapper.closed-view {
+            left: clamp(53%, 58vw, 64%);
+            transform: translate(-50%, -50%) rotateX(20deg) rotateY(-8deg) rotateZ(0.5deg);
+        }
+
+        /* Physical Hardcover Base — deep contact shadow on desk */
+        .book-base {
+            position: absolute;
+            inset: -5px -7px;
+            background: #08060e;
+            border-radius: 12px;
+            box-shadow:
+                /* Deep contact shadow directly under book */
+                0 4px 12px rgba(0, 0, 0, 0.98),
+                0 12px 30px rgba(0, 0, 0, 0.95),
+                0 40px 80px -10px rgba(0, 0, 0, 0.97),
+                /* Wide ambient shadow on desk */
+                0 60px 120px -20px rgba(0, 0, 0, 0.9),
+                /* Subtle purple volumetric bleed from spotlight */
+                0 0 60px rgba(100, 50, 180, 0.08);
+            transform: translateZ(-10px);
+            transition: all 0.7s ease;
+        }
+        .book-wrapper.closed-view .book-base {
+            box-shadow:
+                0 6px 16px rgba(0, 0, 0, 0.99),
+                0 20px 50px rgba(0, 0, 0, 0.96),
+                0 50px 100px -10px rgba(0, 0, 0, 0.98),
+                0 80px 140px -20px rgba(0, 0, 0, 0.92),
+                0 0 80px rgba(100, 50, 180, 0.12);
+        }
+
+        /* Paper Stacks Along Left & Right Edges */
+        .page-stack-left, .page-stack-right {
+            position: absolute;
+            top: 3px;
+            bottom: 3px;
+            width: 14px;
+            pointer-events: none;
+            background: repeating-linear-gradient(to bottom, #e8e8ea 0px, #c8c8cc 1px, #d8d8dc 2px, #a0a0a6 3px);
+            border-radius: 2px;
+            z-index: 2;
+            transition: width 0.4s ease, opacity 0.4s ease;
+        }
+        .page-stack-left {
+            left: -13px;
+            transform: skewY(-2deg);
+            box-shadow: -6px 2px 14px rgba(0, 0, 0, 0.7);
+        }
+        .page-stack-right {
+            right: -13px;
+            transform: skewY(2deg);
+            box-shadow: 6px 2px 14px rgba(0, 0, 0, 0.7);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           LEAF / PAPER — 3D page flip with specular highlights
+           ═══════════════════════════════════════════════════════ */
+        .leaf {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+        }
+
+        .leaf.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* Page Faces */
+        .page-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #ffffff;
+            color: #0f172a;
+            /* Warm paper tone from overhead light */
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.03), inset 0 -20px 60px rgba(255, 245, 230, 0.04);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .page-face.front-face {
+            z-index: 2;
+            border-left: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        /* Spine gutter shadow — deep crease */
+        .page-face.front-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 100%;
+            background: linear-gradient(to right,
+                rgba(0, 0, 0, 0.35) 0%,
+                rgba(0, 0, 0, 0.12) 35%,
+                rgba(0, 0, 0, 0.03) 60%,
+                transparent 100%);
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .page-face.back-face {
+            transform: rotateY(180deg);
+            z-index: 1;
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 8px 0 0 8px;
+        }
+        .page-face.back-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 36px;
+            height: 100%;
+            background: linear-gradient(to left,
+                rgba(0, 0, 0, 0.35) 0%,
+                rgba(0, 0, 0, 0.12) 35%,
+                rgba(0, 0, 0, 0.03) 60%,
+                transparent 100%);
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Dynamic Specular Highlight during page turn */
+        .leaf-shadow {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 60;
+        }
+        .leaf.turning .leaf-shadow {
+            opacity: 1;
+            background:
+                /* Specular highlight streak from overhead light */
+                linear-gradient(105deg,
+                    rgba(0, 0, 0, 0.5) 0%,
+                    rgba(0, 0, 0, 0.2) 20%,
+                    transparent 35%,
+                    rgba(255, 250, 240, 0.25) 48%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    rgba(255, 250, 240, 0.25) 52%,
+                    transparent 65%,
+                    rgba(0, 0, 0, 0.15) 80%,
+                    rgba(0, 0, 0, 0.45) 100%);
+        }
+
+        /* Hardcover Themes */
+        .theme-dark-mesh {
+            background-color: #080312;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(103, 37, 203, 0.42) 0%, rgba(8, 3, 18, 0.98) 78%),
+                linear-gradient(rgba(139, 92, 246, 0.14) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.14) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+            color: #ffffff;
+        }
+
+        .cover-hardcover {
+            background-color: #060410;
+            background-image:
+                /* Glossy overhead light reflection on hardcover surface */
+                radial-gradient(ellipse 60% 40% at 55% 35%,
+                    rgba(180, 140, 255, 0.12) 0%,
+                    rgba(100, 60, 200, 0.06) 30%,
+                    transparent 60%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.4) 0%, rgba(10, 5, 20, 0.98) 75%),
+                linear-gradient(rgba(168, 85, 247, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.12) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            color: #ffffff;
+            box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Center Spine Joint */
+        .book-spine-joint {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 10px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right,
+                rgba(0, 0, 0, 0.8),
+                rgba(30, 25, 35, 0.4),
+                rgba(0, 0, 0, 0.8));
+            z-index: 80;
+            pointer-events: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           CONTROLS DOCK — Floating pill at bottom
+           ═══════════════════════════════════════════════════════ */
+        .controls-dock {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(8, 6, 14, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.22);
+            padding: 8px 20px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow:
+                0 8px 24px rgba(0, 0, 0, 0.9),
+                0 0 40px rgba(80, 40, 160, 0.15);
+            z-index: 100;
+        }
+
+        /* Sparkle float animations */
+        .sparkle-float { animation: float 3.5s ease-in-out infinite alternate; }
+        .sparkle-float-delayed { animation: float 3.5s ease-in-out 1.75s infinite alternate; }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.85; }
+            100% { transform: translateY(-8px) rotate(15deg) scale(1.1); opacity: 1; }
+        }
+
+        /* Custom Scrollbar for slide content */
+        .page-scroll::-webkit-scrollbar { width: 4px; }
+        .page-scroll::-webkit-scrollbar-track { background: transparent; }
+        .page-scroll::-webkit-scrollbar-thumb { background: rgba(147, 51, 234, 0.35); border-radius: 4px; }
+
+        /* Fraction styling */
+        .math-fraction { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; padding: 0 4px; }
+        .math-numerator { border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+        .math-denominator { padding-top: 2px; }
+
+        /* Page Numbering */
+        .page-folio {
+            position: absolute;
+            bottom: 12px;
+            font-size: 11px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            color: #94a3b8;
+            pointer-events: none;
+            z-index: 40;
+        }
+        .front-face .page-folio { right: 16px; }
+        .back-face .page-folio { left: 16px; }
+        .theme-dark-mesh .page-folio { color: #c084fc; }
+    </style>
+</head>
+<body>
+
+    <!-- Dark Wood Desk Canvas -->
+    <div class="desk-canvas"></div>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <!-- Brand / Identity -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleBookOpen()">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
+                <i class="fa-solid fa-shapes text-white text-sm"></i>
+            </div>
+            <div>
+                <span class="heading-font text-base font-extrabold tracking-wider text-white">KJC</span>
+                <span class="block text-[10px] font-mono text-purple-300 uppercase tracking-widest">Interactive Monograph</span>
+            </div>
+        </div>
+
+        <!-- Right Action Buttons -->
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleTOC()" class="px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-purple-500/30 hover:border-purple-400 text-xs font-semibold text-purple-200 transition-all shadow hover:bg-slate-800 flex items-center space-x-2">
+                <i class="fa-solid fa-list-ul text-purple-400"></i>
+                <span class="hidden sm:inline">Index</span>
+            </button>
+            <button onclick="openModal('contactModal')" class="px-4 py-1.5 rounded-full bg-white text-slate-950 font-bold text-xs hover:bg-slate-200 transition-all shadow-md active:scale-95">
+                Get in Touch
+            </button>
+        </div>
+    </div>
+
+    <!-- Volumetric Overhead Spotlight Beam & Surface Sheen -->
+    <div class="spotlight-cone"></div>
+    <div class="spotlight-sheen"></div>
+
+    <!-- Prop 1 (Top-Right): White Ceramic Coffee Cup with Latte Art caught in soft halo -->
+    <div class="desk-prop" style="top: 14%; right: 7%; width: 175px; height: 175px;" title="Espresso Latte in Spotlight Halo">
+        <svg viewBox="0 0 190 190" width="175" height="175" class="drop-shadow-[0_25px_35px_rgba(0,0,0,0.95)]">
+            <defs>
+                <!-- Saucer porcelain gradient with directional warm highlight from center spotlight (bottom-left) -->
+                <radialGradient id="saucerGrad" cx="38%" cy="58%" r="62%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="45%" stop-color="#f8fafc"/>
+                    <stop offset="75%" stop-color="#e2e8f0"/>
+                    <stop offset="92%" stop-color="#cbd5e1"/>
+                    <stop offset="100%" stop-color="#94a3b8"/>
+                </radialGradient>
+                <radialGradient id="coffeeCrema" cx="42%" cy="52%" r="55%">
+                    <stop offset="0%" stop-color="#9a5b28"/>
+                    <stop offset="40%" stop-color="#6f3b15"/>
+                    <stop offset="80%" stop-color="#4d2409"/>
+                    <stop offset="100%" stop-color="#2a1003"/>
+                </radialGradient>
+                <linearGradient id="spoonMetal" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#cbd5e1"/>
+                    <stop offset="35%" stop-color="#ffffff"/>
+                    <stop offset="70%" stop-color="#94a3b8"/>
+                    <stop offset="100%" stop-color="#475569"/>
+                </linearGradient>
+                <!-- Warm spotlight edge glow on cup -->
+                <radialGradient id="spotlightGlow" cx="20%" cy="80%" r="70%">
+                    <stop offset="0%" stop-color="rgba(255, 235, 205, 0.45)"/>
+                    <stop offset="50%" stop-color="rgba(255, 220, 180, 0.1)"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                </radialGradient>
+            </defs>
+            <!-- Teaspoon beside Saucer -->
+            <g transform="translate(155, 30) rotate(42)">
+                <ellipse cx="8" cy="18" rx="7" ry="12" fill="url(#spoonMetal)" filter="drop-shadow(3px 6px 5px rgba(0,0,0,0.6))"/>
+                <rect x="6.5" y="28" width="3" height="65" rx="1.5" fill="url(#spoonMetal)" filter="drop-shadow(3px 6px 5px rgba(0,0,0,0.6))"/>
+                <ellipse cx="8" cy="93" rx="4" ry="7" fill="url(#spoonMetal)"/>
+            </g>
+            <!-- Ceramic Saucer with soft contact shadow -->
+            <circle cx="85" cy="95" r="74" fill="rgba(0,0,0,0.4)" filter="blur(6px)"/>
+            <circle cx="85" cy="95" r="72" fill="url(#saucerGrad)"/>
+            <circle cx="85" cy="95" r="68" fill="none" stroke="#f1f5f9" stroke-width="1.5" opacity="0.8"/>
+            <circle cx="85" cy="95" r="50" fill="none" stroke="#cbd5e1" stroke-width="1.2" opacity="0.6"/>
+            <!-- Directional warm rim catch on saucer facing the spotlight -->
+            <path d="M 35 145 A 72 72 0 0 1 20 75" fill="none" stroke="rgba(255,245,230,0.6)" stroke-width="3" filter="blur(1px)"/>
+            <!-- Coffee Cup Wall -->
+            <circle cx="85" cy="95" r="44" fill="#ffffff" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.35))"/>
+            <circle cx="85" cy="95" r="41" fill="#f8fafc"/>
+            <circle cx="85" cy="95" r="39" fill="#e2e8f0"/>
+            <!-- Rich Espresso Crema Surface -->
+            <circle cx="85" cy="95" r="37" fill="url(#coffeeCrema)"/>
+            <!-- Warm light wash on crema facing spotlight -->
+            <circle cx="85" cy="95" r="37" fill="url(#spotlightGlow)" mix-blend-mode="screen"/>
+            <!-- Foamy Latte Art (Heart with Stem) -->
+            <g transform="translate(85, 95) scale(0.92)">
+                <path d="M 0,-12 C 5,-20 18,-18 18,-6 C 18,5 0,16 0,20 C 0,16 -18,5 -18,-6 C -18,-18 -5,-20 0,-12 Z" fill="#fbfaf6" opacity="0.96" filter="drop-shadow(0 1px 3px rgba(50,20,5,0.6))"/>
+                <path d="M 0,-8 C 3,-14 12,-12 12,-4 C 12,3 0,11 0,14 C 0,11 -12,3 -12,-4 C -12,-12 -3,-14 0,-8 Z" fill="#ffffff"/>
+                <path d="M 0,14 C 0.5,17 0.5,21 0,23 C -0.5,21 -0.5,17 0,14 Z" fill="#fbfaf6"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Prop 2 (Bottom-Left): Dark Digital Stylus Pen in Shadowy Gradient -->
+    <div class="desk-prop" style="bottom: 12%; left: 8%; width: 160px; height: 160px;" title="Digital Stylus in Shadowy Gradient">
+        <svg viewBox="0 0 180 180" width="160" height="160" class="drop-shadow-[0_22px_30px_rgba(0,0,0,0.98)]">
+            <defs>
+                <!-- Deep matte charcoal stylus body -->
+                <linearGradient id="stylusBody" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e222a"/>
+                    <stop offset="35%" stop-color="#0f1117"/>
+                    <stop offset="70%" stop-color="#08090d"/>
+                    <stop offset="100%" stop-color="#020305"/>
+                </linearGradient>
+                <!-- Directional rim specular highlight caught from overhead spotlight -->
+                <linearGradient id="stylusRimLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="rgba(255, 240, 220, 0.7)"/>
+                    <stop offset="40%" stop-color="rgba(200, 210, 230, 0.4)"/>
+                    <stop offset="80%" stop-color="rgba(100, 110, 130, 0.1)"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                </linearGradient>
+                <linearGradient id="chromeRing" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#475569"/>
+                    <stop offset="50%" stop-color="#e2e8f0"/>
+                    <stop offset="100%" stop-color="#1e293b"/>
+                </linearGradient>
+            </defs>
+            <g transform="translate(90, 90) rotate(-40)">
+                <!-- Diffused cast shadow on desk fading into dark gradient -->
+                <rect x="-7" y="-62" width="14" height="126" rx="6" fill="rgba(0,0,0,0.6)" filter="blur(8px)" transform="translate(10, 12)"/>
+                <!-- Pen Body -->
+                <rect x="-6" y="-65" width="12" height="120" rx="5" fill="url(#stylusBody)" stroke="#1a1f2c" stroke-width="0.8"/>
+                <!-- Upper edge rim highlight from overhead light -->
+                <line x1="-5.5" y1="-64" x2="-5.5" y2="45" stroke="url(#stylusRimLight)" stroke-width="1.2"/>
+                <!-- Metallic Accent Ring -->
+                <rect x="-6" y="-14" width="12" height="4.5" fill="url(#chromeRing)"/>
+                <rect x="-6" y="-18" width="12" height="1.5" fill="#64748b"/>
+                <!-- Minimalist Stylus Button -->
+                <rect x="-1" y="2" width="2" height="18" rx="1" fill="#334155"/>
+                <!-- Stylus Nib Section -->
+                <path d="M -5,55 L 0,72 L 5,55 Z" fill="#1e2433"/>
+                <path d="M -5,55 L 0,72" stroke="url(#stylusRimLight)" stroke-width="1"/>
+                <circle cx="0" cy="72" r="1.8" fill="#e2e8f0"/>
+                <!-- Finial Eraser Cap -->
+                <ellipse cx="0" cy="-65" rx="5.5" ry="2.5" fill="url(#chromeRing)"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Prop 3 (Bottom-Right): Stack of Black Business Cards labeled "KJC" fading into dark background -->
+    <div class="desk-prop" style="bottom: 12%; right: 8%; width: 165px; height: 125px;" title="Black Business Cards 'KJC'">
+        <svg viewBox="0 0 180 130" width="165" height="125" class="drop-shadow-[0_25px_35px_rgba(0,0,0,0.98)]">
+            <defs>
+                <!-- Deep matte black card surface -->
+                <linearGradient id="darkCardGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#141416"/>
+                    <stop offset="60%" stop-color="#0a0a0c"/>
+                    <stop offset="100%" stop-color="#020203"/>
+                </linearGradient>
+                <linearGradient id="darkCardGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#18181c"/>
+                    <stop offset="50%" stop-color="#0e0e11"/>
+                    <stop offset="100%" stop-color="#040405"/>
+                </linearGradient>
+                <linearGradient id="darkCardTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1f2026"/>
+                    <stop offset="40%" stop-color="#131418"/>
+                    <stop offset="80%" stop-color="#090a0d"/>
+                    <stop offset="100%" stop-color="#030304"/>
+                </linearGradient>
+                <!-- Debossed gold foil lettering for 'KJC' -->
+                <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fef08a"/>
+                    <stop offset="35%" stop-color="#eab308"/>
+                    <stop offset="70%" stop-color="#ca8a04"/>
+                    <stop offset="100%" stop-color="#854d0e"/>
+                </linearGradient>
+                <!-- Card edge highlight caught by spotlight bleed -->
+                <linearGradient id="cardEdgeCatch" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="rgba(255, 235, 205, 0.35)"/>
+                    <stop offset="100%" stop-color="rgba(255, 255, 255, 0.05)"/>
+                </linearGradient>
+            </defs>
+            <!-- Heavy contact shadow fading into pitch black -->
+            <rect x="18" y="18" width="135" height="78" rx="5" fill="#000000" filter="blur(8px)" transform="rotate(-6 85 55)"/>
+            <!-- Bottom card in stack -->
+            <rect x="18" y="16" width="132" height="76" rx="4" fill="url(#darkCardGrad1)" stroke="#1a1a1f" stroke-width="0.8" transform="rotate(-7 85 54)"/>
+            <!-- Middle card in stack -->
+            <rect x="22" y="19" width="132" height="76" rx="4" fill="url(#darkCardGrad2)" stroke="#222228" stroke-width="0.8" transform="rotate(-3 88 57)"/>
+            <!-- Top Card (Crisp matte black with debossed 'KJC' luxury typography) -->
+            <g transform="rotate(3 90 59)">
+                <rect x="24" y="20" width="132" height="76" rx="4" fill="url(#darkCardTop)" stroke="#272730" stroke-width="1"/>
+                <!-- Upper/left edge caught in spotlight bleed -->
+                <line x1="24" y1="22" x2="155" y2="22" stroke="url(#cardEdgeCatch)" stroke-width="1"/>
+                <line x1="25" y1="20" x2="25" y2="95" stroke="url(#cardEdgeCatch)" stroke-width="1"/>
+
+                <!-- Debossed 'KJC' Luxury Monogram -->
+                <text x="40" y="56" font-family="'Montserrat', sans-serif" font-size="22" font-weight="900" fill="url(#goldFoil)" letter-spacing="3" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.9))">KJC</text>
+                <!-- Subtext on Card -->
+                <text x="41" y="68" font-family="'Inter', sans-serif" font-size="5.5" font-weight="700" fill="#a1a1aa" letter-spacing="1.5">CREATIVE DESIGN &amp; ALGORITHMS</text>
+                <line x1="41" y1="73" x2="140" y2="73" stroke="#272730" stroke-width="0.8"/>
+                <text x="41" y="83" font-family="'Fira Code', monospace" font-size="5" fill="#52525b">EDITION 2026 // VOL. 05</text>
+                <text x="122" y="83" font-family="'Fira Code', monospace" font-size="5" font-weight="700" fill="url(#goldFoil)">STUDIO</text>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Hero Typography (Visible when book is closed) -->
+    <div id="heroBanner" class="hero-banner">
+        <div class="space-y-4">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-950/70 border border-purple-500/30 text-purple-300 text-xs font-semibold">
+                <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+                <span>Chapter 5 • Sorting & Divide-and-Conquer</span>
+            </div>
+            <h1 class="heading-font text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight tracking-tight">
+                Interactive Portfolio<br>
+                <span class="text-slate-300 font-extrabold text-2xl sm:text-3xl md:text-4xl">that you can explore</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-base font-normal leading-relaxed max-w-sm">
+                Click on pages to view works, hover to see how they act in motion.
+            </p>
+            <div class="pt-2 flex items-center space-x-4">
+                <button onclick="openBook()" class="px-6 py-3 rounded-full bg-white text-slate-950 font-extrabold text-sm hover:bg-slate-200 transition-all shadow-xl active:scale-95 flex items-center space-x-2.5">
+                    <span>Explore Presentation</span>
+                    <i class="fa-solid fa-arrow-right text-xs text-purple-600"></i>
+                </button>
+                <span class="text-xs text-slate-400 font-mono">34 Slides • 17 Spreads</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3D Book Scene -->
+    <div class="scene-container">
+        
+        <div id="bookWrapper" class="book-wrapper closed-view">
+            <!-- Physical Hardcover Backboard -->
+            <div class="book-base"></div>
+            <!-- Center Spine Joint Crease -->
+            <div class="book-spine-joint"></div>
+            <!-- Dynamic Paper Stacks along flanks -->
+            <div id="stackLeft" class="page-stack-left opacity-0"></div>
+            <div id="stackRight" class="page-stack-right"></div>
+
+            <!-- BOOK LEAVES CONTAINER -->
+            <div id="bookPages" class="w-full h-full relative">
+                <!-- LEAF 0: Front Hardcover & Slide 1 (TOC) -->
+                <div class="leaf" id="leaf-0" style="z-index: 20;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Hardcover Front (Closed State Cover) -->
+                    <div class="page-face front-face cover-hardcover flex flex-col justify-between p-8 sm:p-12 items-center text-center cursor-pointer" onclick="openBook()">
+                        <div class="w-full flex justify-between items-center text-xs tracking-widest text-purple-300 font-mono">
+                            <span class="font-bold tracking-widest text-amber-200/90">KJC STUDIO</span>
+                            <span>VOL. V</span>
+                        </div>
+                        <div class="space-y-4 my-auto">
+                            <div class="w-16 h-16 mx-auto rounded-2xl bg-white/10 backdrop-blur-md border border-purple-400/40 flex items-center justify-center shadow-lg shadow-purple-500/20">
+                                <span class="heading-font font-black text-2xl tracking-wider text-amber-200">KJC</span>
+                            </div>
+                            <h2 class="heading-font text-2xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-wider drop-shadow-lg">
+                                Chapter 5
+                            </h2>
+                            <p class="text-sm sm:text-base font-bold text-purple-200 uppercase tracking-widest">
+                                Sorting &amp; Divide-and-Conquer
+                            </p>
+                            <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-300/80 to-transparent mx-auto"></div>
+                            <p class="text-xs text-slate-300 max-w-xs mx-auto leading-relaxed">
+                                Selection Sort • Insertion Sort • Recursion • Merge Sort • Algorithmic Comparisons
+                            </p>
+                        </div>
+                        <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-purple-500/20 border border-purple-400/50 text-xs font-bold text-white shadow-lg animate-pulse">
+                            <span>Click Cover to Open</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </div>
+                    </div>
+                    <!-- Back Face: Slide 1 (Chapter Title & Index) -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-6 sm:p-8 relative" onclick="handlePageClick(event, 'left')">
+                        <div class="absolute top-0 right-0 w-44 h-40 pointer-events-none opacity-40">
+                            <svg viewBox="0 0 300 260" fill="none" class="w-full h-full"><path d="M120 0C160 60 250 80 300 60V0H120Z" fill="#a855f7"/><path d="M50 0C110 135 205 185 300 175" stroke="#c084fc" stroke-width="6"/></svg>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-purple-400">Chapter Overview</span>
+                            <h1 class="heading-font text-xl sm:text-2xl font-black text-white uppercase mt-1 leading-snug drop-shadow-md">
+                                CHAPTER 5 - SORTING AND DIVIDE-AND-CONQUER
+                            </h1>
+                        </div>
+                        <div class="space-y-2.5 my-auto z-10">
+                            <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-between hover:bg-purple-900/50 transition cursor-pointer" onclick="event.stopPropagation(); goToSpread(1)">
+                                <span class="text-xs font-bold text-purple-200">1. Selection Sort Algorithm &amp; Complexity</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-purple-400"></i>
+                            </div>
+                            <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-between hover:bg-purple-900/50 transition cursor-pointer" onclick="event.stopPropagation(); goToSpread(6)">
+                                <span class="text-xs font-bold text-purple-200">2. Insertion Sort Algorithm &amp; Loop</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-purple-400"></i>
+                            </div>
+                            <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-between hover:bg-purple-900/50 transition cursor-pointer" onclick="event.stopPropagation(); goToSpread(10)">
+                                <span class="text-xs font-bold text-purple-200">3. Recursion &amp; Divide-and-Conquer</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-purple-400"></i>
+                            </div>
+                            <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-between hover:bg-purple-900/50 transition cursor-pointer" onclick="event.stopPropagation(); goToSpread(13)">
+                                <span class="text-xs font-bold text-purple-200">4. Merge Sort, Recurrence &amp; Analysis</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-purple-400"></i>
+                            </div>
+                            <div class="p-3 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-between hover:bg-purple-900/50 transition cursor-pointer" onclick="event.stopPropagation(); goToSpread(16)">
+                                <span class="text-xs font-bold text-purple-200">5. Algorithm Comparison Matrix</span>
+                                <i class="fa-solid fa-arrow-right text-xs text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div class="text-[11px] text-purple-300 font-mono flex justify-between items-center">
+                            <span>Interactive Monograph</span>
+                            <span class="page-folio">01</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEAF 1: Slide 2 & Slide 3 -->
+                <div class="leaf" id="leaf-1" style="z-index: 19;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 2 (Selection Sort Title Header) -->
+                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                        <div class="absolute top-0 right-0 w-36 h-36 opacity-30"><svg viewBox="0 0 300 260" fill="none"><path d="M120 0C160 60 250 80 300 60V0H120Z" fill="#a855f7"/></svg></div>
+                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 01</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-arrow-down-short-wide"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                1. SELECTION SORT ALGORITHM
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Concept, Mechanics, Execution Trace, and Implementation
+                            </p>
+                        </div>
+                        <span class="page-folio">02</span>
+                    </div>
+                    <!-- Back Face: Slide 3 (What is Selection Sort) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.1</span>
+                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                                What is selection sort?
+                            </h2>
+                        </div>
+                        <div class="space-y-3.5 my-auto text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
+                            <div class="p-3 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg">
+                                <p>
+                                    <strong class="text-slate-900 font-bold">Selection sort</strong> is a simple way to put a list in order, from smallest to biggest. It does this by choosing the smallest item, again and again.
+                                </p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm font-mono text-xs">
+                                <div class="flex items-center space-x-2 text-slate-800">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong>Before:</strong> 64, 25, 12, 22, 11</span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-slate-800 mt-1">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong>After:</strong> 11, 12, 22, 25, 64</span>
+                                </div>
+                            </div>
+                            <p class="text-slate-800 font-semibold">In a list, it works the same way. The list has two parts:</p>
+                            <ul class="space-y-1.5 pl-2 text-xs">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong class="text-slate-900">Sorted part:</strong> grows from the left, one item at a time.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong class="text-slate-900">Unsorted part:</strong> shrinks on the right, until nothing is left.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="page-folio">03</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 2: Slide 4 & Slide 5 -->
+                <div class="leaf" id="leaf-2" style="z-index: 18;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 4 (How It Works) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.2</span>
+                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                                How it works:
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto">
+                            <div class="p-2.5 border-l-4 border-purple-600 bg-purple-50 rounded-r-lg text-xs sm:text-sm font-semibold text-slate-800">
+                                Find the smallest, put it first, repeat—each round locks one more number into its final place.
+                            </div>
+                            <p class="text-xs font-bold text-slate-900 uppercase tracking-wide">There are only three steps:</p>
+                            <div class="space-y-2 text-xs">
+                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
+                                    <p class="font-semibold text-slate-900">
+                                        <span class="text-purple-600 font-bold mr-1.5">1. Scan</span> – Look through the unsorted part and find the smallest number.
+                                    </p>
+                                </div>
+                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm ml-3">
+                                    <p class="font-semibold text-slate-900">
+                                        <span class="text-purple-600 font-bold mr-1.5">2. Swap</span> – Swap it with the first spot of the unsorted part.
+                                    </p>
+                                </div>
+                                <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
+                                    <p class="font-semibold text-slate-900">
+                                        <span class="text-purple-600 font-bold mr-1.5">3. Repeat</span> – The sorted part grew by one. Do it again until nothing is left.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="page-folio">04</span>
+                    </div>
+                    <!-- Back Face: Slide 5 (Trace Steps) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 1.3</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                What happens (Trace steps):
+                            </h2>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="border-2 border-slate-900 bg-white px-2 py-0.5 rounded text-[11px] font-mono font-bold">Start: 64, 25, 12, 22, 11</span>
+                                <span class="text-[11px] text-slate-500 italic">Nothing sorted yet</span>
+                            </div>
+                        </div>
+                        <div class="border-2 border-slate-900 rounded-xl overflow-hidden bg-white shadow-sm my-auto text-xs">
+                            <div class="grid grid-cols-12 border-b border-slate-900">
+                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 1 = 11, 25, 12, 22, 64</div>
+                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 11, swap with 64</div>
+                            </div>
+                            <div class="grid grid-cols-12 border-b border-slate-900">
+                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 2 = 11, 12, 25, 22, 64</div>
+                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 12, swap with 25</div>
+                            </div>
+                            <div class="grid grid-cols-12 border-b border-slate-900">
+                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 3 = 11, 12, 22, 25, 64</div>
+                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">Smallest 22, swap with 25</div>
+                            </div>
+                            <div class="grid grid-cols-12">
+                                <div class="col-span-6 p-2 bg-purple-50 font-mono font-bold text-purple-900 border-r border-slate-900">Pass 4 = 11, 12, 22, 25, 64</div>
+                                <div class="col-span-6 p-2 font-medium text-slate-700 flex items-center">25 in place, no swap needed</div>
+                            </div>
+                        </div>
+                        <div class="border-2 border-slate-900 bg-purple-100/90 py-1.5 px-3 rounded-lg text-center text-xs font-bold text-purple-950">
+                            Remember: Scan, Swap, and Repeat
+                        </div>
+                        <span class="page-folio">05</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 3: Slide 6 & Slide 7 -->
+                <div class="leaf" id="leaf-3" style="z-index: 17;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 6 (Python Code) -->
+                    <div class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
+                                <h3 class="heading-font text-lg font-bold text-white">The Code <span class="text-purple-400">(Python)</span></h3>
+                            </div>
+                            <button onclick="event.stopPropagation(); copyCode('codeSelectionSort', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-purple-300 border border-slate-700 transition flex items-center space-x-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="border border-slate-800 bg-slate-950 rounded-xl overflow-hidden shadow-lg my-auto">
+                            <div class="bg-slate-900 px-3 py-1.5 border-b border-slate-800 flex items-center space-x-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                                <span class="text-[11px] font-mono text-slate-400 pl-2">selection_sort.py</span>
+                            </div>
+                            <pre id="codeSelectionSort" class="code-font p-3 text-[11px] leading-snug overflow-x-auto text-slate-200"><code><span class="text-purple-400 font-semibold">def</span> <span class="text-blue-400 font-semibold">sort</span>(nums):
+    size = <span class="text-cyan-400">len</span>(nums)
+    <span class="text-purple-400 font-semibold">for</span> i <span class="text-purple-400 font-semibold">in</span> <span class="text-cyan-400">range</span>(size - <span class="text-amber-300">1</span>):
+        minpos = i
+        <span class="text-purple-400 font-semibold">for</span> j <span class="text-purple-400 font-semibold">in</span> <span class="text-cyan-400">range</span>(i + <span class="text-amber-300">1</span>, size):
+            <span class="text-purple-400 font-semibold">if</span> nums[j] &lt; nums[minpos]:
+                minpos = j
+        temp = nums[i]
+        nums[i] = nums[minpos]
+        nums[minpos] = temp
+    <span class="text-purple-400 font-semibold">return</span> nums
+
+my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">25</span>, <span class="text-amber-300">12</span>, <span class="text-amber-300">22</span>, <span class="text-amber-300">11</span>]
+<span class="text-cyan-400">print</span>(sort(my_list))</code></pre>
+                        </div>
+                        <div class="flex items-center justify-between text-xs bg-slate-950 p-2 rounded-lg border border-slate-800 font-mono">
+                            <span class="text-slate-400">Output:</span>
+                            <span class="text-emerald-400 font-bold">[11, 12, 22, 25, 64]</span>
+                        </div>
+                        <span class="page-folio">06</span>
+                    </div>
+                    <!-- Back Face: Slide 7 (Time Complexity Title Header) -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
+                        <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 02</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                2. SELECTION SORT TIME COMPLEXITY
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Comparison Analysis, Mathematical Formula &amp; Cases
+                            </p>
+                        </div>
+                        <span class="page-folio">07</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 4: Slide 8 & Slide 9 -->
+                <div class="leaf" id="leaf-4" style="z-index: 16;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 8 (Summary & Key Concepts) -->
+                    <div class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Overview</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">SELECTION SORT SUMMARY</h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
+                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-1.5">What is Selection Sort?</h3>
+                                <ul class="space-y-1 text-slate-700">
+                                    <li>• Finds the smallest value in the unsorted section.</li>
+                                    <li>• Moves that value to the front of the unsorted part.</li>
+                                    <li>• Repeats until the entire array is sorted.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
+                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-1.5">The Basic Steps</h3>
+                                <div class="grid grid-cols-2 gap-1.5 text-slate-700 font-medium">
+                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">1</span><span>Scan unsorted</span></div>
+                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">2</span><span>Find smallest</span></div>
+                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">3</span><span>Swap to front</span></div>
+                                    <div class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-[10px]">4</span><span>Repeat</span></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2 pt-1 font-mono font-bold text-xs">
+                                <span class="bg-white px-2 py-1 rounded border border-slate-300">[4, 2, 5, 1]</span>
+                                <span class="text-blue-600 font-bold">→</span>
+                                <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-2 py-1 rounded">[1, 2, 4, 5]</span>
+                            </div>
+                        </div>
+                        <span class="page-folio">08</span>
+                    </div>
+                    <!-- Back Face: Slide 9 (Why Time Complexity is O(n²)) -->
+                    <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Mathematical Rationale</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Why Time Complexity is O(n²)?</h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200">
+                                <h3 class="font-bold text-blue-600 uppercase text-[11px] mb-2">Comparisons in Each Pass</h3>
+                                <div class="space-y-1 font-semibold text-slate-800">
+                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 1</span><span class="text-blue-600 font-mono">n – 1 comparisons</span></div>
+                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 2</span><span class="text-blue-600 font-mono">n – 2 comparisons</span></div>
+                                    <div class="flex justify-between border-b border-slate-100 pb-1"><span>Pass 3</span><span class="text-blue-600 font-mono">n – 3 comparisons</span></div>
+                                    <div class="flex justify-between"><span>Last pass</span><span class="text-blue-600 font-mono">1 comparison</span></div>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-center font-bold text-blue-900 text-xs">
+                                Total comparisons = n(n – 1) / 2
+                            </div>
+                            <div class="text-[11px] text-slate-600 leading-tight">
+                                <strong>Example for n=8:</strong><br>
+                                7 + 6 + 5 + 4 + 3 + 2 + 1 = <strong>28 total comparisons</strong>
+                            </div>
+                        </div>
+                        <span class="page-folio">09</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 5: Slide 10 & Slide 11 -->
+                <div class="leaf" id="leaf-5" style="z-index: 15;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 10 (Formula Evaluation) -->
+                    <div class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Formula Evaluation</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Selection Sort Formula</h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 text-center">
+                                <div class="text-base sm:text-lg font-bold italic text-slate-900 my-1">
+                                    T(n) = 
+                                    <div class="math-fraction">
+                                        <span class="math-numerator">n<sup>2</sup> – n</span>
+                                        <span class="math-denominator">2</span>
+                                    </div>
+                                </div>
+                                <p class="text-[11px] text-slate-500 font-medium">T(n) = total comparisons for n elements</p>
+                            </div>
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 font-mono text-[11px] space-y-1">
+                                <div class="font-bold text-slate-900">Solving for n=8:</div>
+                                <div>T(8) = (8² – 8) / 2</div>
+                                <div>T(8) = (64 – 8) / 2 = 56 / 2</div>
+                                <div class="pt-1 font-bold text-blue-600">Result: T(8) = 28 comparisons</div>
+                            </div>
+                        </div>
+                        <span class="page-folio">10</span>
+                    </div>
+                    <!-- Back Face: Slide 11 (Best, Average, Worst Cases) -->
+                    <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-600">Cases</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900">Best, Average &amp; Worst Case</h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="bg-white rounded-xl p-3 shadow-sm border border-slate-200 space-y-2">
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                                    <span class="font-bold text-slate-900">Best Case:</span>
+                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600">Array already sorted; full comparisons still required to confirm minimum.</p>
+
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5 pt-1">
+                                    <span class="font-bold text-slate-900">Average Case:</span>
+                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600">Typical random order; scans unsorted segment in every pass.</p>
+
+                                <div class="flex items-center justify-between border-b border-slate-100 pb-1.5 pt-1">
+                                    <span class="font-bold text-slate-900">Worst Case:</span>
+                                    <span class="font-mono font-bold text-blue-600">O(n²)</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600">Reverse sorted order; identical scan iterations.</p>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-2 text-center text-xs font-bold text-blue-900">
+                                Performs at most n – 1 swaps (write-efficient).
+                            </div>
+                        </div>
+                        <span class="page-folio">11</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 6: Slide 12 & Slide 13 -->
+                <div class="leaf" id="leaf-6" style="z-index: 14;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 12 (Insertion Sort Title Header) -->
+                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 03</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                3. INSERTION SORT ALGORITHM
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Concept, Virtual Sections &amp; The 3-Step Iteration Loop
+                            </p>
+                        </div>
+                        <span class="page-folio">12</span>
+                    </div>
+                    <!-- Back Face: Slide 13 (Insertion Sort Definition & Virtual Sections) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.1</span>
+                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                                Insertion Sort Definition
+                            </h2>
+                        </div>
+                        <div class="space-y-3.5 my-auto text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <p class="text-slate-900 font-normal">
+                                    <strong class="font-bold text-slate-900">Insertion sort</strong> works the way we sort playing cards in our hands: taking one item at a time and inserting it into its correct position.
+                                </p>
+                            </div>
+                            <p class="font-bold text-slate-900 text-xs uppercase tracking-wide">Two Virtual Sections:</p>
+                            <ul class="space-y-1.5 text-xs pl-2">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong class="text-slate-900">Sorted:</strong> starts with the first item on the left.</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-purple-600 font-bold">•</span>
+                                    <span><strong class="text-slate-900">Unsorted:</strong> remains on the right until inserted.</span>
+                                </li>
+                            </ul>
+                            <div class="p-2.5 rounded-lg bg-slate-200 font-mono font-semibold text-xs text-slate-900 space-y-1">
+                                <p>Array: [40, 10, 30, 20]</p>
+                                <p>Pass 1: [10, 40 | 30, 20]</p>
+                            </div>
+                        </div>
+                        <span class="page-folio">13</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 7: Slide 14 & Slide 15 -->
+                <div class="leaf" id="leaf-7" style="z-index: 13;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 14 (3-Step Iteration Loop) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 3.2</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                3-Step Iteration Loop
+                            </h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
+                                <p><strong class="text-slate-900">1. Pick:</strong> Look at the first number in unsorted part.</p>
+                            </div>
+                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
+                                <p><strong class="text-slate-900">2. Slide:</strong> Compare backward and slide larger numbers right.</p>
+                            </div>
+                            <div class="border border-slate-300 bg-white rounded-lg p-2 shadow-sm">
+                                <p><strong class="text-slate-900">3. Insert:</strong> Drop the number into its correct slot.</p>
+                            </div>
+                            <div class="pt-1 space-y-1 font-mono text-[11px] text-slate-700">
+                                <p><strong>Start:</strong> [40 | 10, 30, 20] – 40 sorted</p>
+                                <p><strong>Pass 1:</strong> [10, 40 | 30, 20] – 10 &lt; 40, shift 40</p>
+                                <p><strong>Pass 2:</strong> [10, 30, 40 | 20] – drop 30</p>
+                                <p><strong>Pass 3:</strong> [10, 20, 30, 40 |] – drop 20</p>
+                            </div>
+                        </div>
+                        <span class="page-folio">14</span>
+                    </div>
+                    <!-- Back Face: Slide 15 (Insertion Sort Python Code) -->
+                    <div class="page-face back-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'left')">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
+                                <h3 class="heading-font text-lg font-bold text-white">Insertion Sort <span class="text-amber-400">Python</span></h3>
+                            </div>
+                            <button onclick="event.stopPropagation(); copyCode('codeInsertionSort', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-purple-300 border border-slate-700 transition flex items-center space-x-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="border border-slate-800 bg-[#1e1e1e] rounded-xl overflow-hidden shadow-lg my-auto">
+                            <div class="bg-[#2d2d2d] px-3 py-1.5 border-b border-slate-700 flex items-center space-x-2 text-[11px] text-slate-300 font-mono">
+                                <i class="fa-brands fa-python text-amber-400"></i>
+                                <span>insertion_sort.py</span>
+                            </div>
+                            <pre id="codeInsertionSort" class="code-font p-3 text-[11px] leading-snug overflow-x-auto text-slate-200"><code><span class="text-blue-400 font-semibold">def</span> <span class="text-amber-300 font-semibold">insertion_sort</span>(nums):
+    <span class="text-purple-400 font-semibold">for</span> i <span class="text-purple-400 font-semibold">in</span> <span class="text-cyan-400">range</span>(<span class="text-amber-300">1</span>, <span class="text-cyan-400">len</span>(nums)):
+        key = nums[i]
+        j = i - <span class="text-amber-300">1</span>
+        <span class="text-purple-400 font-semibold">while</span> j &gt;= <span class="text-amber-300">0</span> <span class="text-purple-400 font-semibold">and</span> nums[j] &gt; key:
+            nums[j + <span class="text-amber-300">1</span>] = nums[j]
+            j -= <span class="text-amber-300">1</span>
+        nums[j + <span class="text-amber-300">1</span>] = key
+    <span class="text-purple-400 font-semibold">return</span> nums
+
+<span class="text-cyan-400">print</span>(insertion_sort([<span class="text-amber-300">40</span>, <span class="text-amber-300">10</span>, <span class="text-amber-300">30</span>, <span class="text-amber-300">20</span>]))</code></pre>
+                        </div>
+                        <div class="flex items-center justify-between text-xs bg-slate-950 p-2 rounded-lg border border-slate-800 font-mono">
+                            <span class="text-slate-400">Output:</span>
+                            <span class="text-emerald-400 font-bold">[10, 20, 30, 40]</span>
+                        </div>
+                        <span class="page-folio">15</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 8: Slide 16 & Slide 17 -->
+                <div class="leaf" id="leaf-8" style="z-index: 12;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 16 (Insertion Sort Time Complexity Title) -->
+                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 04</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                4. INSERTION SORT TIME COMPLEXITY
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Complexity Growth, Best/Average/Worst Cases &amp; Space
+                            </p>
+                        </div>
+                        <span class="page-folio">16</span>
+                    </div>
+                    <!-- Back Face: Slide 17 (Insertion Sort Intro & Trace) -->
+                    <div class="page-face back-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div class="border-b border-slate-800 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Analysis</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">INSERTION SORT INTRODUCTION</h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="bg-[#1e293b] rounded-2xl p-3 border border-slate-700/80 space-y-1.5">
+                                <p class="text-blue-300 font-bold">What is Insertion Sort?</p>
+                                <ul class="space-y-1 text-slate-300">
+                                    <li>• Arranges elements like playing cards in your hand.</li>
+                                    <li>• Takes one element at a time, inserting it into position.</li>
+                                    <li>• Efficient for small or partially sorted datasets.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-[#1e293b] rounded-2xl p-3 border border-slate-700/80 text-center space-y-2">
+                                <span class="text-slate-400 uppercase font-mono text-[10px]">Example Trace</span>
+                                <div class="flex justify-center space-x-1.5 font-bold font-mono text-xs">
+                                    <span class="bg-slate-800 px-2 py-1 rounded">5</span>
+                                    <span class="bg-slate-800 px-2 py-1 rounded">3</span>
+                                    <span class="bg-slate-800 px-2 py-1 rounded">4</span>
+                                    <span class="bg-slate-800 px-2 py-1 rounded">1</span>
+                                    <span class="bg-slate-800 px-2 py-1 rounded">2</span>
+                                </div>
+                                <div class="text-blue-400 text-xs font-bold">↓ SORTED ↓</div>
+                                <div class="flex justify-center space-x-1.5 font-bold font-mono text-xs text-emerald-300">
+                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">1</span>
+                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">2</span>
+                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">3</span>
+                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">4</span>
+                                    <span class="bg-emerald-950 border border-emerald-500 px-2 py-1 rounded">5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="page-folio">17</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 9: Slide 18 & Slide 19 -->
+                <div class="leaf" id="leaf-9" style="z-index: 11;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 18 (Best, Average, Worst Cases) -->
+                    <div class="page-face front-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div class="border-b border-slate-800 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Cases</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">Time Complexity by Case</h2>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 my-auto text-center text-xs">
+                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-emerald-500/80">
+                                <span class="text-emerald-400 font-bold uppercase text-[10px]">BEST</span>
+                                <div class="text-xl font-black text-white my-1 font-sans">O(n)</div>
+                                <p class="text-[10px] text-slate-300">Already sorted; 1 pass only.</p>
+                            </div>
+                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-amber-500/80">
+                                <span class="text-amber-400 font-bold uppercase text-[10px]">AVG</span>
+                                <div class="text-xl font-black text-white my-1 font-sans">O(n²)</div>
+                                <p class="text-[10px] text-slate-300">Random order; elements shift.</p>
+                            </div>
+                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-red-500/80">
+                                <span class="text-red-400 font-bold uppercase text-[10px]">WORST</span>
+                                <div class="text-xl font-black text-white my-1 font-sans">O(n²)</div>
+                                <p class="text-[10px] text-slate-300">Reverse order; max shifts.</p>
+                            </div>
+                        </div>
+                        <div class="text-center text-[11px] text-slate-400 bg-slate-900/60 p-2 rounded-lg border border-slate-800">
+                            Why O(n²)? In average and worst cases, comparisons and shifts scale with n × n.
+                        </div>
+                        <span class="page-folio">18</span>
+                    </div>
+                    <!-- Back Face: Slide 19 (Space Complexity & Conclusion) -->
+                    <div class="page-face back-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div class="border-b border-slate-800 pb-2">
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">Summary</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-white">Space Complexity &amp; Conclusion</h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="bg-[#1e293b] rounded-xl p-2.5 border border-blue-500/80 flex items-center justify-between">
+                                <div>
+                                    <span class="text-blue-400 font-bold text-[10px] uppercase">Space Complexity</span>
+                                    <p class="text-[11px] text-slate-300">In-place, uses fixed extra memory.</p>
+                                </div>
+                                <div class="text-2xl font-black text-white font-sans">O(1)</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-[11px]">
+                                <div class="bg-[#1e293b] rounded-lg p-2 border border-emerald-500/60">
+                                    <span class="text-emerald-400 font-bold uppercase block mb-1">Advantages</span>
+                                    <p class="text-slate-300">Easy to build; fast on small or nearly sorted lists.</p>
+                                </div>
+                                <div class="bg-[#1e293b] rounded-lg p-2 border border-red-500/60">
+                                    <span class="text-red-400 font-bold uppercase block mb-1">Disadvantage</span>
+                                    <p class="text-slate-300">Slow for large datasets due to O(n²) worst case.</p>
+                                </div>
+                            </div>
+                            <div class="bg-blue-950/40 border border-blue-500/40 rounded-xl p-2 text-[11px] text-slate-300 text-center">
+                                <strong>Conclusion:</strong> Best for small arrays and streaming real-time inputs.
+                            </div>
+                        </div>
+                        <span class="page-folio">19</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 10: Slide 20 & Slide 21 -->
+                <div class="leaf" id="leaf-10" style="z-index: 10;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 20 (Recursion & Divide-and-Conquer Title) -->
+                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 05</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-sitemap"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                5. RECURSION AND DIVIDE-AND-CONQUER
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Self-referential Functions, Base Cases &amp; Problem Decomposition
+                            </p>
+                        </div>
+                        <span class="page-folio">20</span>
+                    </div>
+                    <!-- Back Face: Slide 21 (Recursion Definition & Example) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.1</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                Recursion Definition
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm leading-relaxed">
+                                <strong class="text-slate-900 uppercase font-bold">RECURSION:</strong> A function that calls itself to solve a smaller version of the problem until it reaches the end condition.
+                            </div>
+                            <div class="grid grid-cols-12 gap-2 font-mono">
+                                <div class="col-span-7 bg-slate-950 text-slate-100 rounded-xl p-2.5 text-[11px] space-y-0.5">
+                                    <div class="text-slate-400 pb-1 font-bold">Example:</div>
+                                    <pre><code><span class="text-purple-400">def</span> <span class="text-blue-400">countdown</span>(n):
+  <span class="text-purple-400">if</span> n &lt;= <span class="text-amber-300">0</span>:
+    <span class="text-cyan-400">print</span>(<span class="text-emerald-300">"Done!"</span>)
+  <span class="text-purple-400">else</span>:
+    <span class="text-cyan-400">print</span>(n)
+    countdown(n - <span class="text-amber-300">1</span>)
+
+countdown(<span class="text-amber-300">5</span>)</code></pre>
+                                </div>
+                                <div class="col-span-5 bg-slate-950 text-emerald-400 rounded-xl p-2.5 text-[11px] space-y-0.5 flex flex-col justify-between">
+                                    <div class="text-slate-400 font-bold">Output:</div>
+                                    <div>5<br>4<br>3<br>2<br>1<br><span class="text-cyan-300 font-bold">Done!</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="page-folio">21</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 11: Slide 22 & Slide 23 -->
+                <div class="leaf" id="leaf-11" style="z-index: 9;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 22 (Rules of Recursion) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.2</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                Rules of Recursion
+                            </h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm space-y-1">
+                                <p class="font-bold text-slate-900">1. Base Case</p>
+                                <p class="text-slate-600">The condition that stops the recursion.</p>
+                                <div class="code-font text-[11px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">
+                                    if n &lt;= 0: print("Done!")
+                                </div>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm space-y-1">
+                                <p class="font-bold text-slate-900">2. Recursive Step</p>
+                                <p class="text-slate-600">The function calling itself with a smaller input.</p>
+                                <div class="code-font text-[11px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                                    countdown(n - 1)
+                                </div>
+                            </div>
+                            <div class="border-2 border-red-500 bg-red-50 rounded-xl p-2 text-[11px] text-red-950">
+                                <strong>WARNING:</strong> Without a base case, recursion executes infinitely until stack overflow!
+                            </div>
+                        </div>
+                        <span class="page-folio">22</span>
+                    </div>
+                    <!-- Back Face: Slide 23 (Divide and Conquer) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.3</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                Divide-and-Conquer
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="border-l-4 border-slate-900 pl-3 py-1.5 bg-slate-100 rounded-r-lg leading-relaxed">
+                                <strong class="text-slate-900 font-bold">Divide-and-conquer:</strong> Breaking a big problem into smaller subproblems, solving each independently, and combining solutions.
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <strong class="text-purple-700 font-bold block mb-1">DIVIDE</strong>
+                                <p class="text-slate-700">Break down the original problem into smaller pieces until no further division is possible.</p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <strong class="text-blue-700 font-bold block mb-1">CONQUER</strong>
+                                <p class="text-slate-700">Solve each subproblem individually (directly if small, or recursively).</p>
+                            </div>
+                        </div>
+                        <span class="page-folio">23</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 12: Slide 24 & Slide 25 -->
+                <div class="leaf" id="leaf-12" style="z-index: 8;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 24 (Merge - Sorting Tree Diagram) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-5 sm:p-6 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 5.4</span>
+                            <h2 class="heading-font text-base sm:text-lg font-extrabold text-slate-900">
+                                Merge &amp; Sorting Tree Diagram
+                            </h2>
+                        </div>
+                        <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm my-auto text-center font-mono text-xs">
+                            <div class="flex justify-center items-center space-x-1.5 mb-1.5">
+                                <span class="font-sans text-[11px] text-slate-500 font-bold">Unsorted:</span>
+                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800 bg-white">
+                                    <span class="px-1.5 py-0.5">70</span><span class="px-1.5 py-0.5">30</span><span class="px-1.5 py-0.5">50</span><span class="px-1.5 py-0.5">10</span>
+                                </div>
+                            </div>
+                            <div class="text-slate-400 text-[10px]">↓ Divide ↓</div>
+                            <div class="flex justify-around px-4 my-1">
+                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800"><span class="px-1.5 py-0.5">70</span><span class="px-1.5 py-0.5">30</span></div>
+                                <div class="flex border border-slate-800 rounded divide-x divide-slate-800"><span class="px-1.5 py-0.5">50</span><span class="px-1.5 py-0.5">10</span></div>
+                            </div>
+                            <div class="text-slate-400 text-[10px]">↓ Split Single Elements ↓</div>
+                            <div class="flex justify-around text-[10px] my-1">
+                                <span class="border border-slate-800 px-1 rounded">70</span><span class="border border-slate-800 px-1 rounded">30</span><span class="border border-slate-800 px-1 rounded">50</span><span class="border border-slate-800 px-1 rounded">10</span>
+                            </div>
+                            <div class="text-emerald-600 font-bold text-[10px]">↑ Conquer &amp; Merge ↑</div>
+                            <div class="flex justify-around px-4 my-1">
+                                <div class="flex border border-emerald-800 rounded divide-x divide-emerald-800 bg-emerald-100"><span class="px-1.5 py-0.5">30</span><span class="px-1.5 py-0.5">70</span></div>
+                                <div class="flex border border-emerald-800 rounded divide-x divide-emerald-800 bg-emerald-100"><span class="px-1.5 py-0.5">10</span><span class="px-1.5 py-0.5">50</span></div>
+                            </div>
+                            <div class="text-emerald-700 font-bold text-[10px]">↑ Final Combine ↑</div>
+                            <div class="inline-flex border-2 border-emerald-900 rounded divide-x-2 divide-emerald-900 bg-emerald-700 text-white font-bold px-2 py-0.5">
+                                <span class="px-1">10</span><span class="px-1">30</span><span class="px-1">50</span><span class="px-1">70</span>
+                            </div>
+                        </div>
+                        <span class="page-folio">24</span>
+                    </div>
+                    <!-- Back Face: Slide 25 (Merge Sort Title Header) -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
+                        <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 06</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-code-merge"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                6. MERGE SORT ALGORITHM
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Principles, Divide-Sort-Merge Flow &amp; Python Implementation
+                            </p>
+                        </div>
+                        <span class="page-folio">25</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 13: Slide 26 & Slide 27 -->
+                <div class="leaf" id="leaf-13" style="z-index: 7;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 26 (Merge Sort Overview & Inventor) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.1</span>
+                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                                Merge Sort Algorithm
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs leading-relaxed">
+                            <ul class="space-y-1.5 text-slate-700">
+                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Sorts elements in ascending or descending order.</span></li>
+                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Uses the <u class="font-bold">DIVIDE AND CONQUER</u> technique.</span></li>
+                                <li class="flex items-start space-x-2"><i class="fa-regular fa-square text-slate-900 text-xs mt-0.5"></i><span>Divides array recursively, then merges ordered halves.</span></li>
+                            </ul>
+                            <div class="p-2.5 rounded-lg bg-purple-50 border border-purple-200 font-bold text-slate-900 flex items-center space-x-2">
+                                <i class="fa-solid fa-user-astronaut text-purple-600"></i>
+                                <span>INVENTOR: John von Neumann (1945)</span>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 text-center shadow-sm">
+                                <div class="flex items-center justify-center space-x-3 font-black text-xs sm:text-sm tracking-widest text-slate-900">
+                                    <span>DIVIDE</span><span class="text-slate-400">→</span><span>SORT</span><span class="text-slate-400">→</span><span>MERGE</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="page-folio">26</span>
+                    </div>
+                    <!-- Back Face: Slide 27 (How Merge Sort Works) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 6.2</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                How Merge Sort Works
+                            </h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="space-y-1.5 text-slate-800">
+                                <p><strong class="text-purple-700">DIVIDE:</strong> Split array until each has 1 item.</p>
+                                <p><strong class="text-blue-700">COMPARE:</strong> Compare items from subarrays to determine order.</p>
+                                <p><strong class="text-emerald-700">MERGE:</strong> Combine in sorted order until 1 complete array remains.</p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-[#8cc63f] rounded-xl p-2.5 text-center font-mono font-bold text-slate-950 text-xs space-y-1 shadow-sm">
+                                <div>[8, 3, 6, 2]</div>
+                                <div class="text-[10px]">↓</div>
+                                <div class="flex justify-around"><span>[8, 3]</span><span>[6, 2]</span></div>
+                                <div class="text-[10px]">↓</div>
+                                <div class="flex justify-around text-[10px]"><span>[8]</span><span>[3]</span><span>[6]</span><span>[2]</span></div>
+                                <div class="text-[10px]">↓</div>
+                                <div class="flex justify-around"><span>[3, 8]</span><span>[2, 6]</span></div>
+                                <div class="text-[10px]">↓</div>
+                                <div class="bg-white px-2 py-0.5 rounded border border-slate-900 inline-block">[2, 3, 6, 8]</div>
+                            </div>
+                        </div>
+                        <span class="page-folio">27</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 14: Slide 28 & Slide 29 -->
+                <div class="leaf" id="leaf-14" style="z-index: 6;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 28 (Merge Sort Python Code) -->
+                    <div class="page-face front-face bg-slate-900 text-slate-100 p-6 sm:p-8 flex flex-col justify-between" onclick="handlePageClick(event, 'right')">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] font-mono text-purple-400 uppercase">Implementation</span>
+                                <h3 class="heading-font text-lg font-bold text-white">Merge Sort <span class="text-pink-400">Python</span></h3>
+                            </div>
+                            <button onclick="event.stopPropagation(); copyCode('codeMergeSort', this)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-mono text-purple-300 border border-slate-700 transition flex items-center space-x-1">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="border border-slate-800 bg-[#0a192f] rounded-xl overflow-hidden shadow-lg my-auto">
+                            <div class="bg-[#020c1b] px-3 py-1 border-b border-slate-800 text-[11px] text-slate-400 font-mono">
+                                mergesort.py
+                            </div>
+                            <pre id="codeMergeSort" class="code-font p-3 text-[10px] sm:text-[11px] leading-tight overflow-x-auto text-slate-200"><code><span class="text-pink-400 font-semibold">def</span> <span class="text-amber-300 font-semibold">merge_sort</span>(arr):
+    <span class="text-pink-400 font-semibold">if</span> <span class="text-cyan-400">len</span>(arr) &lt;= <span class="text-amber-300">1</span>:
+        <span class="text-pink-400 font-semibold">return</span> arr
+    mid = <span class="text-cyan-400">len</span>(arr) // <span class="text-amber-300">2</span>
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    result, i, j = [], <span class="text-amber-300">0</span>, <span class="text-amber-300">0</span>
+    <span class="text-pink-400 font-semibold">while</span> i &lt; <span class="text-cyan-400">len</span>(left) <span class="text-pink-400 font-semibold">and</span> j &lt; <span class="text-cyan-400">len</span>(right):
+        <span class="text-pink-400 font-semibold">if</span> left[i] &lt;= right[j]:
+            result.append(left[i]); i += <span class="text-amber-300">1</span>
+        <span class="text-pink-400 font-semibold">else</span>:
+            result.append(right[j]); j += <span class="text-amber-300">1</span>
+    result.extend(left[i:])
+    result.extend(right[j:])
+    <span class="text-pink-400 font-semibold">return</span> result</code></pre>
+                        </div>
+                        <div class="flex items-center justify-between text-xs bg-slate-950 p-2 rounded-lg border border-slate-800 font-mono">
+                            <span class="text-slate-400">Output:</span>
+                            <span class="text-emerald-400 font-bold">[2, 3, 6, 8]</span>
+                        </div>
+                        <span class="page-folio">28</span>
+                    </div>
+                    <!-- Back Face: Slide 29 (Merge Sort Recursion Tree Title) -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'left')">
+                        <div class="text-right text-[10px] font-mono text-purple-400 tracking-wider">SECTION 07</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-tree"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                7. RECURSION TREE &amp; TIME COMPLEXITY
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Recurrence Relations, Tree Depth &amp; O(n log n) Analysis
+                            </p>
+                        </div>
+                        <span class="page-folio">29</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 15: Slide 30 & Slide 31 -->
+                <div class="leaf" id="leaf-15" style="z-index: 5;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 30 (Recursion Tree & Recurrence Relation) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.1</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                Recurrence Relation
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm text-center">
+                                <h3 class="font-extrabold text-slate-900 text-sm mb-1">Merge Sort Recurrence</h3>
+                                <p class="code-font text-base font-bold text-purple-900">T(n) = 2T(n/2) + O(n)</p>
+                            </div>
+                            <div class="p-2.5 border border-slate-300 rounded-xl bg-white font-mono text-center text-xs space-y-0.5">
+                                <div class="font-bold text-slate-900">Tree (N=8)</div>
+                                <div class="text-[10px] text-slate-400">8</div>
+                                <div class="text-[10px] text-slate-400">↙ ↘</div>
+                                <div class="flex justify-around px-8 text-slate-800 font-bold"><span>4</span><span>4</span></div>
+                                <div class="text-[10px] text-slate-400">↙ ↘  ↙ ↘</div>
+                                <div class="flex justify-between px-4 text-slate-800 font-bold"><span>2</span><span>2</span><span>2</span><span>2</span></div>
+                                <div class="text-[10px] text-slate-400">↙↘ ↙↘ ↙↘ ↙↘</div>
+                                <div class="flex justify-between text-[10px] text-slate-600"><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span><span>1</span></div>
+                            </div>
+                        </div>
+                        <span class="page-folio">30</span>
+                    </div>
+                    <!-- Back Face: Slide 31 (Time Complexity Analysis) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 7.2</span>
+                            <h2 class="heading-font text-lg sm:text-xl font-extrabold text-slate-900 mt-1">
+                                Time Complexity Analysis
+                            </h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 text-center font-bold text-slate-900 shadow-sm text-sm">
+                                Merge Sort: <span class="text-purple-600 font-mono font-extrabold">O(n log n)</span>
+                            </div>
+                            <div class="border border-slate-300 bg-white rounded-xl p-2.5 space-y-1">
+                                <p class="font-bold text-slate-900">• O(log n) = Number of Levels</p>
+                                <p class="text-slate-600 text-[11px]">Repeatedly dividing problem size by 2 stops at log₂(n) levels.</p>
+                            </div>
+                            <div class="border border-slate-300 bg-white rounded-xl p-2.5 space-y-1">
+                                <p class="font-bold text-slate-900">• O(n) = Work per Level</p>
+                                <p class="text-slate-600 text-[11px]">Merging all subarrays at any given level requires processing n total items.</p>
+                            </div>
+                        </div>
+                        <span class="page-folio">31</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 16: Slide 32 & Slide 33 -->
+                <div class="leaf" id="leaf-16" style="z-index: 4;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 32 (Comparing Section Header) -->
+                    <div class="page-face front-face theme-dark-mesh flex flex-col justify-between p-8 sm:p-12 relative text-center" onclick="handlePageClick(event, 'right')">
+                        <div class="text-left text-[10px] font-mono text-purple-400 tracking-wider">SECTION 08</div>
+                        <div class="my-auto space-y-4">
+                            <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center text-purple-300 text-2xl shadow-lg">
+                                <i class="fa-solid fa-scale-balanced"></i>
+                            </div>
+                            <h1 class="heading-font text-2xl sm:text-3xl font-black text-white uppercase tracking-tight leading-tight">
+                                8. ALGORITHM COMPARISON
+                            </h1>
+                            <p class="text-xs sm:text-sm text-purple-200 max-w-xs mx-auto">
+                                Comparing Selection, Insertion &amp; Merge Sort
+                            </p>
+                        </div>
+                        <span class="page-folio">32</span>
+                    </div>
+                    <!-- Back Face: Slide 33 (Comparing Each Sorting Algorithm) -->
+                    <div class="page-face back-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.1</span>
+                            <h2 class="heading-font text-base sm:text-lg font-extrabold text-slate-900 mt-1">
+                                Comparing Each Algorithm:
+                            </h2>
+                        </div>
+                        <div class="space-y-2.5 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
+                                <p class="text-slate-900 font-medium">
+                                    <strong class="font-bold text-purple-700">a. Selection Sort:</strong> Repeatedly finds the minimum element and places it into the sorted partition.
+                                </p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
+                                <p class="text-slate-900 font-medium">
+                                    <strong class="font-bold text-blue-700">b. Insertion Sort:</strong> Inserts each unsorted element into its suitable place by shifting larger elements.
+                                </p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-2.5 shadow-sm">
+                                <p class="text-slate-900 font-medium">
+                                    <strong class="font-bold text-emerald-700">c. Merge Sort:</strong> Divides array into two halves, recursively sorts, then merges the sorted halves.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="page-folio">33</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 17: Slide 34 & Chapter Summary -->
+                <div class="leaf" id="leaf-17" style="z-index: 3;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Slide 34 (When to Use) -->
+                    <div class="page-face front-face bg-slate-50 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
+                        <div>
+                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-purple-700">Section 8.2</span>
+                            <h2 class="heading-font text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                                When to Use?
+                            </h2>
+                        </div>
+                        <div class="space-y-3 my-auto text-xs">
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <p class="text-slate-900">
+                                    <strong class="font-bold text-purple-700 text-sm block mb-1">a. Selection Sort</strong>
+                                    Use when the list is small or writing to memory is expensive.
+                                </p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <p class="text-slate-900">
+                                    <strong class="font-bold text-blue-700 text-sm block mb-1">b. Insertion Sort</strong>
+                                    Use when the data set is nearly sorted or very small.
+                                </p>
+                            </div>
+                            <div class="border-2 border-slate-900 bg-white rounded-xl p-3 shadow-sm">
+                                <p class="text-slate-900">
+                                    <strong class="font-bold text-emerald-700 text-sm block mb-1">c. Merge Sort</strong>
+                                    Use when sorting large amounts of data requiring predictable O(n log n) performance.
+                                </p>
+                            </div>
+                        </div>
+                        <span class="page-folio">34</span>
+                    </div>
+                    <!-- Back Face: Chapter Summary & Close Action -->
+                    <div class="page-face back-face theme-dark-mesh flex flex-col justify-between p-6 sm:p-8 text-center" onclick="handlePageClick(event, 'left')">
+                        <div class="text-xs font-mono text-purple-300 uppercase tracking-widest">End of Monograph</div>
+                        <div class="space-y-4 my-auto">
+                            <div class="w-16 h-16 mx-auto rounded-2xl bg-white/10 border border-purple-400/40 flex items-center justify-center text-purple-300 text-3xl shadow-xl">
+                                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            </div>
+                            <h2 class="heading-font text-2xl font-black text-white uppercase">
+                                Chapter 5 Complete!
+                            </h2>
+                            <p class="text-xs text-purple-200 max-w-xs mx-auto leading-relaxed">
+                                You have explored Selection Sort, Insertion Sort, Recursion &amp; Divide-and-Conquer, and Merge Sort.
+                            </p>
+                            <div class="pt-2 flex justify-center space-x-3">
+                                <button onclick="event.stopPropagation(); goToSpread(0)" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition">
+                                    <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Read Again
+                                </button>
+                                <button onclick="event.stopPropagation(); closeBook()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-200 font-bold text-xs border border-purple-500/30 transition">
+                                    <i class="fa-solid fa-book mr-1"></i> Close Book
+                                </button>
+                            </div>
+                        </div>
+                        <span class="page-folio">End</span>
+                    </div>
+                </div>
+
+                <!-- LEAF 18: Outside Back Cover -->
+                <div class="leaf" id="leaf-18" style="z-index: 2;">
+                    <div class="leaf-shadow"></div>
+                    <!-- Front Face: Inside End-sheet -->
+                    <div class="page-face front-face cover-hardcover flex flex-col justify-center items-center p-8 text-center" onclick="handlePageClick(event, 'right')">
+                        <i class="fa-solid fa-shapes text-purple-400 text-4xl mb-4 opacity-50"></i>
+                        <p class="text-xs text-purple-300 font-mono tracking-widest uppercase">Ubznatural Presentation Series</p>
+                    </div>
+                    <!-- Back Face: Outside Back Cover (When book is closed from behind) -->
+                    <div class="page-face back-face cover-hardcover flex flex-col justify-center items-center p-8 text-center" onclick="closeBook()">
+                        <i class="fa-solid fa-code text-purple-400 text-3xl mb-3"></i>
+                        <h3 class="heading-font text-lg font-bold text-white uppercase">Chapter 5</h3>
+                        <p class="text-[11px] text-purple-300 font-mono mt-1">Sorting &amp; Divide-and-Conquer</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Floating Glassmorphic Dock at Bottom -->
+    <div class="controls-dock">
+        <!-- Close / Cover Toggle -->
+        <button id="bookCoverToggleBtn" onclick="toggleBookOpen()" class="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-all text-xs" title="Open / Close Book">
+            <i id="bookCoverIcon" class="fa-solid fa-book"></i>
+        </button>
+
+        <div class="w-px h-5 bg-slate-700/80"></div>
+
+        <!-- Prev Spread -->
+        <button id="prevBtn" onclick="prevSpread()" class="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white disabled:opacity-30 disabled:pointer-events-none transition-all text-xs" title="Previous Spread (Left Arrow)">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <!-- Spread Indicator -->
+        <span id="spreadCounter" class="text-xs font-mono font-bold text-purple-200 px-2 tracking-wider">
+            Cover
+        </span>
+
+        <!-- Next Spread -->
+        <button id="nextBtn" onclick="nextSpread()" class="p-2 rounded-full bg-purple-600 hover:bg-purple-500 text-white shadow-md transition-all text-xs active:scale-95" title="Next Spread (Right Arrow / Space)">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <div class="w-px h-5 bg-slate-700/80"></div>
+
+        <!-- Table of Contents Modal Trigger -->
+        <button onclick="toggleTOC()" class="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-all text-xs" title="Table of Contents">
+            <i class="fa-solid fa-list-ul"></i>
+        </button>
+
+        <!-- Autoplay Toggle -->
+        <button id="autoplayBtn" onclick="toggleAutoplay()" class="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-all text-xs" title="Autoplay Slideshow">
+            <i id="autoplayIcon" class="fa-solid fa-play"></i>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="soundBtn" onclick="toggleSound()" class="p-2 rounded-full hover:bg-white/10 text-purple-300 hover:text-white transition-all text-xs" title="Toggle Page Flip Sound">
+            <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <!-- Fullscreen Toggle -->
+        <button onclick="toggleFullscreen()" class="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-all text-xs" title="Toggle Fullscreen (F)">
+            <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
+        </button>
+    </div>
+
+    <!-- Table of Contents Slide-over Drawer -->
+    <div id="tocDrawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex justify-end">
+        <div class="w-full max-w-md h-full bg-[#0a0614] border-l border-purple-500/30 p-6 flex flex-col justify-between overflow-y-auto page-scroll">
+            <div>
+                <div class="flex justify-between items-center pb-4 border-b border-purple-500/20">
+                    <h2 class="heading-font text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open text-purple-400"></i>
+                        <span>Presentation Index</span>
+                    </h2>
+                    <button onclick="toggleTOC()" class="text-slate-400 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <!-- TOC Sections -->
+                <div id="tocList" class="mt-4 space-y-2 text-xs font-medium"></div>
+            </div>
+            <div class="pt-6 border-t border-purple-500/20 text-center text-slate-500 text-[11px]">
+                Chapter 5: Sorting &amp; Divide-and-Conquer • 34 Slides
+            </div>
+        </div>
+    </div>
+
+    <!-- Get in Touch Modal -->
+    <div id="contactModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div class="bg-[#0f0c1b] border border-purple-500/40 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <div class="flex justify-between items-center pb-3 border-b border-purple-500/20">
+                <h3 class="heading-font text-lg font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-info text-purple-400"></i>
+                    <span>About Presentation</span>
+                </h3>
+                <button onclick="closeModal('contactModal')" class="text-slate-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+            <div class="text-xs text-slate-300 space-y-3 leading-relaxed">
+                <p>
+                    <strong class="text-white">Chapter 5: Sorting and Divide-and-Conquer</strong> is an interactive educational presentation created for BSCS Data Structures and Algorithms.
+                </p>
+                <div class="bg-purple-950/40 border border-purple-500/30 rounded-xl p-3.5 space-y-1.5">
+                    <p class="font-bold text-purple-300">Included Algorithms:</p>
+                    <ul class="list-disc pl-4 space-y-1 text-slate-300">
+                        <li>Selection Sort (Concept, Pass Trace, Python Code, Time Complexity)</li>
+                        <li>Insertion Sort (Virtual Sections, 3-Step Iteration, Python Code)</li>
+                        <li>Recursion &amp; Divide-and-Conquer Principles</li>
+                        <li>Merge Sort (Recursion Tree, Recurrence Relation, Time Analysis)</li>
+                        <li>Comprehensive Algorithm Comparison &amp; Usage Guide</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-2 flex justify-end">
+                <button onclick="closeModal('contactModal')" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactive Presentation Engine -->
+    <script>
+        // Total Spreads: 0 (Closed Cover), 1..17 (Slides 1 to 34), 18 (Summary & End Cover)
+        const totalSpreads = 18;
+        const totalLeaves = 19; // Leaf 0 to 18
+        let currentSpread = 0;
+        let isBookOpen = false;
+        let autoplayInterval = null;
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        const bookWrapper = document.getElementById('bookWrapper');
+        const heroBanner = document.getElementById('heroBanner');
+        const spreadCounter = document.getElementById('spreadCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const bookCoverIcon = document.getElementById('bookCoverIcon');
+        const stackLeft = document.getElementById('stackLeft');
+        const stackRight = document.getElementById('stackRight');
+
+        // Spreads Data for Index Navigation
+        const spreadsMeta = [
+            { title: "Cover", pages: "Cover", desc: "Front Book Cover" },
+            { title: "Chapter Title & Selection Sort Header", pages: "Pages 1 & 2", desc: "Overview & Section 1 Title" },
+            { title: "What is Selection Sort? & How It Works", pages: "Pages 3 & 4", desc: "Concept, Before/After & 3 Steps" },
+            { title: "Trace Steps & Python Implementation", pages: "Pages 5 & 6", desc: "Pass 1-4 Trace & Python Code" },
+            { title: "Time Complexity Header & Summary", pages: "Pages 7 & 8", desc: "Section 2 Title & Basic Idea" },
+            { title: "Why O(n²)? & Formula Evaluation", pages: "Pages 9 & 10", desc: "Comparisons per Pass & Math Solver" },
+            { title: "Best/Avg/Worst Cases & Insertion Sort", pages: "Pages 11 & 12", desc: "Cases & Section 3 Title" },
+            { title: "Insertion Sort Definition & 3-Step Loop", pages: "Pages 13 & 14", desc: "Virtual Sections & Pick-Slide-Insert" },
+            { title: "Insertion Code & Time Complexity Title", pages: "Pages 15 & 16", desc: "Python Snippet & Section 4 Title" },
+            { title: "Insertion Sort Intro & Cases Analysis", pages: "Pages 17 & 18", desc: "Example Trace & Best/Avg/Worst Cases" },
+            { title: "Space Complexity & Recursion Title", pages: "Pages 19 & 20", desc: "O(1) Memory & Section 5 Title" },
+            { title: "Recursion Definition & Rules of Recursion", pages: "Pages 21 & 22", desc: "Countdown Code & Base Case Rules" },
+            { title: "Divide-and-Conquer & Sorting Tree", pages: "Pages 23 & 24", desc: "Strategy & Tree Diagram" },
+            { title: "Merge Sort Header & Algorithm Overview", pages: "Pages 25 & 26", desc: "Section 6 Title & Inventor" },
+            { title: "How Merge Sort Works & Python Code", pages: "Pages 27 & 28", desc: "Divide/Compare/Merge & Code" },
+            { title: "Recursion Tree Header & Recurrence", pages: "Pages 29 & 30", desc: "Section 7 Title & T(n) = 2T(n/2)+O(n)" },
+            { title: "Time Analysis & Algorithm Comparison", pages: "Pages 31 & 32", desc: "O(n log n) & Section 8 Title" },
+            { title: "Comparing Algorithms & When to Use", pages: "Pages 33 & 34", desc: "Matrix & Selection Criteria" },
+            { title: "Summary & Review", pages: "Pages 35 & 36", desc: "Recap & Closing Cover" }
+        ];
+
+        // Synthesize authentic paper turn sound with Web Audio API
+        function playPageTurnSound() {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const bufferSize = audioCtx.sampleRate * 0.22;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(1250, audioCtx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(620, audioCtx.currentTime + 0.2);
+                filter.Q.value = 2.0;
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.28, audioCtx.currentTime + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                noise.start();
+                noise.stop(audioCtx.currentTime + 0.23);
+            } catch(e) {}
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            icon.className = soundEnabled ? "fa-solid fa-volume-high" : "fa-solid fa-volume-xmark";
+        }
+
+        // Initialize Book Stacking & State
+        function updateBookState() {
+            for (let i = 0; i < totalLeaves; i++) {
+                const leaf = document.getElementById(`leaf-${i}`);
+                if (!leaf) continue;
+
+                if (i < currentSpread) {
+                    // Turned to the left
+                    leaf.classList.add('flipped');
+                    leaf.style.zIndex = i + 1;
+                } else {
+                    // Unflipped on the right
+                    leaf.classList.remove('flipped');
+                    leaf.style.zIndex = totalLeaves - i;
+                }
+            }
+
+            // Update UI & Stack thicknesses
+            if (currentSpread === 0) {
+                isBookOpen = false;
+                bookWrapper.classList.add('closed-view');
+                heroBanner.classList.remove('hidden-mode');
+                bookCoverIcon.className = "fa-solid fa-book";
+                spreadCounter.textContent = "Cover";
+                stackLeft.style.opacity = "0";
+                stackRight.style.width = "14px";
+            } else {
+                isBookOpen = true;
+                bookWrapper.classList.remove('closed-view');
+                heroBanner.classList.add('hidden-mode');
+                bookCoverIcon.className = "fa-solid fa-book-open";
+
+                const pageNumLeft = (currentSpread * 2) - 1;
+                const pageNumRight = currentSpread * 2;
+                if (currentSpread < totalSpreads) {
+                    spreadCounter.textContent = `Pages ${pageNumLeft}-${pageNumRight} / 34`;
+                } else {
+                    spreadCounter.textContent = "Summary";
+                }
+
+                stackLeft.style.opacity = "1";
+                stackLeft.style.width = `${Math.min(16, 4 + currentSpread)}px`;
+                stackRight.style.width = `${Math.max(2, 16 - currentSpread)}px`;
+            }
+
+            prevBtn.disabled = currentSpread === 0;
+            nextBtn.disabled = currentSpread >= totalSpreads;
+        }
+
+        function nextSpread() {
+            if (currentSpread < totalSpreads) {
+                const leafToFlip = document.getElementById(`leaf-${currentSpread}`);
+                if (leafToFlip) {
+                    leafToFlip.classList.add('turning');
+                    leafToFlip.style.zIndex = totalLeaves + 15;
+                    setTimeout(() => leafToFlip.classList.remove('turning'), 850);
+                }
+                currentSpread++;
+                playPageTurnSound();
+                updateBookState();
+            } else if (autoplayInterval) {
+                toggleAutoplay();
+            }
+        }
+
+        function prevSpread() {
+            if (currentSpread > 0) {
+                currentSpread--;
+                const leafToUnflip = document.getElementById(`leaf-${currentSpread}`);
+                if (leafToUnflip) {
+                    leafToUnflip.classList.add('turning');
+                    leafToUnflip.style.zIndex = totalLeaves + 15;
+                    setTimeout(() => leafToUnflip.classList.remove('turning'), 850);
+                }
+                playPageTurnSound();
+                updateBookState();
+            }
+        }
+
+        function openBook() {
+            if (currentSpread === 0) {
+                nextSpread();
+            }
+        }
+
+        function closeBook() {
+            currentSpread = 0;
+            playPageTurnSound();
+            updateBookState();
+        }
+
+        function toggleBookOpen() {
+            if (currentSpread === 0) {
+                openBook();
+            } else {
+                closeBook();
+            }
+        }
+
+        function goToSpread(index) {
+            if (index >= 0 && index <= totalSpreads) {
+                currentSpread = index;
+                playPageTurnSound();
+                updateBookState();
+                closeTOC();
+            }
+        }
+
+        function handlePageClick(e, side) {
+            // Prevent flip if clicking interactive controls (buttons, links, pre)
+            if (e.target.closest('button, input, select, a, pre, code')) return;
+
+            if (side === 'right') {
+                nextSpread();
+            } else if (side === 'left') {
+                prevSpread();
+            }
+        }
+
+        // Copy Code to Clipboard with feedback
+        function copyCode(elementId, btn) {
+            const pre = document.getElementById(elementId);
+            if (!pre) return;
+            navigator.clipboard.writeText(pre.innerText).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> <span class="text-emerald-400">Copied!</span>`;
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+            });
+        }
+
+        // Autoplay Mode
+        function toggleAutoplay() {
+            const icon = document.getElementById('autoplayIcon');
+            const btn = document.getElementById('autoplayBtn');
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+                icon.className = "fa-solid fa-play";
+                btn.classList.remove('text-purple-400', 'bg-purple-900/40');
+            } else {
+                if (currentSpread >= totalSpreads) currentSpread = 0;
+                if (currentSpread === 0) openBook();
+                autoplayInterval = setInterval(nextSpread, 4500);
+                icon.className = "fa-solid fa-pause";
+                btn.classList.add('text-purple-400', 'bg-purple-900/40');
+            }
+        }
+
+        // Table of Contents Drawer
+        function buildTOC() {
+            const tocList = document.getElementById('tocList');
+            tocList.innerHTML = '';
+            spreadsMeta.forEach((meta, idx) => {
+                const item = document.createElement('div');
+                item.className = "p-2.5 rounded-xl border border-purple-500/20 bg-purple-950/20 hover:bg-purple-900/40 transition cursor-pointer flex items-center justify-between";
+                item.onclick = () => goToSpread(idx);
+                item.innerHTML = `
+                    <div>
+                        <div class="font-bold text-slate-200">${meta.title}</div>
+                        <div class="text-[10px] text-slate-400">${meta.desc}</div>
+                    </div>
+                    <span class="text-[10px] font-mono font-bold text-purple-400 ml-2">${meta.pages}</span>
+                `;
+                tocList.appendChild(item);
+            });
+        }
+
+        function toggleTOC() {
+            const drawer = document.getElementById('tocDrawer');
+            const isOpen = drawer.classList.contains('opacity-100');
+            if (isOpen) {
+                closeTOC();
+            } else {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                drawer.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        function closeTOC() {
+            const drawer = document.getElementById('tocDrawer');
+            drawer.classList.add('opacity-0', 'pointer-events-none');
+            drawer.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+
+        // Modals
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            const icon = document.getElementById('fullscreenIcon');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                icon.className = "fa-solid fa-compress";
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                icon.className = "fa-solid fa-expand";
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                nextSpread();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSpread();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                closeBook();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                goToSpread(totalSpreads);
+            } else if (e.key === 'Escape') {
+                closeTOC();
+                closeModal('contactModal');
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'm' || e.key === 'M') {
+                toggleSound();
+            }
+        });
+
+        // Touch Swipe Support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            if (swipeDistance < -60) {
+                nextSpread();
+            } else if (swipeDistance > 60) {
+                prevSpread();
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            buildTOC();
+            updateBookState();
+        });
+    </script>
+</body>
+</html>
