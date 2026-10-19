@@ -152,7 +152,7 @@
             pointer-events: none;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 768px), (max-width: 1024px) and (max-height: 500px) {
             .hero-banner {
                 inset: 0 0 auto;
                 width: 100%;
@@ -601,10 +601,40 @@
         }
         .selection-demo-legend span { display: inline-flex; align-items: center; gap: 0.3rem; }
         .selection-demo-swatch { width: 0.65rem; height: 0.65rem; border-radius: 0.2rem; }
-        @media (max-width: 768px) {
+        @media (max-width: 768px), (max-width: 1024px) and (max-height: 500px) {
             :root {
-                --book-w: max(680px, 94vw);
-                --book-h: min(76vh, 700px);
+                --book-w: min(680px, 94vw);
+                --book-h: min(76dvh, 700px);
+            }
+
+            body,
+            .scene-container {
+                width: 100%;
+                height: 100dvh;
+            }
+
+            .book-wrapper {
+                top: calc(50% - 12px);
+            }
+
+            .book-wrapper.closed-view {
+                left: 50%;
+                transform: translate(-50%, -50%) rotateX(16deg);
+            }
+
+            .controls-dock {
+                bottom: max(8px, env(safe-area-inset-bottom));
+                width: calc(100% - 16px);
+                max-width: 480px;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 6px 8px;
+                border-radius: 16px;
+            }
+
+            .controls-dock > .w-px {
+                display: none;
             }
         }
 
@@ -1575,7 +1605,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     <!-- Page 21: Insertion Sort Introduction and Trace -->
                     <div class="page-face back-face bg-[#0f172a] text-white p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
     <div class="border-b border-slate-800 pb-2">
-        <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-white">INSERTION SORT INTRODUCTION</h2>
+        <h2 class="heading-font text-2xl sm:text-3xl font-extrabold text-black">INSERTION SORT INTRODUCTION</h2>
         <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 mt-0.5 block">Time Complexity Slide 1 • Introduction</span>
     </div>
     <div class="space-y-4 my-auto text-sm sm:text-base">
@@ -1599,13 +1629,13 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
         </div>
         <div class="bg-[#1e293b] rounded-xl p-4 border border-slate-700/80 text-center space-y-2">
             <span class="text-slate-400 uppercase font-mono text-xs font-bold tracking-wider">Example Trace</span>
-            <div class="flex justify-center space-x-1.5 font-bold font-mono text-sm sm:text-base">
-                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">5</span>
-                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">3</span>
-                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">4</span>
-                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">1</span>
-                <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">2</span>
-            </div>
+            <div class="flex justify-center space-x-1.5 text-blue-300 font-bold text-base sm:text-lg">
+    <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">5</span>
+    <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">3</span>
+    <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">4</span>
+    <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">1</span>
+    <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">2</span>
+</div>
             <div class="text-blue-400 text-xs font-extrabold tracking-wider">↓ SORTED ↓</div>
             <div class="flex justify-center space-x-1.5 font-bold font-mono text-sm sm:text-base text-emerald-300">
                 <span class="bg-emerald-950 border border-emerald-500 px-2.5 py-1 rounded">1</span>
