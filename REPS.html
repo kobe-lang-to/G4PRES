@@ -1161,45 +1161,30 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
                     <!-- Page 8: Selection Sort Summary and Key Concepts -->
                     <div id="selectionSortSummaryPage" class="page-face front-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'right')">
     <div class="border-b border-slate-200 pb-2">
-        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">SELECTION SORT </h2>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">SELECTION SORT TIME COMPLEXITY</h2>
         <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Time Complexity • Basic idea and how the algorithm works</span>
     </div>
     <div id="selectionSortSummaryContent" class="space-y-4 my-auto text-base sm:text-lg">
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
-            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-2">What is Selection Sort?</h3>
-            <ul class="space-y-2 text-slate-700">
-                <li class="flex items-start space-x-2">
-                    <span class="text-blue-600 font-bold">•</span>
-                    <span>A sorting algorithm that finds the smallest value.</span>
-                </li>
-                <li class="flex items-start space-x-2">
-                    <span class="text-blue-600 font-bold">•</span>
-                    <span>It moves that value to the front of the unsorted part.</span>
-                </li>
-                <li class="flex items-start space-x-2">
-                    <span class="text-blue-600 font-bold">•</span>
-                    <span>It repeats until the whole array is sorted.</span>
-                </li>
-                <li class="flex items-start space-x-2">
-                    <span class="text-blue-600 font-bold">•</span>
-                    <span>The sorted part grows after each pass.</span>
-                </li>
-            </ul>
+            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-2">WHAT IS TIME COMPLEXITY?</h3>
+            
+                 <ul class="space-y-4 text-slate-700">
+                    <li class="flex items-start space-x-3">
+                <span class="text-blue-600 font-bold text-xl">•</span>
+                <span class="text-lg sm:text-xl leading-relaxed">
+                    Time complexity measures how the running time of an algorithm changes as the input size increases.
+                </span>
+                    </li>
+
+                     <li class="flex items-start space-x-3">
+                <span class="text-blue-600 font-bold text-xl">•</span>
+                <span class="text-lg sm:text-xl leading-relaxed">
+                    It helps us understand how efficient an algorithm is when handling small or large amounts of data.
+                </span>
+                     </li>
+                 </ul>
         </div>
-        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
-            <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-2">The Basic Steps</h3>
-            <div class="grid grid-cols-2 gap-2 text-slate-700 font-medium text-sm sm:text-base">
-                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">1</span><span>Scan unsorted</span></div>
-                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">2</span><span>Find smallest</span></div>
-                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">3</span><span>Swap to front</span></div>
-                <div class="flex items-center space-x-2"><span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-bold flex items-center justify-center text-xs">4</span><span>Repeat</span></div>
-            </div>
-        </div>
-        <div class="flex items-center justify-center space-x-3 pt-2 font-mono font-bold text-sm sm:text-base">
-            <span class="bg-white px-3 py-1.5 rounded border border-slate-300">[4, 2, 5, 1]</span>
-            <span class="text-blue-600 font-bold text-lg">→</span>
-            <span class="bg-emerald-100 text-emerald-900 border border-emerald-300 px-3 py-1.5 rounded">[1, 2, 4, 5]</span>
-        </div>
+      
     </div>
     <span class="page-folio">08</span>
 </div>
@@ -1207,21 +1192,20 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
 <div class="page-face back-face bg-slate-100 text-slate-800 p-6 sm:p-8 flex flex-col justify-between page-scroll overflow-y-auto" onclick="handlePageClick(event, 'left')">
     <div class="border-b border-slate-200 pb-2">
         <span class="text-sm sm:text-base font-mono font-bold uppercase tracking-wider text-blue-600">Mathematical Rationale</span>
-        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Why Time Complexity is O(n²)?</h2>
+        <h2 class="heading-font text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Why Does Selection Sort Have O(n²) Time Complexity?</h2>
+
     </div>
     <div class="space-y-4 my-auto text-base sm:text-lg">
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
             <h3 class="font-bold text-blue-600 uppercase text-xs sm:text-sm mb-3">Comparisons in Each Pass</h3>
             <div class="space-y-2 font-semibold text-slate-800">
-                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 1</span><span class="text-blue-600 font-mono">n – 1 comparisons</span></div>
-                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 2</span><span class="text-blue-600 font-mono">n – 2 comparisons</span></div>
-                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Pass 3</span><span class="text-blue-600 font-mono">n – 3 comparisons</span></div>
-                <div class="flex justify-between pt-1"><span>Last pass</span><span class="text-blue-600 font-mono">1 comparison</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>Selection Sort has O(n²) time complexity because it repeatedly compares each element with the remaining unsorted elements to find the smallest value.</span><span class="text-blue-600 font-mono"></span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>In every pass, the algorithm checks fewer elements, but it still performs many comparisons. As the number of elements increases, the total comparisons grow approximately as n × n</span><span class="text-blue-600 font-mono"></span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-1.5"><span>That is why Selection Sort has O(n²) time complexity.</span><span class="text-blue-600 font-mono"></span></div>
+                
             </div>
         </div>
-        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-center font-bold text-blue-900 text-base sm:text-lg">
-            Total comparisons = n(n – 1) / 2
-        </div>
+        
     </div>
     <span class="page-folio">09</span>
 </div>
@@ -1382,7 +1366,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
 
             <div>
                 <div class="flex items-center justify-between border-b border-slate-100 pb-2 pt-1">
-                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Average Case:</span>
+                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Average <br> Case:</span>
                                     <p class="text-sm sm:text-base text-slate-600 mt-1.5">Values are in a typical random order.</p>
                     <span class="font-mono font-bold text-blue-600 text-xl sm:text-2xl">O(n²)</span>
                 </div>
@@ -1390,7 +1374,7 @@ my_list = [<span class="text-amber-300">64</span>, <span class="text-amber-300">
 
             <div>
                 <div class="flex items-center justify-between border-b border-slate-100 pb-2 pt-1">
-                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Worst Case:</span>
+                    <span class="font-bold text-slate-900 text-lg sm:text-xl">Worst <br> Case:</span>
                                     <p class="text-sm sm:text-base text-slate-600 mt-1.5">Values are in an unfavorable order.</p>
                     <span class="font-mono font-bold text-blue-600 text-xl sm:text-2xl">O(n²)</span>
                 </div>
@@ -1917,24 +1901,24 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                     </defs>
 
                     <!-- Level 1 -> Level 2 -->
-                    <line x1="44%" y1="10%" x2="33%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="56%" y1="10%" x2="67%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="48%" y1="15%" x2="33%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="56%" y1="15%" x2="67%" y2="22%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
 
                     <!-- Level 2 -> Level 3 -->
-                    <line x1="28%" y1="33%" x2="20%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="36%" y1="33%" x2="42%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="64%" y1="33%" x2="58%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="72%" y1="33%" x2="80%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="28%" y1="35%" x2="17%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="34%" y1="35%" x2="39%" y2="42%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="67%" y1="35%" x2="62%" y2="42%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="72%" y1="35%" x2="83%" y2="44%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
 
                     <!-- Level 3 -> Level 4 -->
-                    <line x1="20%" y1="56%" x2="28%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="42%" y1="56%" x2="36%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="58%" y1="56%" x2="64%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="80%" y1="56%" x2="72%" y2="67%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="16%" y1="56%" x2="28%" y2="62%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="38%" y1="56%" x2="30%" y2="62%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="62%" y1="56%" x2="67%" y2="62%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="83%" y1="56%" x2="72%" y2="62%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
 
                     <!-- Level 4 -> Level 5 (Shortened to ensure arrowheads are 100% visible) -->
-                    <line x1="32%" y1="78%" x2="43%" y2="86%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
-                    <line x1="68%" y1="78%" x2="57%" y2="86%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="32%" y1="76%" x2="46%" y2="86%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
+                    <line x1="68%" y1="76%" x2="57%" y2="85%" stroke-width="1.2" marker-end="url(#arrow-compact)" />
                 </svg>
 
                 <div class="relative z-0 space-y-4 py-1">
@@ -2272,7 +2256,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 <!-- SVG Overlay with Pixel-Perfect Line Coordinates -->
                 <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-slate-400" style="z-index: 1;">
                     <!-- Level 1 (8) -> Level 2 (4, 4) -->
-                    <line x1="50%" y1="12%" x2="28.5%" y2="30%" stroke-width="1.5" />
+                    <line x1="50%" y1="12%" x2="29.5%" y2="30%" stroke-width="1.5" />
                     <line x1="50%" y1="12%" x2="71.5%" y2="30%" stroke-width="1.5" />
 
                     <!-- Level 2 (4) -> Level 3 (2, 2) Left & Right -->
@@ -2283,20 +2267,20 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
                     <!-- Level 3 (2) -> Level 4 (1, 1) Ultra-Precise Alignment -->
                     <!-- 1st '2' -> nodes 1 & 2 -->
-                    <line x1="16.5%" y1="66%" x2="4.5%" y2="84%" stroke-width="1.2" />
-                    <line x1="16.5%" y1="66%" x2="17.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="13.5%" y1="66%" x2="4.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="13.5%" y1="66%" x2="17.5%" y2="84%" stroke-width="1.2" />
 
                     <!-- 2nd '2' -> nodes 3 & 4 -->
-                    <line x1="40.5%" y1="66%" x2="30.5%" y2="84%" stroke-width="1.2" />
-                    <line x1="40.5%" y1="66%" x2="43.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="37.5%" y1="66%" x2="30.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="37.5%" y1="66%" x2="43.5%" y2="84%" stroke-width="1.2" />
 
                     <!-- 3rd '2' -> nodes 5 & 6 -->
-                    <line x1="59.5%" y1="66%" x2="56.5%" y2="84%" stroke-width="1.2" />
-                    <line x1="59.5%" y1="66%" x2="69.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="62.5%" y1="66%" x2="56.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="62.5%" y1="66%" x2="69.5%" y2="84%" stroke-width="1.2" />
 
                     <!-- 4th '2' -> nodes 7 & 8 -->
-                    <line x1="83.5%" y1="66%" x2="82.5%" y2="84%" stroke-width="1.2" />
-                    <line x1="83.5%" y1="66%" x2="95.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="86.5%" y1="66%" x2="82.5%" y2="84%" stroke-width="1.2" />
+                    <line x1="86.5%" y1="66%" x2="95.5%" y2="84%" stroke-width="1.2" />
                 </svg>
 
                 <div class="relative z-10 space-y-4 sm:space-y-5">
