@@ -419,6 +419,46 @@
             z-index: 50;
             border-radius: 0 8px 8px 0;
         }
+        .book-wrapper.single-page-mode #bookPages > .leaf {
+            display: none;
+        }
+        .book-wrapper.single-page-mode #bookPages > .leaf.mobile-active-leaf {
+            display: block;
+            top: 0;
+            right: auto;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: none;
+            transform-style: flat;
+            border-radius: 8px;
+        }
+        .book-wrapper.single-page-mode #bookPages .page-face:not(.mobile-active-page) {
+            display: none;
+        }
+        .book-wrapper.single-page-mode #bookPages .page-face.mobile-active-page {
+            display: flex;
+            transform: none;
+            backface-visibility: visible;
+            -webkit-backface-visibility: visible;
+            border-radius: 8px;
+        }
+        .book-wrapper.single-page-mode #bookPages .page-face.mobile-active-page::before {
+            display: none;
+        }
+        .book-wrapper.single-page-mode .book-spine-joint,
+        .book-wrapper.single-page-mode .page-stack-left,
+        .book-wrapper.single-page-mode .page-stack-right {
+            display: none;
+        }
+        .book-wrapper.single-page-mode #selectionSortInteractive.selection-demo-open-page,
+        .book-wrapper.single-page-mode #insertionSortInteractivePage.insertion-demo-open-page,
+        .book-wrapper.single-page-mode #mergeSortInteractivePage.merge-demo-open-page {
+            left: 0;
+            right: auto;
+            width: 100%;
+            border-radius: 8px;
+        }
         #bookPages.has-open-demo > .leaf {
             pointer-events: none;
         }
@@ -2602,11 +2642,21 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
     <!-- JavaScript Interactive Presentation Engine -->
     <script>
-        // Spread 0 is the closed cover; spreads 1..20 show pages 1 to 40.
+        // Position 0 is the cover; compact layouts navigate one page at a time.
         const presentationLeaves = [...document.querySelectorAll('#bookPages > .leaf')];
         const frontCover = presentationLeaves[0].querySelector('.front-face');
         const orderedPages = [...document.querySelectorAll('#bookPages .page-face')]
             .filter((face) => face !== frontCover);
+        const mobilePages = orderedPages.filter((face) => !face.querySelector('.cover-hardcover h3'));
+        const bookPages = document.getElementById('bookPages');
+        const bookWrapper = document.getElementById('bookWrapper');
+        const singlePageMedia = window.matchMedia(
+            '(max-width: 768px), (max-width: 1024px) and (max-height: 500px)'
+        );
+        let isSinglePageMode = singlePageMedia.matches;
+        if (mobilePages.length !== 40) {
+            throw new Error(`Expected 40 presentation pages, found ${mobilePages.length}.`);
+        }
 
         const leafShadows = presentationLeaves.map((leaf) => leaf.querySelector('.leaf-shadow'));
         presentationLeaves.forEach((leaf, index) => {
@@ -2636,14 +2686,14 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             leaf.append(face);
         });
 
-        const totalSpreads = 20;
+        const totalSpreads = Math.ceil(mobilePages.length / 2);
+        const totalPages = mobilePages.length;
         const totalLeaves = presentationLeaves.length;
         let currentSpread = 0;
         let autoplayInterval = null;
         let soundEnabled = true;
         let audioCtx = null;
 
-        const bookWrapper = document.getElementById('bookWrapper');
         const heroBanner = document.getElementById('heroBanner');
         const spreadCounter = document.getElementById('spreadCounter');
         const prevBtn = document.getElementById('prevBtn');
@@ -2651,6 +2701,10 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         const bookCoverIcon = document.getElementById('bookCoverIcon');
         const stackLeft = document.getElementById('stackLeft');
         const stackRight = document.getElementById('stackRight');
+
+        function getActiveSpread() {
+            return isSinglePageMode ? Math.ceil(currentSpread / 2) : currentSpread;
+        }
 
         // Spreads Data for Index Navigation
         const spreadsMeta = [
@@ -2839,7 +2893,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
             Promise.race([animationComplete, fallbackComplete]).then(() => {
                 clearTimeout(fallbackTimer);
-                if (currentSpread === spread) overlay.show();
+                if (getActiveSpread() === spread) overlay.show();
             });
         }
 
@@ -3241,37 +3295,51 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
         // Initialize Book Stacking & State
         function updateBookState() {
-            if (currentSpread !== 3) selectionDemoOverlay.restore();
-            if (currentSpread !== 9) {
+            const activeSpread = getActiveSpread();
+            if (activeSpread !== 3) selectionDemoOverlay.restore();
+            if (activeSpread !== 9) {
                 insertionPlayback.pause();
                 insertionSortOverlay.restore();
             }
-            if (currentSpread !== 16) {
+            if (activeSpread !== 16) {
                 mergePlayback.pause();
                 mergeSortOverlay.restore();
             }
 
-            for (let i = 0; i < totalLeaves; i++) {
-                const leaf = document.getElementById(`leaf-${i}`);
-                if (!leaf) continue;
-
-                if (i < currentSpread) {
-                    // Turned to the left
-                    leaf.classList.add('flipped');
-                    leaf.style.zIndex = i + 1;
-                } else {
-                    // Unflipped on the right
+            bookWrapper.classList.toggle('single-page-mode', isSinglePageMode);
+            if (isSinglePageMode) {
+                const activeFace = currentSpread === 0 ? frontCover : mobilePages[currentSpread - 1];
+                presentationLeaves.forEach((leaf) => {
+                    leaf.classList.toggle('mobile-active-leaf', leaf.contains(activeFace));
                     leaf.classList.remove('flipped');
-                    leaf.style.zIndex = totalLeaves - i;
-                }
+                    leaf.style.zIndex = leaf.contains(activeFace) ? totalLeaves + 1 : '';
+                });
+                bookPages.querySelectorAll('.page-face').forEach((face) => {
+                    face.classList.toggle('mobile-active-page', face === activeFace);
+                });
+            } else {
+                bookPages.querySelectorAll('.page-face').forEach((face) => {
+                    face.classList.remove('mobile-active-page');
+                });
+                presentationLeaves.forEach((leaf, index) => {
+                    leaf.classList.remove('mobile-active-leaf');
+                    if (index < currentSpread) {
+                        leaf.classList.add('flipped');
+                        leaf.style.zIndex = index + 1;
+                    } else {
+                        leaf.classList.remove('flipped');
+                        leaf.style.zIndex = totalLeaves - index;
+                    }
+                });
             }
-            if (currentSpread === 3) {
+
+            if (activeSpread === 3) {
                 revealDemoAfterPageTurn(3, selectionDemoOverlay);
             }
-            if (currentSpread === 9) {
+            if (activeSpread === 9) {
                 revealDemoAfterPageTurn(9, insertionSortOverlay);
             }
-            if (currentSpread === 16) {
+            if (activeSpread === 16) {
                 revealDemoAfterPageTurn(16, mergeSortOverlay);
             }
 
@@ -3288,9 +3356,13 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 heroBanner.classList.add('hidden-mode');
                 bookCoverIcon.className = "fa-solid fa-book-open";
 
-                const pageNumLeft = (currentSpread * 2) - 1;
-                const pageNumRight = currentSpread * 2;
-                spreadCounter.textContent = `Pages ${pageNumLeft}-${pageNumRight} / 40`;
+                if (isSinglePageMode) {
+                    spreadCounter.textContent = `Page ${currentSpread} / ${totalPages}`;
+                } else {
+                    const pageNumLeft = (currentSpread * 2) - 1;
+                    const pageNumRight = currentSpread * 2;
+                    spreadCounter.textContent = `Pages ${pageNumLeft}-${pageNumRight} / ${totalPages}`;
+                }
 
                 stackLeft.style.opacity = "1";
                 stackLeft.style.width = `${Math.min(16, 4 + currentSpread)}px`;
@@ -3299,21 +3371,41 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
 
             prevBtn.disabled = currentSpread === 0;
             nextBtn.disabled = false;
+            prevBtn.title = isSinglePageMode
+                ? 'Previous Page (Left Arrow)'
+                : 'Previous Spread (Left Arrow)';
+            nextBtn.title = isSinglePageMode
+                ? 'Next Page (Right Arrow / Space)'
+                : 'Next Spread (Right Arrow / Space)';
         }
+
+        window.addEventListener('resize', () => {
+            const shouldUseSinglePage = singlePageMedia.matches;
+            if (shouldUseSinglePage === isSinglePageMode) return;
+
+            currentSpread = shouldUseSinglePage
+                ? (currentSpread === 0 ? 0 : (currentSpread * 2) - 1)
+                : Math.ceil(currentSpread / 2);
+            isSinglePageMode = shouldUseSinglePage;
+            updateBookState();
+        });
 
         function nextSpread() {
             selectionPlayback.pause();
-            if (currentSpread < totalSpreads) {
-                const leafToFlip = document.getElementById(`leaf-${currentSpread}`);
-                if (leafToFlip) {
-                    leafToFlip.classList.add('turning');
-                    leafToFlip.style.zIndex = totalLeaves + 15;
-                    setTimeout(() => leafToFlip.classList.remove('turning'), 850);
+            const lastPosition = isSinglePageMode ? totalPages : totalSpreads;
+            if (currentSpread < lastPosition) {
+                if (!isSinglePageMode) {
+                    const leafToFlip = document.getElementById(`leaf-${currentSpread}`);
+                    if (leafToFlip) {
+                        leafToFlip.classList.add('turning');
+                        leafToFlip.style.zIndex = totalLeaves + 15;
+                        setTimeout(() => leafToFlip.classList.remove('turning'), 850);
+                    }
                 }
                 currentSpread++;
                 playPageTurnSound();
                 updateBookState();
-            } else if (currentSpread === totalSpreads) {
+            } else if (currentSpread === lastPosition) {
                 if (autoplayInterval) toggleAutoplay();
                 closeBook();
             }
@@ -3323,11 +3415,13 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             selectionPlayback.pause();
             if (currentSpread > 0) {
                 currentSpread--;
-                const leafToUnflip = document.getElementById(`leaf-${currentSpread}`);
-                if (leafToUnflip) {
-                    leafToUnflip.classList.add('turning');
-                    leafToUnflip.style.zIndex = totalLeaves + 15;
-                    setTimeout(() => leafToUnflip.classList.remove('turning'), 850);
+                if (!isSinglePageMode) {
+                    const leafToUnflip = document.getElementById(`leaf-${currentSpread}`);
+                    if (leafToUnflip) {
+                        leafToUnflip.classList.add('turning');
+                        leafToUnflip.style.zIndex = totalLeaves + 15;
+                        setTimeout(() => leafToUnflip.classList.remove('turning'), 850);
+                    }
                 }
                 playPageTurnSound();
                 updateBookState();
@@ -3358,7 +3452,7 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
         function goToSpread(index) {
             if (index >= 0 && index <= totalSpreads) {
                 selectionPlayback.pause();
-                currentSpread = index;
+                currentSpread = isSinglePageMode && index > 0 ? (index * 2) - 1 : index;
                 playPageTurnSound();
                 updateBookState();
                 closeTOC();
@@ -3369,6 +3463,16 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
             if (e.target.closest('[data-no-page-turn]')) return;
             // Controls and graph clicks are interactions, not page turns.
             if (e.target.closest('button, input, select, a, pre, code, [data-selection-role="array"], [data-insertion-role="array"], [data-merge-role="array"]')) return;
+
+            if (isSinglePageMode) {
+                const bounds = e.currentTarget.getBoundingClientRect();
+                if (e.clientX - bounds.left < bounds.width * 0.3) {
+                    prevSpread();
+                } else {
+                    nextSpread();
+                }
+                return;
+            }
 
             if (side === 'right') {
                 nextSpread();
@@ -3398,7 +3502,8 @@ countdown(<span class="text-amber-300">5</span>)</code></pre>
                 icon.className = "fa-solid fa-play";
                 btn.classList.remove('text-purple-400', 'bg-purple-900/40');
             } else {
-                if (currentSpread >= totalSpreads) currentSpread = 0;
+                const lastPosition = isSinglePageMode ? totalPages : totalSpreads;
+                if (currentSpread >= lastPosition) currentSpread = 0;
                 if (currentSpread === 0) openBook();
                 autoplayInterval = setInterval(nextSpread, 4500);
                 icon.className = "fa-solid fa-pause";
